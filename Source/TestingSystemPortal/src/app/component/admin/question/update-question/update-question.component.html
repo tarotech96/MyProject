@@ -1,0 +1,169 @@
+<div class="tong">
+  <form [formGroup]="updateForm" (ngSubmit)="updateForm.valid" enctype="multipart/form-data">
+    <div style="text-align: center"><h4>Sửa Câu Hỏi</h4></div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label> Tiêu đề<span class = "required_field">*</span></label>
+        <input type="text" class="form-control" formControlName="title" [ngClass]="{'is-invalid': updateForm.get('title').touched && updateForm.get('title').invalid}" required />
+        <div class="invalid-feedback">
+          <div *ngIf="updateForm.hasError('maxlength', ['title'])">Độ dài không vượt quá 250 kí tự</div>
+          <div *ngIf="updateForm.hasError('whitespace', ['title'])">Không được để trống</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label> Nội dung<span class = "required_field">*</span></label>
+        <textarea
+          type="text"
+          class="form-control"
+          formControlName="content" [ngClass]="{'is-invalid': updateForm.get('content').touched && updateForm.get('content').invalid}" required
+          row="5"
+        ></textarea>
+        <div class="invalid-feedback">
+          <div *ngIf="updateForm.hasError('maxlength', ['content'])">Độ dài không vượt quá 1000 kí tự</div>
+          <div *ngIf="updateForm.hasError('whitespace', ['content'])">vui lòng nhập giá trị cho câu hỏi & chứa kí tự</div>
+        </div>
+      </div>
+      <div class="form-group">
+          <label> Gợi ý<span class = "required_field"></span></label>
+          <textarea
+            type="text"
+            class="form-control"
+            formControlName="explain" [ngClass]="{'is-invalid': updateForm.get('explain').touched && updateForm.get('explain').invalid}" 
+            row="5"
+          ></textarea>
+          <div class="invalid-feedback">
+            <div *ngIf="updateForm.hasError('maxlength', ['content'])">Độ dài không vượt quá 1000 kí tự</div>
+            <div *ngIf="updateForm.hasError('whitespace', ['content'])">vui lòng nhập giá trị cho câu hỏi & chứa kí tự</div>
+          </div>
+        </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label> Thời gian(s)<span class = "required_field">*</span></label>
+          <input
+            type="number"
+            min="1"
+            onkeypress="return event.charCode >= 48"
+            class="form-control"
+            formControlName="time" [ngClass]="{'is-invalid': updateForm.get('time').touched && updateForm.get('time').invalid}" required
+          />
+          <div class="invalid-feedback">
+            <div>Không được để trống</div>
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <label> Media:</label>
+          <input
+            type="file"
+            accept=".png, .mp3, .jpeg, .mp4"
+            formControlName="media"
+            [ngClass]="{'is-invalid': updateForm.get('media').touched && updateForm.get('media').invalid}"
+            (change)="selectFile($event)"
+            class="form-control" />
+            <div *ngIf="updateForm.hasError('extension', ['media'])">Không đúng định dạng !!</div>
+            <div class="col-md-6">
+                <img
+                  *ngIf="!showMedia"
+                  style="width: 120px;height: 80px;"
+                  [src]="imageSrc || 'http://placehold.it/180'"
+                  alt="your image"/>
+                <img *ngIf="showMedia" src="{{baseURL}}/resources/images/question/{{ imageBefore }}" alt="" style="width: 120px;height: 80px;">
+            </div>
+      </div>
+      <div class="timemedia">
+          <div style="width: 30%">
+            <div class="form-group">
+          <label> Môn thi<span class = "required_field">*</span></label>
+          <select
+            id="subject"
+            (change)="onChange($event)"
+            class="form-control"
+            formControlName="subjects" [ngClass]="{'is-invalid': updateForm.get('subjects').touched && updateForm.get('subjects').invalid}" required>
+            <option [value]="subject.id" *ngFor="let subject of subjects">{{
+              subject.name
+            }}</option>
+          </select>
+          <div class="invalid-feedback">
+            <div>Vui lòng chọn môn thi!!</div>
+          </div>
+          </div>
+        </div>
+        <div style="width: 30%">
+            <div class="form-group">
+          <label> Chương<span class = "required_field">*</span></label>
+          <select
+            class="form-control"
+            [(ngModel)]="chapter"
+            formControlName="chapters" [ngClass]="{'is-invalid': updateForm.get('chapters').touched && updateForm.get('chapters').invalid}" required>
+            <option [value]="chapter.id" *ngFor="let chapter of chapters">{{chapter.name}}</option>
+          </select>
+          <div class="invalid-feedback">
+            <div>Vui lòng chọn chương!!</div>
+          </div>
+          </div>
+        </div>
+        <div style="width: 30%">
+            <div class="form-group">
+          <label> Kĩ năng<span class = "required_field">*</span></label>
+          <select class="form-control" formControlName="domains"   >
+            <option
+              [value]="domain.id"
+              *ngFor="let domain of domains"
+              selected>{{ domain.name }}</option>
+          </select>
+        </div>
+        </div>
+      </div>
+      <div class="them cau hoi" style="width: 100%;">
+        <button
+          class="btn btn-primary add"
+          (click)="onclick()"
+          style="margin-top: 10px; width: 20%;position: relative;float: right">
+          + Thêm câu trả lời
+      </button>
+        <div class="dapan" style="width: 100%;">
+            <div class="kk" style="width: 100%;height: 30px;margin-top: 10px;" formArrayName="answers"
+              *ngFor="let answer of updateForm.get('answers').controls; let j = index">
+              <!-- <label class="asterisk-if-mandatory" style="width: 10%;">Đáp án {{ j + 1 }} :</label> -->
+              <label> Đáp án:{{j + 1}}<span class = "required_field">*</span></label>
+              <div *ngIf="isValid('contentanswer',j)" style="color: red">Phải nhập nội dung câu hỏi </div>
+              <div *ngIf="!isValid('correctanswer')" style="color: red"> Phải nhập ít nhất 1 câu đúng</div>
+              <div class="kk" [formGroupName] = "j">
+                <input
+                  formControlName="contentanswer"
+                  style="width: 80%; height: 100%; border-radius: 4px; border: 2px solid rgb(187, 187, 187);"/>
+                  <!-- <div *ngIf="isValid('contentanswer',j)">Phải nhập nội dung câu hỏi</div> -->
+                <div
+                  class="correct"
+                  style="width: 20%;">
+                  <div style="height: 30px;" class="kk">
+                    <input class="radio-inline"  formControlName="correctanswer" type="checkbox" />
+                    <i (click)="ondelete($event, j)" class="fa fa-trash-o"></i>
+                    <!-- <div *ngIf="!isValid('correctanswer')"> Phải nhập ít nhất 1 câu đúng</div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    </div>
+    <!-- Button them moi va dong -->
+    <div class="modal-footer" style="width: 20%;">
+      <button
+        type="submit"
+        [disabled]="!updateForm.valid"
+        class="btn btn-success"
+        (click)="onUpdate()"
+        style="width: 70%">
+        Cập nhật
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="onClickCloseForm()"
+        style="width: 70%">
+        Đóng
+      </button>
+    </div>
+  </form>
+</div>

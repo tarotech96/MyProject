@@ -1,0 +1,46 @@
+* {
+  outline: 0 !important;
+  font-size: 16px !important;
+}
+.fa {
+  color: gray;
+}
+#content {
+  margin: 2.5%;
+  height: auto;
+}
+.container {
+  margin: 2.5%;
+  height: auto;
+}
+#fu {
+  display: flex;
+  justify-content: space-between;
+}
+
+#search_box {
+  width: 300px;
+}
+#abtn {
+  position: relative;
+  float: right;
+}
+#trfu {
+  text-align: right !important;
+}
+
+.phantrang {
+  width: 100%;
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px 0 10px;
+}
+.lt span {
+  color: rgb(70, 68, 68);
+}
+.pagi {
+  position: relative;
+  top: 8px;
+}

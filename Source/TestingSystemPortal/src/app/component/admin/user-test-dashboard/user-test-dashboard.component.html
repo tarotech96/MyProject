@@ -1,0 +1,273 @@
+<div class="divtrong">
+  <div class="divphai">
+    <div class="headerdivphai">
+      <div class="lichsubaithi" (click)="xemBaiThi(true)">
+        <span class="lichsubaithi">
+          <i class="fa fa-tags"></i> &nbsp;&nbsp;Lịch sử bài thi</span
+        >
+      </div>
+      <div
+        class="lichsuthuchanh"
+        style="margin-left: 10px;"
+        (click)="xemBaiThucHanh(true)"
+      >
+        <span class="lichsuthuchanh">
+          <i style="margin-left: 15px" class="fa fa-file-text"></i>
+          &nbsp;&nbsp;Lịch sử bài thi thử</span
+        >
+      </div>
+    </div>
+    <div *ngIf="baiThiStatus" class="tenbaithiuserdathi1">
+      <div *ngFor="let baithi of listResult">
+        <label
+          style="font-family: 'Times New Roman', Times, serif;text-decoration: unset;color:rgb(255, 255, 255);font-size: 20px; height: 30px; width: 100%;margin-top: 20px;text-align: left; vertical-align: middle;border-radius: 5px;"
+        >
+          <i class="fa fa-tags"></i> {{ baithi['exam'][8] }}
+        </label>
+        <div *ngFor="let t of baithi['result']; let i = index">
+          <div
+            class="testtags"
+            [style.border-color]="t['pass'] == true ? '#149dcc' : 'gray'"
+          >
+            <div
+              class="testtagsli"
+              [style.color]="t['pass'] == true ? '#149dcc' : 'gray'"
+            >
+              <div
+                class="testtag_top"
+                [style.border-color]="t['pass'] == true ? '#149dcc' : 'gray'"
+              >
+                <div class="test_datetaken">
+                  <span>{{ t['created_at'] | date: 'hh:mm | dd/MM/yyy' }}</span>
+                  <span>NGÀY THI</span>
+                </div>
+                <div
+                  class="line"
+                  [style.border-color]="t['pass'] == true ? '#149dcc' : 'gray'"
+                ></div>
+                <div class="test_score">
+                  <span>{{ t['correct_num'] }}</span>
+                  <span
+                    class="test_datetakens"
+                    [style.border-color]="
+                      t['pass'] == true ? '#149dcc' : 'gray'
+                    "
+                    >{{ baithi['exam']['10'] }} CÂU HỎI</span
+                  >
+                </div>
+                <div
+                  class="line"
+                  [style.border-color]="t['pass'] == true ? '#149dcc' : 'gray'"
+                ></div>
+                <div class="test_percent">
+                  <span>{{ t['total_score'] * 100 }}%</span>
+                  <span>TRẢ LỜI ĐÚNG</span>
+                </div>
+                <div
+                  class="line"
+                  [style.border-color]="t['pass'] == true ? '#149dcc' : 'gray'"
+                ></div>
+                <div class="imms">
+                  <img
+                    class="im"
+                    *ngIf="t['pass'] == true"
+                    src="../../../../assets/images/Passed.jpg"
+                    alt=""
+                  />
+                  <img
+                    class="im"
+                    *ngIf="t['pass'] == false"
+                    src="../../../../assets/images/failed.jpg"
+                    alt=""
+                  />
+                </div>
+                <div
+                  class="line"
+                  [style.border-color]="t['pass'] == true ? '#149dcc' : 'gray'"
+                ></div>
+                <div class="test_viewbutton">
+                  <button
+                    class="btn btn-primary btn-sm"
+                    (click)="ClickButton(baithi['exam'][0], t['id'])"
+                  >
+                    Chi tiết
+                  </button>
+                </div>
+              </div>
+              <div
+                class="testtag_bottom"
+                [style.color]="t['pass'] == true ? '#149dcc' : 'gray'"
+              >
+                <span>Thi lần {{ i + 1 }}</span>
+
+                <span>Thời gian làm bài: {{ t['time'] }} (phút:giây)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="thucHanhSatus" class="tenbaithiuserdathi2">
+      <div *ngFor="let baithip of listResultp">
+        <label
+          style="font-family: 'Times New Roman', Times, serif; color:rgb(255, 255, 255);font-size: 20px; height: 30px; width: 100%;margin-top: 20px;text-align: left; vertical-align: middle;border-radius: 5px;"
+          ><i class="fa fa-file-text"></i> {{ baithip['practice'][8] }}
+        </label>
+        <div *ngFor="let tp of baithip['resultp']; let ip = index">
+          <div
+            class="testtags"
+            [style.border-color]="tp['total_score'] > 0.7 ? '#149dcc' : 'gray'"
+          >
+            <div
+              class="testtagsli"
+              [style.color]="tp['total_score'] > 0.7 ? '#149dcc' : 'gray'"
+            >
+              <div
+                class="testtag_top"
+                [style.border-color]="
+                  tp['total_score'] > 0.7 ? '#149dcc' : 'gray'
+                "
+              >
+                <div class="test_datetaken">
+                  <span>{{
+                    tp['created_at'] | date: 'hh:mm | dd/MM/yyy'
+                  }}</span>
+                  <span>NGÀY THI</span>
+                </div>
+                <div
+                  class="line"
+                  [style.border-color]="
+                    tp['total_score'] > 0.7 ? '#149dcc' : 'gray'
+                  "
+                ></div>
+                <div class="test_score">
+                  <span>{{ tp['correct_num'] }}</span>
+                  <span
+                    class="test_datetakens "
+                    [style.border-color]="
+                      tp['total_score'] > 0.7 ? '#149dcc' : 'gray'
+                    "
+                    >{{ baithip['practice']['10'] }} CÂU HỎI</span
+                  >
+                </div>
+                <div
+                  class="line"
+                  [style.border-color]="
+                    tp['total_score'] > 0.7 ? '#149dcc' : 'gray'
+                  "
+                ></div>
+                <div class="test_percent">
+                  <span>{{ tp['total_score'] * 100 }}%</span>
+                  <span>TRẢ LỜI ĐÚNG</span>
+                </div>
+                <div
+                  class="line"
+                  [style.border-color]="
+                    tp['total_score'] > 0.7 ? '#149dcc' : 'gray'
+                  "
+                ></div>
+                <div class="test_viewbutton">
+                  <button
+                    class="btn btn-success btn-sm"
+                    (click)="clickVaoThiP(baithip['practice'][0])"
+                    *ngIf="baithip['practice'][6] > baithip['resultp'].length"
+                  >
+                    Thi lại
+                  </button>
+                  <button
+                    style="cursor: not-allowed;"
+                    class="btn btn-warning btn-sm"
+                    *ngIf="baithip['practice'][6] <= baithip['resultp'].length"
+                  >
+                    HẾT LƯỢT!
+                  </button>
+                  <button
+                    style="margin-left: 10px"
+                    class="btn btn-primary btn-sm"
+                    (click)="ClickButton(baithip['practice'][0], tp['id'])"
+                  >
+                    Chi tiết
+                  </button>
+                </div>
+              </div>
+              <div
+                class="testtag_bottom"
+                [style.color]="tp['total_score'] > 0.7 ? '#149dcc' : 'gray'"
+              >
+                <span>Thi lần {{ ip + 1 }}</span>
+                <span>Thời gian làm bài: {{ tp['time'] }} (phút:giây)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="divtrai" [ngStyle]="{ 'background-image': 'url(' + photo + ')' }">
+    <div class="headerdivtrai">
+      <i style="color: red" class="fa fa-exclamation-triangle"></i>
+      &nbsp;&nbsp;Các bài thi sắp đến hạn
+    </div>
+    <div
+      class="duoiheaderdivtrai"
+      [ngStyle]="{ 'background-image': 'url(' + photo + ')' }"
+    >
+      <div class="divtrais" *ngFor="let list of userserviceService.listExamASC">
+        <div class="cacbaithisapdenhan">
+          <div class="cacbaithigandaytren">
+            <div class="logobaithisapdenhan"><i class="fab fa-java"></i></div>
+            <!-- <div class="line1"></div> -->
+            <div class="tenbaithisapdenhan">
+              <span>{{ list['1'] | uppercase }}</span>
+              <span class="socauhoibaithisapdenhan"
+                >{{ list['2'] }} CÂU HỎI - HẠN:
+                {{ list['3'] | date: 'dd/MM/yyyy' }}</span
+              >
+            </div>
+          </div>
+          <div class="chitietvaothi">
+            <button
+              (click)="clickXemChiTiet(list['0'], hamCheckQuaHan(list['3']))"
+              class="btn btn-primary"
+            >
+              Chi tiết
+            </button>
+            <button
+              *ngIf="hamCheckQuaHan(list['3'])"
+              class="btn btn-warning"
+              style="cursor: not-allowed"
+            >
+              QUÁ HẠN!
+            </button>
+            <button
+              *ngIf="!hamCheckQuaHan(list['3'])"
+              (click)="clickVaoThi(list['0'])"
+              class="btn btn-danger"
+            >
+              Vào thi
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="divtraiss" *ngIf="listExamASC.length == 0"></div> -->
+    </div>
+  </div>
+  <div class="noti" *ngIf="notificationVisibilityWhenDelete">
+    <div id="snackbard">
+      <div class="chu">Bạn có chắc muốn thi bài thi này không?</div>
+      <div class="yn">
+        <div id="bss1" (click)="oncg(true)">Yes</div>
+        <div id="bss2" (click)="oncg(false)">No</div>
+      </div>
+    </div>
+  </div>
+  <div class="noti" *ngIf="notificationVisibilityWhenDelete1">
+    <div id="snackbard">
+      <div class="chu">Bạn có chắc muốn thi bài thi này không?</div>
+      <div class="yn">
+        <div id="bss1" (click)="oncg1(true)">Yes</div>
+        <div id="bss2" (click)="oncg1(false)">No</div>
+      </div>
+    </div>
+  </div>
+</div>

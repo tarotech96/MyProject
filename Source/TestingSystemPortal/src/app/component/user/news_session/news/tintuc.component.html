@@ -1,0 +1,70 @@
+<div class="divtintuchinh">
+  <div class="duongdan">
+    <img
+      class="img-fluid"
+      src="../../../../../assets/images/News-Image.jpg"
+      alt=""
+    />
+  </div>
+  <div style="padding: 10px">
+    <i class="fa fa-home" [routerLink]="['/hometotal']"> Trang chủ/ </i>
+    <i class="fa fa-newspaper-o"> Tin tức tổng hợp/</i>
+  </div>
+  <div class="divnews">
+    <div class="tintuctonghop">Tin tức tổng hợp</div>
+    <ul
+      id="newsli"
+      *ngFor="
+        let ex of (listPagenewsNews
+          | paginate: { itemsPerPage: [perPage], currentPage: p });
+        trackBy: trackByFn
+      "
+    >
+      <li style="list-style: none;">
+        <div class="newstitle" (click)="onViews(ex['0'])">
+          <a> {{ ex['1'] }} </a>
+        </div>
+
+        <div class="newsimage_descrip">
+          <div class="imgtieude">
+            <img
+              (click)="onViews(ex['0'])"
+              class="profile-user-img img-responsive"
+              src="{{ ex['2'] }}"
+              onerror="this.src='../../../../../../../assets/images/default_news_avatar.png'"
+            />
+          </div>
+          <div class="newsdes_date">
+            <div>{{ ex['3'] }}</div>
+            <div class="note-sp">
+              Đăng ngày: {{ ex['7'] | date: 'dd/MM/yyyy' }}
+            </div>
+            <div class="" (click)="onViews(ex['0'])">
+              <i class="fa fa-angle-double-right" style="color: black"
+                >Xem thêm</i
+              >
+            </div>
+          </div>
+        </div>
+      </li>
+      <hr />
+    </ul>
+  </div>
+
+  <div class="phantrang">
+    <div class="lt">
+      <span for="sel1">Results per page: </span>
+      <select class="ft" id="sel1" (change)="onChange($event)">
+        <option>5</option>
+        <option>10</option>
+        <!-- <option>15</option> -->
+      </select>
+    </div>
+    <div class="pagi">
+      <pagination-controls
+        style="float:right;"
+        (pageChange)="p = $event"
+      ></pagination-controls>
+    </div>
+  </div>
+</div>

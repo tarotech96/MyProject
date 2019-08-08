@@ -1,0 +1,75 @@
+* {
+  outline: 0 !important;
+  font-size: 16px !important;
+}
+.form-control::ng-deep * {
+  background-color: aqua;
+}
+label input button {
+  background-color: red;
+}
+#content {
+  margin: 2.5% !important;
+  height: auto;
+}
+.container {
+  margin: 2.5%;
+  height: auto;
+}
+.fa {
+  color: gray;
+}
+#content {
+  margin: 2%;
+  height: 1080px;
+}
+#fu {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+}
+.themfile {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+  justify-content: space-between;
+}
+.themfile input {
+  text-align: center;
+  vertical-align: middle;
+}
+.form-group {
+  margin: 0px;
+  padding: 0px;
+}
+.themfile button {
+  margin-left: 20px;
+}
+#search_box {
+  width: 300px;
+}
+#abtn {
+  position: relative;
+  float: right;
+}
+#trfu {
+  text-align: right !important;
+}
+
+.phantrang {
+  width: 100%;
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px 0 10px;
+}
+.lt span {
+  color: rgb(70, 68, 68);
+}
+.pagi {
+  position: relative;
+  top: 8px;
+}

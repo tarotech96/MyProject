@@ -1,0 +1,10 @@
+  const questionTf1 = event.container.data;
+    console.log(event.currentIndex + '    ' + event.previousIndex);
+    console.log(this.done.length + '   ' + oldDone.length);
+    if (this.done.length > oldDone.length) {
+      this.time += +this.done[event.currentIndex]['time'];
+      this.numberQuestion += 1;
+    } else {
+      this.time -= +oldDone[event.previousIndex]['time'];
+      this.numberQuestion -= 1;
+    }

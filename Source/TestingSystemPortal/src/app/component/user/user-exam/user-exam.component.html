@@ -1,0 +1,140 @@
+<div class="tong">
+  <div class="divtabletrai">
+    <div class="header">
+      <span><i class="fa fa-tags" aria-hidden="true"></i>&nbsp;BÀI THI </span>
+      <button (click)="clickLichSu()" class="btn btn-warning">
+        <i class="fa fa-history" aria-hidden="true"></i>&nbsp;Lịch sử
+      </button>
+    </div>
+    <table class="table table-light">
+      <thead>
+        <tr>
+          <th (click)="sapXep(0)">
+            Tên bài thi
+            <i class="fa fa-sort float-right" aria-hidden="true"></i>
+          </th>
+          <th (click)="sapXep(1)">
+            Chủ đề <i class="fa fa-sort float-right" aria-hidden="true"></i>
+          </th>
+          <th class="an" style="text-align: center;width: 100px">Số câu hỏi</th>
+          <th class="an" style="text-align: center;width: 100px">Thời gian</th>
+          <th class="an" style="text-align: center;width: 100px">% Đỗ</th>
+          <th class="an" style="text-align: center;width: 100px">Số lần thi</th>
+          <th class="an" style="text-align: center;width: 120px">
+            Số lần đã thi
+          </th>
+          <th style="width: 220px;text-align: center">
+            <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+          </th>
+        </tr>
+      </thead>
+      <tbody
+        *ngFor="
+          let item of (listResult
+            | paginate: { itemsPerPage: [perPage], currentPage: p });
+          trackBy: trackByFn
+        "
+      >
+        <td title="{{ item['exam']['1'] }}" style="word-wrap: break-word;">
+          {{ item['exam'][1] }}
+        </td>
+        <td title="{{ item['exam']['2'] }}" style="word-wrap: break-word;">
+          {{ item['exam'][2] }}
+        </td>
+        <td class="an" style="text-align: center;width: 100px">
+          {{ item['exam'][3] }}
+        </td>
+        <td class="an" style="text-align: center;width: 100px">
+          {{ item['exam'][4] }}
+        </td>
+        <td class="an" style="text-align: center;width: 100px">
+          {{ item['exam'][5] }}
+        </td>
+        <td class="an" style="text-align: center;width: 100px">
+          {{ item['exam'][6] }}
+        </td>
+        <td class="an" style="text-align: center;width: 120px">
+          {{ item['result'].length }}
+        </td>
+        <td class="btnaction" style="width: 220px">
+          <button
+            type="button"
+            (click)="
+              clickXemChiTiet(
+                item['exam'][0],
+                hamCheckQuaHan(item['exam'][8]),
+                item['exam'][6] <= item['result'].length
+              )
+            "
+            class="btn btn-primary "
+          >
+            <i class="fa fa-info-circle" aria-hidden="true"></i> &nbsp;&nbsp;Chi
+            tiết
+          </button>
+          <button
+            class="btn btn-warning"
+            style="cursor: not-allowed"
+            *ngIf="
+              item['exam'][6] <= item['result'].length &&
+              !hamCheckQuaHan(item['exam'][8])
+            "
+          >
+            HẾT LƯỢT!
+          </button>
+          <button
+            class="btn btn-warning"
+            style="cursor: not-allowed"
+            *ngIf="hamCheckQuaHan(item['exam'][8])"
+          >
+            QUÁ HẠN!
+          </button>
+          <button
+            type="button"
+            *ngIf="
+              item['exam'][6] > item['result'].length &&
+              !hamCheckQuaHan(item['exam'][8])
+            "
+            (click)="
+              clickVaoThi(item['exam'][0], item['exam'][1], item['exam'][2])
+            "
+            class="btn btn-danger "
+            [disabled]="item['exam'][6] === item['result'].length"
+          >
+            <i class="fa fa-clock-o" aria-hidden="true"></i> &nbsp;&nbsp;Vào thi
+          </button>
+          <!-- <button
+            (click)="
+            clickKetQua(item['0'])" class="btn btn-success ">
+            Kết quả
+          </button> -->
+        </td>
+      </tbody>
+    </table>
+    <div class="phantrang">
+      <div class="lt">
+        <span for="sel1">Results per page: </span>
+        <select class="ft" id="sel1" (change)="onChange($event)">
+          <option disabled style="visibility: hidden;">10</option>
+          <option>5</option>
+          <option>10</option>
+          <option>15</option>
+        </select>
+      </div>
+      <div class="pagi">
+        <pagination-controls
+          style="float:right;"
+          (pageChange)="p = $event"
+        ></pagination-controls>
+      </div>
+    </div>
+  </div>
+  <div class="noti" *ngIf="notificationVisibilityWhenDelete">
+    <div id="snackbard">
+      <div class="chu">Bạn có chắc muốn thi bài thi này không?</div>
+      <div class="yn">
+        <div id="bss1" (click)="oncg(true)">Yes</div>
+        <div id="bss2" (click)="oncg(false)">No</div>
+      </div>
+    </div>
+  </div>
+</div>

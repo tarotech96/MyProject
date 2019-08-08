@@ -1,0 +1,252 @@
+<div id="snackbar" class="{{ sh }}" [ngStyle]="{ visibility: hd }">
+  {{ noti }}
+</div>
+<h1 style="text-align: center;font-size: 28px; margin-top: 2.5%">
+  Update News
+</h1>
+<div class="divphai">
+  <form [formGroup]="insertnew">
+    <div class="form-group">
+      <label for="inputEmail4"
+        >Tiêu đề <span class="required_field">*</span>
+        <label for="">
+          <mat-error
+            *ngIf="
+              insertnew.get('title').hasError('required') &&
+              insertnew.get('title').touched
+            "
+            style="color: red"
+          >
+            Không được để trống!
+          </mat-error>
+          <mat-error *ngIf="insertnew.get('title').hasError('minlength')"
+            >Không được dưới 50 kí tự!</mat-error
+          >
+          <mat-error *ngIf="insertnew.get('title').hasError('maxlength')"
+            >Không được vượt quá 200 kí tự!</mat-error
+          >
+        </label>
+      </label>
+      <input
+        type="text"
+        (change)="checkSpaceTitle($event)"
+        class="form-control  "
+        formControlName="title"
+        [ngClass]="{
+          'is-invalid':
+            (insertnew.get('title').hasError('whitespace') &&
+              insertnew.get('title').touched) ||
+            insertnew.get('title').hasError('maxlength') ||
+            insertnew.get('title').hasError('minlength'),
+          'is-valid':
+            (!insertnew.get('title').hasError('whitespace') &&
+              insertnew.get('title').touched) ||
+            !insertnew.get('title').hasError('maxlength') ||
+            !insertnew.get('title').hasError('minlength')
+        }"
+      />
+      <mat-error
+        *ngIf="
+          insertnew.get('title').hasError('whitespace') &&
+          insertnew.get('title').touched
+        "
+        style="font-size: 16px"
+      >
+        Không được để trống hay chỉ nhập khoảng trắng không!
+      </mat-error>
+    </div>
+    <div class="form-group">
+      <label for="inputEmail4"
+        >Image URL <span class="required_field">*</span>
+        <label for="">
+          <!-- <mat-error
+            *ngIf="
+              insertnew.get('linkimage').hasError('required') &&
+              insertnew.get('linkimage').touched
+            "
+            style="color: red"
+          >
+            Không được để trống!
+          </mat-error> -->
+
+          <mat-error
+            *ngIf="
+              insertnew.get('linkimage').hasError('pattern') &&
+              insertnew.get('linkimage').touched
+            "
+            style="color: red"
+          >
+            Không đúng định dạng url!
+          </mat-error>
+        </label>
+      </label>
+      <input
+        type="url"
+        class="form-control"
+        formControlName="linkimage"
+        (change)="checkSpaceImg($event)"
+        [ngClass]="{
+          'is-invalid':
+            insertnew.get('linkimage').hasError('required') &&
+            insertnew.get('linkimage').touched &&
+            insertnew.get('linkimage').hasError('pattern'),
+          'is-valid':
+            !insertnew.get('linkimage').hasError('required') &&
+            insertnew.get('linkimage').touched &&
+            insertnew.get('linkimage').hasError('pattern')
+        }"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="inputEmail4"
+        >Tóm tắt <span class="required_field">*</span>
+        <label for="">
+          <!-- <mat-error
+            *ngIf="
+              insertnew.get('description').hasError('required') &&
+              insertnew.get('description').touched
+            "
+            style="color: red"
+          >
+            Không được để trống!
+          </mat-error> -->
+          <mat-error *ngIf="insertnew.get('description').hasError('minlength')"
+            >Không được dưới 100 kí tự!</mat-error
+          >
+          <mat-error *ngIf="insertnew.get('description').hasError('maxlength')"
+            >Không được vượt quá 555 ký tự!</mat-error
+          >
+        </label>
+      </label>
+      <textarea
+        rows="5"
+        type="text"
+        class="form-control"
+        (change)="checkSpaceDes($event)"
+        formControlName="description"
+        [ngClass]="{
+          'is-invalid':
+            (insertnew.get('description').hasError('whitespace') &&
+              insertnew.get('description').touched) ||
+            insertnew.get('description').hasError('minlength') ||
+            insertnew.get('description').hasError('maxlength'),
+          'is-valid':
+            (!insertnew.get('description').hasError('whitespace') &&
+              insertnew.get('description').touched) ||
+            !insertnew.get('description').hasError('minlength') ||
+            !insertnew.get('description').hasError('maxlength')
+        }"
+      ></textarea>
+      <mat-error
+        *ngIf="
+          insertnew.get('description').hasError('whitespace') &&
+          insertnew.get('description').touched
+        "
+        style="font-size: 16px"
+      >
+        Không được để trống hay chỉ nhập khoảng trắng không!
+      </mat-error>
+    </div>
+    <div id="tg">
+      <label for="inputEmail4"
+        >Tag <span class="required_field">*</span>
+        <label for="">
+          <mat-error
+            *ngIf="
+              insertnew.get('tags').hasError('required') &&
+              insertnew.get('tags').touched
+            "
+            style="color: red"
+          >
+            Không được để trống!
+          </mat-error>
+        </label>
+      </label>
+      <mat-form-field class="w-100">
+        <mat-select
+          formControlName="tags"
+          multiple
+          (selectionChange)="tagdathaydoi()"
+        >
+          <mat-option *ngFor="let item of tags" [value]="item.tagName">
+            {{ item.tagName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <label for="inputEmail4">
+        Nội dung <span class="required_field">*</span>
+        <label for="">
+          <!-- <mat-error
+            *ngIf="
+              insertnew.get('content').hasError('required') &&
+              insertnew.get('content').touched
+            "
+            style="color: red"
+          >
+            Không được để trống!
+          </mat-error> -->
+          <mat-error *ngIf="insertnew.get('content').hasError('minlength')"
+            >Không được dưới 3000 kí tự!</mat-error
+          >
+          <mat-error *ngIf="insertnew.get('content').hasError('maxlength')"
+            >Không được vượt quá 10000 ký tự!</mat-error
+          >
+        </label>
+      </label>
+      <angular-editor
+        formControlName="content"
+        (keyup)="checkSpaceContent(getContent())"
+        [config]="config"
+        id="xyz"
+        [ngClass]="{
+          'is-invalid':
+            (insertnew.get('content').hasError('whitespace') &&
+              insertnew.get('content').touched) ||
+            insertnew.get('content').hasError('minlength') ||
+            insertnew.get('content').hasError('maxlength'),
+          'is-valid':
+            (!insertnew.get('content').hasError('whitespace') &&
+              insertnew.get('content').touched) ||
+            !insertnew.get('content').hasError('minlength') ||
+            !insertnew.get('content').hasError('maxlength')
+        }"
+      ></angular-editor>
+      <mat-error
+        *ngIf="
+          insertnew.get('content').hasError('whitespace') &&
+          insertnew.get('content').touched
+        "
+        style="font-size: 16px"
+      >
+        Không được để trống hay chỉ nhập khoảng trắng không!
+      </mat-error>
+    </div>
+    <div class="form-group">
+      <label for="inputEmail4">Update by: {{ us.userLogin.fullname }} </label>
+    </div>
+    <div class="bt">
+      <button
+        class="btn btn-primary prebutton"
+        (click)="onPreview()"
+        [disabled]="!insertnew.valid"
+      >
+        Preview
+      </button>
+      <button
+        class="btn btn-primary"
+        (click)="onUpdateNews()"
+        [disabled]="!insertnew.valid"
+      >
+        Update
+      </button>
+
+      <button class="btn btn-danger cancelbutton" (click)="onCancel()">
+        Cancel
+      </button>
+    </div>
+  </form>
+  <br />
+</div>

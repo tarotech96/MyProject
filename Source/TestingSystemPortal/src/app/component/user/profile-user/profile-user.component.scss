@@ -1,0 +1,156 @@
+.rowsss {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+}
+.mainclass-fluid {
+  height: auto;
+  // box-shadow: 10px 18px 30px gray;
+  background-image: url('../../../../assets/images/Silver-Blur-Background-Wallpaper.jpg');
+  background-size: cover;
+}
+.bannerimg {
+  width: 100%;
+  height: 100%;
+  background-image: url('../../../../assets/images/Blur-Wallpapers.jpg');
+  background-size: cover;
+  // border-radius: 10px 10px 0 0;
+  background-color: rgba(235, 226, 226, 0.5);
+}
+
+.avaimg {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 5px solid rgba(54, 54, 54, 0.5);
+  box-shadow: 1px 8px 20px grey;
+  margin: 30px 0 3 0px 0;
+  left: 2%;
+}
+// .action {
+//   margin: 40px 0;
+// }
+.profilename {
+  margin-top: 5%;
+  margin-left: 5%;
+}
+.profile {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 930px;
+}
+.duoiavaimg {
+  position: relative;
+  top: -80px;
+}
+.thongtincoban {
+  height: 100vh;
+  width: 30%;
+  background-color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  padding: 20px;
+  color: white;
+  font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif;
+}
+.btnS {
+  height: 150px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+  // background-color: rgba(0, 0, 0, 0.5);
+  position: relative;
+  top: -60px;
+}
+// .btnS img {
+//   height: 250px;
+//   width: 100%;
+//   position: relative;
+//   top: -60px;
+// }
+#customers {
+  font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 16px;
+  position: relative;
+  bottom: 0px;
+  margin: 20px 0;
+  background-color: rgba(41, 41, 41, 0.5);
+}
+#customers td,
+#customers th {
+  padding: 8px;
+  overflow: hidden;
+}
+#customers tr:nth-child(even) {
+  // background-color: rgba(255, 255, 255, 0.5);
+  color: black;
+}
+#customers tr:nth-child(odd) {
+  // background-color: rgba(41, 41, 41, 0.5);
+  color: white;
+}
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+}
+
+.thongtinchitiet {
+  width: 70%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0 0 0 0px;
+}
+.the {
+  width: 100%;
+  height: 310px;
+  background-color: rgba(56, 56, 56, 0.5);
+}
+.btn {
+  width: 180px;
+  margin: 20px 0 0 20px;
+}
+.kc-top {
+  margin-top: 60px;
+}
+.tong {
+  height: auto;
+  min-height: 100vh;
+}
+
+@media all and (max-width: 1700px) {
+  .profile {
+    height: 1100px;
+  }
+}
+
+@media all and (max-width: 1200px) {
+  .profile {
+    flex-direction: column;
+    justify-content: space-between;
+    height: 1630px;
+  }
+  .thongtincoban {
+    width: 100%;
+  }
+  .thongtinchitiet {
+    margin-top: 20px;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px;
+  }
+  .the {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}

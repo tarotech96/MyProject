@@ -1,0 +1,71 @@
+<div class="tong">
+  <div class="searchadd">
+    <!-- <input
+      (keyup)="onSearch($event)"
+      [(ngModel)]="keysearch"
+      class="form-control"
+      type="search"
+      placeholder="Search"
+      aria-label="Search"
+    /> -->
+  </div>
+
+  <table class="table table-bordered text-left">
+    <thead>
+      <tr>
+        <th style="text-align: left">Menu/Role</th>
+        <th style="text-align: center; width: 200px;" *ngFor="let role of Role">
+          {{ role.value }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of Menu">
+        <td>
+          <span style="color: blue" *ngIf="p['parent_id'] === 0"
+            >* {{ p['name'] }}</span
+          >
+          <span *ngIf="p['parent_id'] !== 0">- {{ p['name'] }}</span>
+        </td>
+        <td
+          style="width: 200px;padding-left: 88px;"
+          *ngFor="
+            let check of (Role | paginate: { itemsPerPage: 5, currentPage: p })
+          "
+        >
+          <label class="container">
+            <input
+              name="checked"
+              type="checkbox"
+              [checked]="isCheck(check.value, p['name'])"
+              (change)="onSelect(check.value, p['name'], $event)"
+            />
+            <span class="checkmark"></span>
+          </label>
+          <!-- <ng-template #elseBlock>
+            <input
+              name="checked"
+              type="checkbox"
+              (change)="onSelect(check.value, p['name'], $event)"
+          /></ng-template> -->
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="phantrang">
+    <div class="lt">
+      <span for="sel1">Results per page: </span>
+      <select class="ft" id="sel1" (change)="onChange($event)">
+        <option>5</option>
+        <option>10</option>
+        <!-- <option>15</option> -->
+      </select>
+    </div>
+    <div class="pagi">
+      <pagination-controls
+        class="text-center"
+        (pageChange)="p = $event"
+      ></pagination-controls>
+    </div>
+  </div>
+</div>

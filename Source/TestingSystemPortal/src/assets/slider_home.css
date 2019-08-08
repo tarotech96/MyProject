@@ -1,0 +1,133 @@
+/* Left/Right Controls */
+.home-page-slider .carousel-control {
+    background: none;
+}
+
+.home-page-slider .carousel-control .fa {
+    position: absolute;
+    top: 50%;
+    font-size: 65px;
+}
+
+.home-page-slider .carousel-control .fa.fa-angle-left {
+    left: 40%;
+    transform: translate(-40%, -50%);
+}
+
+.home-page-slider .carousel-control .fa.fa-angle-right {
+    right: 40%;
+    transform: translate(40%, -50%);
+}
+
+/* Indicators */
+.home-page-slider .carousel-indicators li.active {
+    position: relative;
+    background: transparent;
+}
+
+.home-page-slider .carousel-indicators li.active:after {
+    content: "";
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    padding: 4px;
+    background-color: #fff;
+    border-radius: 100%;
+}
+
+/* Slider Content */
+.home-page-slider .text-banner {
+    color: #fff;
+    position: absolute;
+    transform: translateY(-40%);
+    top: 40%;
+    left: 0;
+    right: 0;
+}
+
+.home-page-slider .title-big {
+    text-transform: uppercase;
+    font-size: 38px;
+    font-family: 'GothamB', sans-serif;
+    margin-bottom: 20px;
+}
+
+.home-page-slider .carousel-item {
+    text-align: left;
+}
+
+.home-page-slider .carousel-item img {
+    width: 100%;
+}
+
+/* Below medium-sized screen */
+@media screen and (max-width: 768px) {
+    #bannerSlider {
+        margin-top: 52px;
+    }
+
+    .home-page-slider .carousel-item img {
+        height: 180px;
+        transition: all .25s ease-in-out;
+    }
+
+    .home-page-slider .title-big {
+        width: 70%;
+        margin: 0 auto 15px;
+        font-size: 15px;
+    }
+
+    .home-page-slider .sologan {
+        font-size: 12px;
+        width: 70%;
+        margin: auto;
+        text-align: justify;
+        text-justify: inter-word;
+    }
+
+    .home-page-slider .carousel-indicators {
+        bottom: -16px;
+    }
+}
+
+/* Medium-sized screen */
+@media screen and (min-width: 768px) {
+    .home-page-slider .title-big {
+        width: 78%;
+        margin: 15px auto;
+        font-size: 36px;
+    }
+
+    .home-page-slider .sologan {
+        width: 45%;
+        margin-left: 85px;
+        text-align: justify;
+        text-justify: inter-word;
+        text-align: justify;
+    }
+}
+
+/* Large-sized screen */
+@media screen and (min-width: 992px) {
+    .home-page-slider .text-banner {
+        left: 10%;
+    }
+
+    .home-page-slider .title-big {
+        width: 60%;
+        font-size: 38px;
+        margin: 0;
+        text-align: left;
+        line-height: normal;
+    }
+
+    .home-page-slider .sologan {
+        width: 60%;
+        margin: 0;
+        font-size: 16px;
+        text-align: justify;
+        font-family: 'GothamR', sans-serif;
+        line-height: inherit;
+        padding-top: 15px;
+    }
+}

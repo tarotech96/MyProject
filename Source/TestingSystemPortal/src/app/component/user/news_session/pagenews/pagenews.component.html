@@ -1,0 +1,75 @@
+<div class="tong">
+  <div class="divtongtintuc">
+    <!--
+      ROUTER OUTLET***********************************************************************************************************
+    -->
+
+    <div class="divtrai">
+      <router-outlet></router-outlet>
+    </div>
+
+    <!--
+      ROUTER OUTLET***********************************************************************************************************
+    -->
+    <div class="divphai">
+      <div class="searchnewstong">
+        <span>
+          <input class="" placeholder="Tìm kiếm tin tức" id="srch-term" type="search" aria-label="Search" (keyup)="onSearch($event)"
+            [(ngModel)]="keySearch" /> <i (click)="xoaSearch()" *ngIf="keySearch !== ''" style="margin-left: 2px;font-size: 22px; color: red; cursor: pointer;"
+            class="fa fa-close">
+          </i> </span>
+        <div class="ketquasearch" *ngIf="keySearch != ''">
+          <div class="baivietganday">
+            <div class="tinthunho">
+              <div class="ketqua">Kết quả</div>
+              <ul id="newsul" *ngFor="
+                  let new2 of (view2
+                    | paginate: { itemsPerPage: [12], currentPage: p1 })
+                ">
+                <li (click)="onViews(new2.id)" style="display: inline;">
+                  <div class="chitietbaivietganday">
+                    <div class="imgtieude">
+                      <img src="{{ new2.linkimage }}" onerror="this.src='../../../../../../../assets/images/default_news_avatar.png'" />
+                    </div>
+                    <div class="newstitle">
+                      <div class="title-rec">
+                        {{ new2.title | truncate: 60 }}
+                      </div>
+                      <div class="time-rec">
+                        {{ new2.createDate | date: 'dd/MM/yyyy' }} - Người đăng:
+                        {{ new2.confirmLeader }} - Tác giả: {{ new2.creator }}
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div class="pinnednews">
+        <div class="tinnong">Tin nóng</div>
+        <ul id="newsul" *ngFor="
+            let pinnednews of (listPinnedNews
+              | paginate: { itemsPerPage: [12], currentPage: p1 })
+          ">
+          <li (click)="onViews(pinnednews['0'])" style="display: inline;">
+            <div class="chitietbaivietganday">
+              <div class="imgtieude">
+                <img src="{{ pinnednews['2'] }}" onerror="this.
+                src='../../../../../../../assets/images/default_news_avatar.png'" />
+              </div>
+              <div class="newstitle">
+                <div class="title-rec">{{ pinnednews['1'] }}</div>
+                <div class="time-rec">
+                  {{ pinnednews['7'] | date: 'dd/MM/yyyy' }}
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

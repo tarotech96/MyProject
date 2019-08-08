@@ -1,0 +1,131 @@
+<!-- NOTIFICATION -->
+<div id="snackbar" *ngIf="notificationVisibility">{{ notification }}</div>
+
+<div class="noti1" *ngIf="notificationVisibilityWhenDelete"></div>
+<div class="noti" *ngIf="notificationVisibilityWhenDelete">
+  <div id="snackbard">
+    <div class="chu">{{ chu }}</div>
+    <div class="yn">
+      <div id="bss1" (click)="oncg(true)">Yes</div>
+      <div id="bss2" (click)="oncg(false)">No</div>
+    </div>
+  </div>
+</div>
+<!-- NOTIFICATION -->
+<div class="divtable">
+  <div class="searchadd">
+    <button class="btn btn-primary addbutton" [routerLink]="['/cms/createnew']" *ngIf="checkRolePerMission('insertnews')">
+      + Thêm tin tức
+    </button>
+    <span style="display: flex; flex-direction: row;align-items: center">
+      <input (keyup)="onSearch($event)" [(ngModel)]="keySearch" class="form-control mr-sm-2 searchform" type="search"
+        placeholder="Search" aria-label="Search" /><i (click)="xoaSearch()" *ngIf="keySearch !== ''" style="margin-left: 5px;font-size: 42px; color: red; cursor: pointer;"
+        class="fa fa-close">
+      </i> </span>
+  </div>
+  <div id="zz">
+    <table class="table table-bordered text-center maintable">
+      <thead>
+        <th class="th1" scope="col">Ảnh</th>
+
+        <th style="text-align: left" class="th2" scope="col" (click)="onSort(1)">
+          Tiêu đề <i class="fa fa-sort float-right" aria-hidden="true"></i>
+        </th>
+
+        <th style="text-align: left" class="th3" scope="col" (click)="onSort(3)">
+          Mô tả<i class="fa fa-sort float-right" aria-hidden="true"></i>
+        </th>
+
+        <th style="text-align: left" class="th4" scope="col" (click)="onSort(5)">
+          Ngày viết <i class="fa fa-sort float-right" aria-hidden="true"></i>
+        </th>
+        <th style="text-align: left" class="th5" scope="col">Tags</th>
+        <th class="th6" (click)="onSort(8)">
+          Pin news <i class="fa fa-sort float-right" aria-hidden="true"></i>
+        </th>
+        <th class="th6" (click)="onSort(4)">
+          Trạng thái <i class="fa fa-sort float-right" aria-hidden="true"></i>
+        </th>
+        <th class="th6" (click)="onSort(7)">
+          Active <i class="fa fa-sort float-right" aria-hidden="true"></i>
+        </th>
+        <th class="th6" scope="col">Thiết lập</th>
+      </thead>
+
+      <tbody *ngFor="
+          let new of (viewNewsList
+            | paginate: { itemsPerPage: [perPage], currentPage: p });
+          trackBy: trackByFn
+        ">
+        <td class="th1" (click)="onViews(new.id)">
+          <img src="{{ new.linkimage }}" onerror="this.src='../../../../../../../assets/images/default_news_avatar.png'" />
+        </td>
+
+        <td style="text-align: left; cursor: pointer" id="th2" class="th2" (click)="onViews(new.id)">
+          {{ new.title }}
+        </td>
+
+        <td style="text-align: left; cursor: pointer" id="th3" class="th3" (click)="onViews(new.id)">
+          {{ new.description }}
+        </td>
+
+        <td style="text-align: center" class="th4">
+          {{ new.createDate | date: 'dd/MM/yyy' }}
+        </td>
+
+        <td style="text-align: left" id="th5" class="th5">{{ new.tags }}</td>
+        <td>
+          <label *ngIf="new.pinned === 'true'&& new.activeStatus === 'true'" class="labelStatus pin">Pinned</label>
+          <label *ngIf="new.pinned === 'false'&& new.activeStatus === 'true'" class="labelStatus unpin">Unpin</label>
+        </td>
+        <td>
+          <label *ngIf="new.upStatus == 'pending' && new.activeStatus === 'true'" class="labelStatus pending">Pending
+          </label>
+          <label *ngIf="new.upStatus == 'approve' && new.activeStatus === 'true'" class="labelStatus approve">Approved
+          </label>
+          <label *ngIf="new.upStatus == 'reject' && new.activeStatus === 'true'" class="labelStatus reject">Rejected
+          </label>
+        </td>
+        <td>
+          <label *ngIf="new.activeStatus === 'false'" class="labelStatus inactive">Inactive</label>
+          <label *ngIf="new.activeStatus === 'true'" class="labelStatus active">Active</label>
+        </td>
+        <td class="th6">
+          <div class="form-group">
+            <select class="form-control" [(ngModel)]="selectedAction" (change)="onChangeAction($event, new)" (mouseout)="focusOutFunction()">
+              <option value="action" selected disabled>Action</option>
+              <option value="view">View news</option>
+              <option value="edit" *ngIf="checkRolePerMission('updatenews')">Update</option>
+              <option value="approve" *ngIf="
+                  checkRolePerMission('updatenews') && new.upStatus != 'approve'
+                ">Approve</option>
+              <option value="reject" *ngIf="
+                  checkRolePerMission('updatenews') && new.upStatus != 'reject'
+                ">Reject</option>
+              <option value="pin" *ngIf="
+                  checkRolePerMission('pinNewsnews') &&
+                  new.upStatus === 'approve'
+                ">Pin/Unpin</option>
+              <option value="delete" *ngIf="checkRolePerMission('updatenews')">Active/Inactive</option>
+            </select>
+          </div>
+        </td>
+      </tbody>
+    </table>
+
+    <div class="phantrang">
+      <div class="lt">
+        <span for="sel1">Results per page: </span>
+        <select class="ft" id="sel1" (change)="onChange($event)">
+          <option disabled style="visibility: hidden">{{ perPage }}</option>
+          <option>5</option>
+          <option>10</option>
+          <option>15</option>
+        </select>
+      </div>
+      <div class="pagi">
+        <pagination-controls style="float:right;" (pageChange)="p = $event"></pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>

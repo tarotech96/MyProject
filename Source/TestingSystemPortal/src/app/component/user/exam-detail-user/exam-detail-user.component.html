@@ -1,0 +1,111 @@
+<div class="tong">
+  <div class="divtabletrai">
+    <div class="header">
+      <span
+        ><i class="fa fa-tags" aria-hidden="true"></i> &nbsp;CHI TIẾT BÀI THI
+      </span>
+    </div>
+    <table class="table table-light">
+      <tr>
+        <th>Tên bài thi</th>
+        <td *ngIf="exam">{{ exam['1'] }}</td>
+      </tr>
+      <tr>
+        <th>Bộ môn</th>
+        <td *ngIf="exam">{{ exam['2'] }}</td>
+      </tr>
+
+      <tr>
+        <th>Chương</th>
+        <td>
+          <div style="display: inline;" *ngFor="let chap of chapters">
+            <label
+              style="background-color: #0097e6; border-radius: 5px; padding: 0px 5px 0px 5px; color: white"
+              >{{ chap }} </label
+            >&nbsp;&nbsp;
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th>Kĩ năng</th>
+        <td>
+          <div style="display: inline;" *ngFor="let do of domains">
+            <label
+              style="background-color: #0097e6; border-radius: 5px; padding: 0px 5px 0px 5px; color: white"
+              >{{ do }}</label
+            >&nbsp;&nbsp;
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th>Ngày bắt đầu</th>
+        <td *ngIf="exam">{{ exam['3'] | date: 'dd/MM/yyyy' }}</td>
+      </tr>
+      <tr>
+        <th>Ngày kết thúc</th>
+        <td *ngIf="exam">{{ exam['4'] | date: 'dd/MM/yyyy' }}</td>
+      </tr>
+      <tr>
+        <th>Số câu hỏi</th>
+        <td *ngIf="exam">{{ exam['5'] }}</td>
+      </tr>
+      <tr>
+        <th>Mô tả</th>
+        <td *ngIf="exam">{{ exam['11'] }}</td>
+      </tr>
+      <tr>
+        <th>Số lần thi</th>
+        <td *ngIf="exam">{{ exam['7'] }}</td>
+      </tr>
+      <tr>
+        <th>Điểm đỗ (%)</th>
+        <td *ngIf="exam">{{ exam['6'] }} (%)</td>
+      </tr>
+      <tr>
+        <th>Thời gian làm bài</th>
+        <td *ngIf="exam">{{ exam['10'] }} (phút)</td>
+      </tr>
+      <tr style="margin: 5px;">
+        <div class="btn btn-toolbar ">
+          <div class="btn-group btn-group-justified">
+            <button (click)="onBack()" type="button" class="btn btn-dark">
+              <i class="fa fa-arrow-left" aria-hidden="true"></i> &nbsp;Quay lại
+            </button>
+            <button
+              (click)="clickVaoThi(exam['0'])"
+              type="button"
+              class="btn btn-primary"
+              *ngIf="quaLuot == 'false' && quaHan == 'false'"
+            >
+              <i class="fa fa-hourglass-start"></i> &nbsp;Bắt đầu thi
+            </button>
+            <button
+              class="btn btn-warning"
+              style="cursor: not-allowed"
+              *ngIf="quaLuot === 'true' && quaHan === 'false'"
+            >
+              HẾT LƯỢT!
+            </button>
+            <button
+              class="btn btn-warning"
+              style="cursor: not-allowed"
+              *ngIf="quaHan === 'true'"
+            >
+              QUÁ HẠN!
+            </button>
+          </div>
+        </div>
+      </tr>
+    </table>
+  </div>
+
+  <div class="noti" *ngIf="notificationVisibilityWhenDelete">
+    <div id="snackbard">
+      <div class="chu">Bạn có chắc muốn thi bài thi này không?</div>
+      <div class="yn">
+        <div id="bss1" (click)="oncg(true)">Yes</div>
+        <div id="bss2" (click)="oncg(false)">No</div>
+      </div>
+    </div>
+  </div>
+</div>

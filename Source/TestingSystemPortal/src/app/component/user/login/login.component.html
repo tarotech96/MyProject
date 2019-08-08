@@ -1,0 +1,93 @@
+<div id="snackbar" *ngIf="showNoti">
+  Ahihihi: Tính năng đang trong quá trình hoàn thiện!
+</div>
+<div class="logintong">
+  <div class="formlogin">
+
+    <div class="panel">
+      <h2 style="font-size: 70px;text-align: center;color: #1d9ed5;">
+        <i class="fa fa-user"></i>
+      </h2>
+      <br />
+    </div>
+    <div style="text-align: center"><h4>Đăng nhập</h4></div>
+    <form [formGroup]="loginForm">
+      <div class="form-group">
+        <label for="inputEmail4">Email *
+          <mat-error *ngIf="
+              loginForm.get('email').hasError('required') &&
+              loginForm.get('email').touched
+            "
+            style="color: red">
+            không được để trống!
+          </mat-error>
+
+          <mat-error *ngIf="
+              loginForm.hasError('email', ['email']) &&
+              loginForm.touched "
+            style="color: red">
+            không đúng định dạng!
+          </mat-error>
+        </label>
+        <input [(ngModel)]="email" type="email" formControlName="email" class="form-control" id="inputEmail" placeholder="enter email here..."
+          class="form-control" [ngClass]="{
+            'is-invalid':
+              (loginForm.get('email').hasError('required') &&
+                loginForm.get('email').touched) ||
+              loginForm.get('email').hasError('minlength') ||
+              loginForm.get('email').hasError('maxlength'),
+            'is-valid':
+              (!loginForm.get('email').hasError('required') &&
+                loginForm.get('email').touched) ||
+              !loginForm.get('email').hasError('minlength') ||
+              !loginForm.get('email').hasError('maxlength')
+          }" />
+      </div>
+      <div class="form-group">
+        <label for="inputEmail4">Password *
+          <label for="">
+            <mat-error *ngIf="
+                loginForm.get('password').hasError('required') &&
+                loginForm.get('password').touched
+              "
+              style="color: red">
+              không được để trống!
+            </mat-error>
+            <mat-error *ngIf="loginForm.get('password').hasError('minlength')">không được dưới 6 kí tự!</mat-error>
+            <mat-error *ngIf="loginForm.get('password').hasError('maxlength')">không được vượt quá 30 ký tự!</mat-error>
+          </label>
+        </label>
+        <input [(ngModel)]="pass" type="password" formControlName="password" class="form-control" id="inputPassword" placeholder="enter password here..."
+          [ngClass]="{
+            'is-invalid':
+              (loginForm.get('password').hasError('required') &&
+                loginForm.get('password').touched) ||
+              loginForm.get('password').hasError('minlength') ||
+              loginForm.get('password').hasError('maxlength'),
+            'is-valid':
+              (!loginForm.get('password').hasError('required') &&
+                loginForm.get('password').touched) ||
+              !loginForm.get('password').hasError('minlength') ||
+              !loginForm.get('password').hasError('maxlength')
+          }" />
+      </div>
+      <div class="input-group alert alert-danger text-center loginError" role="alert" *ngIf="errorExist !== ''">
+        {{ errorExist }}
+      </div>
+      <div class="input-group duoilogin">
+        <div class="checkbox">
+          <label class="remember">
+            <input id="login-remember" type="checkbox" name="remember" value="1" (change)="remember($event)" />
+            Remember me
+          </label>
+        </div>
+        <label class="forgetPassBtn" [routerLink]="['/hometotal/forgotpass']">Forgot Password</label>
+      </div>
+      <br />
+      <div class="loginbutton">
+        <input type="submit" class="btn btn-primary" style="width: 100px;" (click)="login()" value="Login" />
+
+      </div>
+    </form>
+  </div>
+</div>

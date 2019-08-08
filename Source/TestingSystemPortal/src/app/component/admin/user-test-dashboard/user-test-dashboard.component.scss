@@ -1,0 +1,458 @@
+// Khong cho outline khi tro chuot vao cac the + khong hien thi scroll bar
+* {
+  outline: 0px !important;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+::-moz-scrollbar {
+  display: none;
+}
+::-ms-scrollbar {
+  display: none;
+}
+.divtrong {
+  height: 100vh;
+  width: 100%;
+  background-image: url('../../../../assets/images/Candy.jpg');
+  background-repeat: repeat;
+  background-size: cover;
+  padding: 30px 30px 100px 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.header {
+  height: 60px;
+  background-color: #fa8231;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+.header span {
+  font-size: 20px;
+  color: white;
+}
+// .mainview {
+
+// }
+
+// DIVTRAI ****************************************************
+.divtrai {
+  height: 90vh;
+  width: 30%;
+  background-color: #ffffff;
+  border-radius: 5px;
+  font-size: 14px;
+  background-size: 250%;
+  background-position: center;
+}
+.headerdivtrai {
+  border-radius: 5px 5px 0px 0px;
+  background-color: #4d4d4d;
+  color: white;
+  font-size: 14px;
+  padding-left: 10px;
+  height: 4%;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+}
+.duoiheaderdivtrai {
+  width: 100%;
+  height: 96%;
+  -ms-overflow-style: none;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-radius: 0px 0px 5px 5px;
+}
+.divtrais {
+  width: 100%;
+  height: auto;
+  padding: 10px 10px 0px 10px;
+  display: block;
+}
+.divtraiss {
+  background-image: url('../../../../assets/images/j4.jpg');
+  background-size: cover;
+  width: 100%;
+  height: auto;
+}
+li {
+  list-style-type: circle;
+}
+
+li li {
+  list-style-type: square;
+}
+
+// DIVTRAI ****************************************************
+
+// DIVPHAI ****************************************************
+.divphai {
+  height: 90vh;
+  width: 68%;
+  display: block;
+  border-radius: 5px;
+}
+.headerdivphai {
+  border-radius: 5px 5px 0px 0px;
+  background-color: #4d4d4d;
+  height: 4%;
+  padding: 0px !important;
+  margin: 0px !important;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+.lichsubaithi {
+  background-color: #2d3436;
+  font-size: 14px;
+  padding: 0px;
+  border-radius: 5px 5px 0px 0px;
+  height: 98%;
+  width: 170px;
+  cursor: pointer;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: center;
+  text-align: center;
+  padding-left: 15px;
+}
+.lichsuthuchanh {
+  border-radius: 5px 5px 0px 0px;
+  background-color: #636e72;
+  font-size: 14px;
+  padding-left: 10px;
+  height: 98%;
+  width: 170px;
+  cursor: pointer;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: center;
+  text-align: center;
+  padding-left: 2px;
+}
+.testtags {
+  background-color: #ffffff;
+  width: 100%;
+  height: 100px;
+  margin-top: 10px;
+  border-radius: 5px;
+  border-top: 10px solid;
+  padding-left: 0px;
+}
+.tenbaithiuserdathi1 {
+  height: 96%;
+  -ms-overflow-style: none;
+  overflow: auto;
+  padding: 10px 0px 10px 0px;
+  background-color: #2d3436;
+  border: 10px solid #2d3436;
+  border-radius: 0px 0px 5px 5px;
+}
+.tenbaithiuserdathi2 {
+  height: 96%;
+  -ms-overflow-style: none;
+  overflow: auto;
+  padding: 10px 0px 10px 0px;
+  background-color: #636e72;
+  border: 10px solid #636e72;
+  border-radius: 0px 0px 5px 5px;
+}
+ul {
+  list-style: none;
+}
+.testtag_top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  align-content: center;
+  height: 55px;
+  border-bottom: 2px solid;
+}
+.test_datetaken {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  font-size: 14px;
+}
+.test_score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  font-size: 14px;
+}
+.test_datetakens {
+  border-top: 2px solid gray;
+}
+.test_percent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  font-size: 14px;
+}
+.test_percent p {
+  border-top: 2px solid gray;
+}
+.test_viewbutton {
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+}
+
+.test_viewbutton button {
+  width: 70px;
+  height: 30px;
+}
+.testtag_bottom {
+  height: 45px;
+  font-size: 16px;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-bottom: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+  font-weight: 500;
+}
+.im {
+  width: 45px;
+  height: 45px;
+}
+.line {
+  height: 40px;
+  width: 2px;
+  border-right: 2px solid gray;
+}
+// DIVPHAI ****************************************************
+
+.cacbaithisapdenhan {
+  background-color: #efefef;
+  width: 100%;
+  height: 100px;
+  border-radius: 5px;
+  border-top: 10px solid #ff6b81;
+  padding: 0px;
+  display: block;
+  color: rgb(0, 0, 0);
+  overflow: auto;
+}
+.cacbaithigandaytren {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+  height: 55px;
+  padding-top: 5px;
+  border-bottom: 5px solid #fc5c65;
+}
+.logobaithisapdenhan {
+  height: 40px;
+  width: 20%;
+  margin-bottom: 10px;
+  font-size: 40px;
+  padding: 10px;
+  border-right: 2px solid #eb3b5a;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+}
+.tenbaithisapdenhan {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  font-size: 14px;
+  padding: 5px;
+}
+.socauhoibaithisapdenhan {
+  padding-top: 2.5px;
+  border-top: 2px solid #eb3b5a;
+}
+.line1 {
+  width: 10%;
+  height: 60px;
+  border-right: 2px solid #eb3b5a;
+}
+.chitietvaothi {
+  height: 30px;
+  padding-top: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+}
+.chitietvaothi button {
+  width: 70px;
+  height: 25px;
+  padding: 0px;
+  margin: 5px;
+  font-size: 14px;
+}
+@media all and(max-width: 1500px) {
+  .anNgayBatdauThi {
+    display: none;
+  }
+}
+@media all and (max-width: 1200px) {
+  .divtrong {
+    height: 160vh;
+    background-color: #bbccd6;
+    padding: 0px 30px 30px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-repeat: repeat;
+  }
+  .divtrai {
+    width: 100%;
+    height: 100vh;
+    margin-top: 10px;
+    padding-left: 0%;
+  }
+  .divphai {
+    width: 100%;
+    height: 100vh;
+    margin-top: 10px;
+  }
+}
+
+@media all and (max-width: 700px) {
+  .testtags {
+    overflow: hidden;
+  }
+  .divtrong {
+    padding: 11px 0px 30px 0px;
+    width: 100%;
+  }
+  .divphai {
+    margin-top: 0px;
+  }
+  .divtrai {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .lichsubaithi {
+    width: 50%;
+  }
+  .lichsuthuchanh {
+    width: 50%;
+  }
+  .lichsubaithi span {
+    width: 100%;
+  }
+  .lichsuthuchanh span {
+    width: 100%;
+  }
+}
+
+// set css popup
+.viewdetail {
+  width: 600px;
+  border: 1px solid #f7f7f7;
+  text-transform: uppercase;
+}
+.viewdetail p {
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+// Popup tự viết
+.noti {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  z-index: 300000;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+#snackbard {
+  width: 350px;
+  height: 86.5px;
+  background-color: #ffffff;
+  color: #718093;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 4;
+  font-size: 18px;
+  margin: 0 auto;
+  margin-top: 20%;
+}
+
+.yn {
+  display: flex;
+  flex-direction: row;
+  vertical-align: center;
+}
+
+#bss1 {
+  background: #ff0000;
+  width: 50px;
+  height: 86.5px;
+  font-size: 20px;
+  vertical-align: center;
+  color: #ffffff;
+  padding: 25px 0px 25px 0px;
+  cursor: pointer;
+}
+
+.chu {
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  align-content: center;
+}
+#bss2 {
+  background: #128af3;
+  width: 50px;
+  height: 86.5px;
+  font-size: 20px;
+  vertical-align: center;
+  color: #ffffff;
+  padding: 25px 0px 25px 0px;
+  cursor: pointer;
+}
+#bss1:hover {
+  background: #db0000;
+}
+
+#bss2:hover {
+  background: #0070d3;
+}

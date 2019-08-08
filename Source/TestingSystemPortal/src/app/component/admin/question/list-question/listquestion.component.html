@@ -1,0 +1,108 @@
+<div id="content">
+  <div id="fu">
+    <input
+      id="search_box"
+      class="form-control"
+      type="search"
+      placeholder="Tìm kiếm theo tên"
+      aria-label="Search"
+      (keyup)="search($event)"
+    />
+    <div class="themfile">
+      <button type="button" class="btn btn-warning abtn">
+        <a [href]="urlDownloadFile" style="text-decoration: none"
+          >Tải file mẫu</a
+        >
+      </button>
+      <button
+        type="button"
+        (click)="getListQuestion2()"
+        *ngIf="checkRolePermission('readExcelquestion')"
+        class="btn btn-warning abtn"
+      >
+        Import Excel
+      </button>
+      <button
+        type="button"
+        (click)="onAdd()"
+        class="btn btn-primary abtn"
+        *ngIf="checkRolePermission('addQuestionquestion')"
+      >
+        + Thêm nội dung
+      </button>
+    </div>
+  </div>
+  <table class="table table-bordered text-center" style="margin-top: 10px;">
+    <thead>
+      <tr>
+        <th style="text-align: left">Tiêu đề</th>
+        <th style="text-align: left">Kĩ năng</th>
+        <th style="text-align: left">Bộ môn</th>
+        <th style="text-align: left">Chương</th>
+        <th style="text-align: left">Ngày tạo</th>
+        <th style="text-align: left">Ngày sửa</th>
+        <th style="text-align: left">Người tạo</th>
+        <th>Thời gian</th>
+        <th>Thiết lập</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let question of (uploadService.listquestion
+            | paginate: { itemsPerPage: [perPage], currentPage: p });
+          let i = index
+        "
+      >
+        <td style="text-align: left">{{ question.title }}</td>
+
+        <td style="text-align: left">{{ question.domainName }}</td>
+        <td style="text-align: left">{{ question.subjectName }}</td>
+        <td style="text-align: left">{{ question.chapterName }}</td>
+        <td style="text-align: left">
+          {{ question.created_at | date: 'dd/MM/yyyy' }}
+        </td>
+        <td style="text-align: left">
+          {{ question.updated_at | date: 'dd/MM/yyyy' }}
+        </td>
+        <td style="text-align: left">
+          {{ mapNameCreater.get(question.creator_id) }}
+        </td>
+        <td>{{ question.time }}</td>
+        <td>
+          <i
+            style="color:white;"
+            *ngIf="checkRolePermission('updateQuestionquestion')"
+            (click)="onUpdate(question.id)"
+            class="fa fa-pencil btn btn-primary"
+          ></i>
+          <i
+            style="color:white; margin-left: 10px;"
+            *ngIf="checkRolePermission('deleteQuestionquestion')"
+            (click)="onDelete(question.id)"
+            class="fa fa-trash-o btn btn-danger"
+          ></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <popup #popupDelete (confirmClick)="confirmDeleteClick()">
+    Bạn có chắc chắn muốn xóa ?
+  </popup>
+
+  <div class="phantrang">
+    <div class="lt">
+      <span for="sel1">Results per page: </span>
+      <select class="ft" id="sel1" (change)="onChangePage($event)">
+        <option>5</option>
+        <option>10</option>
+      </select>
+    </div>
+    <div class="pagi">
+      <pagination-controls
+        style="float:right;"
+        (pageChange)="p = $event"
+      ></pagination-controls>
+    </div>
+  </div>
+</div>

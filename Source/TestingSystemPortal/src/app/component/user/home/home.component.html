@@ -1,0 +1,149 @@
+<div class="tong">
+  <div class="sildershow">
+    <ngb-carousel *ngIf="slideBarActive.length != 0">
+      <div *ngFor="let sl of slideBarActive">
+        <ng-template ngbSlide>
+          <img
+            class="img-responsive"
+            src="{{ baseURL }}/resources/images/slidebars/{{ sl.img }}"
+            onerror="this.src='../../../../assets/images/webslide1.jpg'"
+          />
+          <div class="carousel-caption slogantitle">
+            <h5>{{ sl.title }}</h5>
+            <p style="font-size: 14px">{{ sl.slogan }}</p>
+          </div>
+        </ng-template>
+      </div>
+    </ngb-carousel>
+  </div>
+
+  <div class="baithitudo">
+    <div class="divtabletrai">
+      <h1>
+        <i class="fa fa-file-text" aria-hidden="true"></i> &nbsp; BÀI THI TỰ DO
+      </h1>
+      <div class="tablebaithi">
+        <table class="table table-light">
+          <thead>
+            <tr>
+              <!-- <th>Id</th> -->
+              <th (click)="sapXep(0)">
+                Tên bài thi
+                <i class="fa fa-sort float-right" aria-hidden="true"></i>
+              </th>
+              <th class="chude" (click)="sapXep(1)">
+                Chủ đề <i class="fa fa-sort float-right" aria-hidden="true"></i>
+              </th>
+              <th style="text-align: center; width: 100px;">Số câu</th>
+              <!-- <th style="text-align: center; width: 100px;">Thời gian</th> -->
+              <th style="text-align: center;width: 200px">
+                <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            *ngFor="
+              let item of (listPractice
+                | paginate: { itemsPerPage: [perPage], currentPage: p });
+              trackBy: trackByFn
+            "
+          >
+            <!-- <td>{{ item['0'] }}</td> -->
+            <td title="{{ item['1'] }}" style="word-wrap: break-word;">
+              {{ item['1'] }}
+            </td>
+            <td
+              title="{{ item['5'] }}"
+              class="chude"
+              style="word-wrap: break-word;"
+            >
+              {{ item['5'] }}
+            </td>
+            <td style="text-align: center; width: 100px;">{{ item['2'] }}</td>
+            <!-- <td style="text-align: center; width: 100px;">{{ item['3'] }}</td> -->
+            <td class="btnaction" style="width: 200px">
+              <button
+                (click)="clickXemChiTiet(item['0'])"
+                class="btn btn-primary "
+              >
+                <i class="fa fa-info-circle" aria-hidden="true"></i> &nbsp;Chi
+                tiết
+              </button>
+              <button (click)="clickVaoThi(item['0'])" class="btn btn-danger ">
+                <i class="fa fa-clock-o" aria-hidden="true"></i> &nbsp;Thi thử
+              </button>
+            </td>
+          </tbody>
+        </table>
+
+        <div class="phantrang">
+          <div class="lt">
+            <span for="sel1">Results per page: </span>
+            <select class="ft" id="sel1" (change)="onChange($event)">
+              <option disabled style="visibility: hidden;">10</option>
+              <option>5</option>
+              <option>10</option>
+            </select>
+          </div>
+          <div class="pagi">
+            <pagination-controls
+              style="float:right;"
+              (pageChange)="p = $event"
+            ></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="divphaitintuc">
+      <h1>
+        <i class="fa fa-newspaper-o" aria-hidden="true"></i> &nbsp;TIN TỨC NỔI
+        BẬT
+      </h1>
+      <div class="tintuc">
+        <div class="divphai">
+          <div class="input-group add-on" style="padding:15px"></div>
+          <hr />
+          <div class="baivietganday">
+            <div class="tinthunho">
+              <ul id="newsul" *ngFor="let pinnednews of listPinnedNews">
+                <li (click)="onViews(pinnednews['0'])" style="display: inline;">
+                  <div class="chitietbaivietganday">
+                    <div class="imgtieude">
+                      <img
+                        src="{{ pinnednews['2'] }}"
+                        onerror="this.src='../../../../assets/images/default_news_avatar.png'"
+                      />
+                    </div>
+                    <div class="newstitle">
+                      <div class="title-rec">
+                        {{ pinnednews['1'] | truncate: 155 }}
+                      </div>
+                      <div class="time-rec">
+                        {{ pinnednews['7'] | date: 'dd/MM/yyyy' }}
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="noti" *ngIf="notificationVisibilityWhenVaoThi">
+    <div id="snackbard">
+      <div class="chu">Bạn có chắc muốn thi bài thi này không?</div>
+      <div class="yn">
+        <div id="bss1" (click)="oncg(true)">Yes</div>
+        <div id="bss2" (click)="oncg(false)">No</div>
+      </div>
+    </div>
+  </div>
+  <div class="noti" *ngIf="notificationVisibilityWhenMaxAttemptExcess">
+    <div id="snackbards">
+      Bạn đã làm quá số lần cho phép, vui lòng chọn bài thực hành khác!
+      <button class="btn btn-success" (click)="oncgNotLogin()">OK</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+.listnhanvien{
+    min-height: 300px;
+max-height: 350px;
+margin-bottom: 10px;
+overflow: scroll;
+-webkit-overflow-scrolling: touch;
+}
+// * {
+//     outline: 0px !important;
+//     ::-webkit-scrollbar {
+//       display: none;
+//     }
+//     ::-moz-scrollbar {
+//       display: none;
+//     }
+//     ::-ms-scrollbar {
+//       display: none;
+//     }
+//   }
+  .textview {
+    font-size: 16px;
+    text-transform: uppercase;
+  }
+  .container {
+    -ms-overflow-style: none;
+    overflow: auto;
+    padding-bottom: 30px;
+  }
+  .bg-primary {
+    background-color: #007bff !important;
+    height: 45px;
+}
+.bg-info {
+  background-color: #17a2b8 !important;
+  height: 45px;
+}
+.bg-warning {
+  background-color: #ffc107 !important;
+  height: 45px;
+}

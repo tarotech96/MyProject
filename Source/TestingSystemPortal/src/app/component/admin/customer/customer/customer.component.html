@@ -1,0 +1,85 @@
+<div id="content" *ngIf="showTable">
+  <div id="fu">
+    <input
+      id="search_box"
+      class="form-control"
+      type="search"
+      placeholder="Tìm kiếm theo tên"
+      aria-label="Search"
+      (keyup)="search($event)"
+    />
+  </div>
+  <table class="table table-bordered text-center " style="margin-top: 10px;">
+    <thead>
+      <tr>
+        <th style="vertical-align: middle;text-align: left;width:200px;">
+          Họ tên
+        </th>
+        <th style="vertical-align: middle;text-align: left;">Email</th>
+        <th style="vertical-align: middle;text-align: left;">Điện thoại</th>
+        <th style="vertical-align: middle;text-align: left;">Tiêu đề</th>
+        <th style="vertical-align: middle;text-align: left;">Tin nhắn</th>
+        <th style="vertical-align: middle;text-align: left;">Ngày tạo</th>
+        <th>Xóa</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let customer of (listCustomer
+            | paginate: { itemsPerPage: [perPage], currentPage: p });
+          trackBy: trackByFn
+        "
+      >
+        <td style="vertical-align: middle;text-align: left; width:200px;">
+          {{ customer.name }}
+        </td>
+        <td style="vertical-align: middle;text-align: left">
+          {{ customer.email }}
+        </td>
+        <td style="vertical-align: middle;text-align: left">
+          {{ customer.phone }}
+        </td>
+        <td style="vertical-align: middle;text-align: left">
+          {{ customer.subject }}
+        </td>
+        <td
+          style="vertical-align: middle;text-align: left"
+          title="{{ customer.message }}"
+        >
+          {{ customer.message | truncate: 100 }}
+        </td>
+        <td style="vertical-align: middle;text-align: left">
+          {{ customer.created_at | date: 'dd/MM/yyyy' }}
+        </td>
+        <td>
+          <i
+            class="fa fa-trash-o btn btn-danger"
+            style="color: white; font-size: 10px;"
+            (click)="onClickDelete(customer)"
+          ></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="phantrang">
+    <div class="lt">
+      <span for="sel1">Results per page: </span>
+      <select class="ft" id="sel1" (change)="onChange($event)">
+        <option>5</option>
+        <option>10</option>
+        <!-- <option>15</option> -->
+      </select>
+    </div>
+    <div class="pagi">
+      <pagination-controls
+        *ngIf="showTable"
+        class="text-center"
+        (pageChange)="p = $event"
+      ></pagination-controls>
+    </div>
+  </div>
+</div>
+<popup #popupDelete (confirmClick)="confirmDeleteClick()">
+  Bạn có chắc chắn muốn xóa ?
+</popup>

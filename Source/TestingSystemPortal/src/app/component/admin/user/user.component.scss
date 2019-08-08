@@ -1,0 +1,69 @@
+* {
+  outline: 0 !important;
+  font-size: 16px !important;
+}
+.fa {
+  color: gray;
+}
+#content {
+  margin: 2.5% 2.5% 2.5% 2.5%;
+  width: 95%;
+  height: auto;
+}
+.container {
+  margin: 2.5%;
+  height: auto;
+}
+#fu {
+  display: flex;
+  justify-content: space-between;
+}
+
+#search_box {
+  width: 300px;
+}
+#abtn {
+  position: relative;
+  float: right;
+}
+#trfu {
+  text-align: right !important;
+}
+
+.phantrang {
+  width: 100%;
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px 0 10px;
+}
+.lt span {
+  color: rgb(70, 68, 68);
+}
+.pagi {
+  position: relative;
+  top: 8px;
+}
+
+.icon {
+  margin-left: 10px;
+  color: #fff;
+}
+.labelStatus {
+  display: block;
+  width: 50px;
+  text-align: center !important ;
+  display: inline-block;
+  margin: 10px 10px 0 0;
+  padding: 0px 0px;
+  border-radius: 4px;
+}
+.active {
+  background-color: #009432;
+  color: white;
+}
+.inactive {
+  background-color: #f50057;
+  color: white;
+}

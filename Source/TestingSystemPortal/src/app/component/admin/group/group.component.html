@@ -1,0 +1,238 @@
+<!-- Page Content -->
+<div id="content" *ngIf="showType==='table'">
+  <div id="fu">
+    <input id="search_box" class="form-control" type="search" placeholder="Tìm kiếm theo tên" aria-label="Search"
+      (keyup)="search($event)" />
+    <button type="button" class="btn btn-primary abtn" (click)="onClickAddNew()"
+      *ngIf="showType==='table' && checkRolePermission('insertgroup')">
+      + Thêm nội dung
+    </button>
+  </div>
+
+  <table class="table table-bordered text-center " style="margin-top: 10px;">
+    <thead>
+      <tr>
+        <th colspan="3">ID</th>
+        <th style="vertical-align: middle;text-align: left;" colspan="6" (click)="sort('name')">
+          Tên<i class="fa fa-sort float-right" aria-hidden="true"></i>
+        </th>
+        <!-- <th style="vertical-align: middle;text-align: left;" colspan="3">
+          Loại
+        </th>
+        <th style="vertical-align: middle;text-align: left;" colspan="3">
+          Parent
+        </th> -->
+        <th style="vertical-align: middle;text-align: left;" colspan="3">
+          Ngày tạo
+        </th>
+        <th style="vertical-align: middle;text-align: left;" colspan="3">
+          Ngày sửa
+        </th>
+
+        <th style="vertical-align: middle;text-align: center;" colspan="3">Thiết lập</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="
+          let group of (listGroup
+            | paginate: { itemsPerPage: [perPage], currentPage: p });
+          trackBy: trackByFn
+        ">
+        <td colspan="3">{{ group['0'] }}</td>
+        <td style="text-align: left" colspan="6">{{ group['1'] }}</td>
+        <!-- <td style="text-align: left" colspan="3">
+          {{ group['3'] == 1 ? 'Deparment' : 'Group' }}
+        </td>
+        <td style="text-align: left" colspan="3">{{ group['7'] }}</td> -->
+        <td style="text-align: left" colspan="3">
+          {{ group['4'] | date: 'dd/MM/yyyy' }}
+        </td>
+        <td style="text-align: left" colspan="3">
+          {{ group['5'] | date: 'dd/MM/yyyy' }}
+        </td>
+
+        <td>
+          <i style="color:white; margin-left: 10px;" *ngIf="checkRolePermission('updategroup')"
+            class="fa fa-pencil btn btn-primary" (click)="onClickUpdate(group)"></i>
+          <i class="fa fa-group btn btn-primary" style="color:white; margin-left: 10px;" (click)="onClickListUser(group['0'])"></i>
+          <i style="color:white; margin-left: 10px;" *ngIf="checkRolePermission('deletegroup')"
+            class="fa fa-trash-o btn btn-danger" (click)="onClickDelete(group, group['7'])"></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="phantrang">
+    <div class="lt">
+      <span for="sel1">Results per page: </span>
+      <select class="ft" id="sel1" (change)="onChange($event)">
+        <option>5</option>
+        <option>10</option>
+        <!-- <option>15</option> -->
+      </select>
+    </div>
+    <div class="pagi">
+      <pagination-controls *ngIf="showType==='table'" class="text-center" (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <form [formGroup]="insertForm" (ngSubmit)="onSubmitInsert()" enctype="multipart/form-data" *ngIf="showInsertForm">
+    <div style="text-align: center">
+      <h4>Thêm mới Group</h4>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>
+          Name Group
+          <span class="required_field">*</span></label>
+        <input type="text" class="form-control" formControlName="name" (change)="checkSpaceName($event)" />
+      </div>
+      <div class="form-group alert alert-danger" role="alert" *ngIf="
+                            insertForm.get('name').errors &&
+                            insertForm.get('name').touched
+                          ">
+        <span *ngIf="insertForm.hasError('required', ['name'])">
+          Bạn không được để trống name!
+        </span>
+        <span *ngIf="insertForm.hasError('maxlength', ['name'])">
+          name không được quá 50 kí tự!
+        </span>
+        <span *ngIf="insertForm.get('name').hasError('pattern')">
+          name không được nhập space!
+        </span>
+      </div>
+      <div class="form-group alert alert-danger" role="alert" *ngIf="errGroup != ''">
+        <span> {{ errGroup }} </span>
+      </div>
+
+      <!-- <div class="form-group">
+        <label> Parent</label>
+        <select class="form-control" formControlName="parent_name">
+          <option value="null"> </option>
+          <option *ngFor="let group of listGroup2" value="{{ group.id }}" selected>
+            {{ group.name }}
+          </option>
+        </select>
+      </div> -->
+      <!-- <div class="form-group">
+        <label>
+          Type <span class="required_field">*</span>
+        </label>
+        <select class="form-control" formControlName="type">
+          <option *ngFor="let choose of selectForm" value="{{ choose.id }}">{{ choose.name }}</option>
+        </select>
+      </div> -->
+    </div>
+    <div class="modal-footer">
+      <button type="submit" [disabled]="!insertForm.valid" class="btn btn-success">
+        Thêm mới
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="onClickCloseForm()">
+        Đóng
+      </button>
+    </div>
+  </form>
+  <!-- Form update -->
+  <form [formGroup]="updateForm" (ngSubmit)="onSubmitUpdate()" enctype="multipart/form-data" *ngIf="showUpdateForm">
+    <div style="text-align: center">
+      <h4>Update Group</h4>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>
+          Name Group
+          <span class="required_field">*</span></label>
+        <input type="text" class="form-control" formControlName="name" (change)="checkSpaceNameUpdate($event)" />
+      </div>
+      <div class="form-group alert alert-danger" role="alert" *ngIf="
+                            updateForm.get('name').errors &&
+                            updateForm.get('name').touched
+                          ">
+        <span *ngIf="updateForm.hasError('required', ['name'])">
+          Bạn không được để trống name!
+        </span>
+        <span *ngIf="updateForm.hasError('maxlength', ['name'])">
+          Full name không được quá 50 kí tự!
+        </span>
+        <span *ngIf="updateForm.get('name').hasError('pattern')">
+          name không được nhập space!
+        </span>
+      </div>
+      <div class="form-group alert alert-danger" role="alert" *ngIf="errGroup != ''">
+        <span> {{ errGroup }} </span>
+      </div>
+      <!-- <div class="form-group">
+        <label> Parent</label>
+        <select class="form-control" formControlName="parent_name">
+          <option value="0"> </option>
+          <option *ngFor="let group of listUpdate" value="{{ group.id }}" selected>
+            {{ group.name }}
+          </option>
+        </select>
+      </div> -->
+      <!-- <div class="form-group">
+        <label>
+          Type <span class="required_field">*</span></label>
+        <select class="form-control" formControlName="type">
+          <option *ngFor="let choose of selectForm" value="{{ choose.id }}">{{ choose.name }}</option>
+          >
+        </select>
+      </div> -->
+    </div>
+    <div class="modal-footer">
+      <button type="submit" [disabled]="!updateForm.valid" class="btn btn-success">
+        Cập nhật
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="onClickCloseForm()">
+        Đóng
+      </button>
+    </div>
+  </form>
+</div>
+<!-- Page Content -->
+<div id="content" *ngIf="showType==='listUser'">
+  <div id="fu">
+    <input id="search_box" class="form-control" type="search" placeholder="Tìm kiếm theo tên" aria-label="Search"
+      (keyup)="search($event)" />
+    <button type="button" class="btn btn-primary abtn" (click)="onClickAddNew()"
+      *ngIf="showType==='table' && checkRolePermission('insertgroup')">
+       Thêm người dùng
+    </button>
+  </div>
+  <table class="table table-bordered text-center " style="margin-top: 10px;">
+    <thead>
+      <tr>
+        <th colspan="3">ID</th>
+        <th style="vertical-align: middle;text-align: left;" colspan="3" (click)="sort('name')">
+          Họ và tên<i class="fa fa-sort float-right" aria-hidden="true"></i>
+        </th>
+        <th style="vertical-align: middle;text-align: left;" colspan="3">
+          Email
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+  </table>
+  <div class="phantrang">
+    <div class="lt">
+      <span for="sel1">Results per page: </span>
+      <select class="ft" id="sel1" (change)="onChange($event)">
+        <option>5</option>
+        <option>10</option>
+        <!-- <option>15</option> -->
+      </select>
+    </div>
+    <div class="pagi">
+      <pagination-controls *ngIf="showType==='listUser'" class="text-center" (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+</div>
+<popup #popupDelete (confirmClick)="confirmDeleteClick()"> {{ xyz }} </popup>
+<popup #popupDeleteChildren (confirmClick)="confirmDeleteClick()">
+  <div *ngIf="this.errDelete != ''">
+    <span>{{ this.errDelete }}</span>
+  </div>
+</popup>
+<popup #popupApplyFailed> Cần ít nhất 2 bản ghi được kích hoạt ! </popup>

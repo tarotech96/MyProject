@@ -1,0 +1,353 @@
+<!-- <img class="gambare" src="../../../../assets/images/tenor.gif" alt="" /> -->
+<div class="tongcha">
+  <div class="tongcon">
+    <div class="row container" style=" margin: 0 auto;">
+      <div class="col-md-12">
+        <div class="head">
+          <div>
+            <i class="fa fa-cog fa-spin fa-1x fa-fw"> </i>
+            <label for=""> {{ name }} </label>
+          </div>
+          <div>
+            <i class="fa fa-map-marker" aria-hidden="true">
+              &nbsp;{{ position }}/{{ len }}</i
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <br />
+    <!--Body-->
+
+    <div class="row container" style=" margin: 0 auto;">
+      <div class="col-md-12">
+        <div class="currentquestion">
+          <div style="font-size: 20px;color: white;">{{ position }})</div>
+          <div style="font-size: 20px;color: white;">
+            Question ID : {{ currentQuestion['id'] }}
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="col-md-12">
+        <div class="content_question">
+          <span class="numSentence">{{ position }}) </span>
+          <span>{{ currentQuestion['content'] }} ?</span>
+        </div>
+      </div> -->
+      <div class="col-md-12">
+        <div id="content_question">{{ currentQuestion['content'] }} ?</div>
+      </div>
+      <div class="col-md-12">
+        <div
+          style="text-align: center; display: flex; justify-items: center; justify-content: center; justify-content: columns;background-color: white"
+        >
+          <div>
+            <audio
+              *ngIf="fileExtension === 'mp3'"
+              style="width: 480px;height: 20px;"
+              controls="controls"
+            >
+              <source
+                src="{{ baseUrl }}/resources/images/question/{{
+                  currentQuestion['media']
+                }}"
+                type="audio/mpeg"
+              />
+              Your browser does not support the audio element.
+            </audio>
+
+            <video
+              *ngIf="fileExtension === 'mp4'"
+              controls="controls"
+              style="width: 480px;height: 240px;"
+            >
+              <source
+                src="{{ baseUrl }}/resources/images/question/{{
+                  currentQuestion['media']
+                }}"
+                type="video/mp4"
+              />
+              <source
+                src="{{ baseUrl }}/resources/images/question/{{
+                  currentQuestion['media']
+                }}"
+                type="video/ogg"
+              />
+              Your browser does not support the video element.
+            </video>
+
+            <img
+              *ngIf="fileExtension === 'img'"
+              src="{{ baseUrl }}/resources/images/question/{{
+                currentQuestion['media']
+              }}"
+              alt=""
+              style="width: 480px;height: 240px;"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div id="answer_question">
+          <div
+            class="form-check"
+            *ngFor="
+              let item of currentQuestion['answer_Options'];
+              let i = index
+            "
+          >
+            <div
+              style="float: left;margin-right: 12px;width: 24px;height: 24px;z-index: 10000 !important;"
+            >
+              <!-- <span title="Đáp án của bạn!"
+                ><img
+                  class="img_answer"
+                  *ngIf="mapCheckedAnser.get(item['id']) === true"
+                  src="../../../../assets//images//pointhand.png"
+              /></span> -->
+            </div>
+            <div>
+              <div>
+                <img
+                  class="img_answer"
+                  *ngIf="mapCheckedAnser.get(item['id']) == null"
+                  src="../../../../assets//images//checkboxemty2.png"
+                />
+                <!-- <img
+                  class="img_answer"
+                  *ngIf="
+                    item['correct'] === false &&
+                    mapCheckedAnser.get(item['id']) === true "
+                  src="../../../../assets//images//wrongcheckbox.png" /> -->
+                <img
+                  class="img_answer"
+                  *ngIf="mapCheckedAnser.get(item['id']) === true"
+                  src="../../../../assets//images//correctcheckbox.png"
+                />
+                <label>{{ mapABC.get(i) }}.{{ item['content'] }} </label>
+                <img
+                  class="img_answer_correct"
+                  *ngIf="item['correct']"
+                  src="../../../../assets//images//checkpng.png"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button
+          class="btn btn-warning"
+          style="margin: 10px;"
+          (click)="clickMark(currentQuestion['id'])"
+        >
+          <span *ngIf="mapMark.get(currentQuestion['id'])">Bỏ đánh dấu</span>
+          <span *ngIf="!mapMark.get(currentQuestion['id'])">Đánh dấu</span>
+        </button>
+      </div>
+      <!-- <div class="col-md-12">
+        <button
+          class="btn btn-warning"
+          style="margin: 10px;"
+          (click)="clickMark(currentQuestion['id'])" >
+          <span *ngIf="mapMark.get(currentQuestion['id'])">Bỏ đánh dấu</span>
+          <span *ngIf="!mapMark.get(currentQuestion['id'])">Đánh dấu</span>
+        </button>
+      </div> -->
+      <br />
+      <div class="col-md-12">
+        <div class="footerbutton">
+          <div>
+            <button
+              class="btn btn-default music"
+              (click)="backPage()"
+              role="button"
+            >
+              <p class="navButton">Về trang trước</p>
+            </button>
+
+            <button
+              href="#myModal"
+              style="margin-left:10px;"
+              class="btn btn-default music"
+              data-toggle="modal"
+              data-target="#myModal"
+              role="button"
+            >
+              <p class="navButton">Danh sách câu hỏi</p>
+            </button>
+            <button
+              style="margin-left:10px;"
+              data-toggle="modal"
+              data-target="#myModalEx"
+              class="btn btn-default music"
+              href="#"
+              role="button"
+              *ngIf="
+                currentQuestion['explantion'] != null &&
+                currentQuestion['explantion'] !== ''
+              "
+            >
+              <p class="navButton">Gợi ý</p>
+            </button>
+          </div>
+
+          <div>
+            <button
+              style="margin-right:10px"
+              class="btn btn-default music"
+              (click)="clickPrev()"
+              role="button"
+            >
+              <p class="navButton">Quay lại</p>
+            </button>
+
+            <button
+              class="btn btn-default music"
+              (click)="clickNext()"
+              role="button"
+            >
+              <p class="navButton">Tiếp theo</p>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <!-- Trigger the modal with a button -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModalEx" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4>Explantion</h4>
+            <button type="button" class="close" data-dismiss="modal">
+              &times;
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>{{ currentQuestion['explantion'] }}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2>Danh sách câu hỏi</h2>
+            <button type="button" class="close" data-dismiss="modal">
+              &times;
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+              <br />
+              <div></div>
+              <div class="row container">
+                <!-- <div class="col-xs-2">
+                  <p class="abc text-center">
+                    <i class="fa fa-flag"></i> Đã đánh dấu
+                  </p>
+                </div> -->
+                <!-- <div class="col-xs-2">
+                  <p
+                    class="abc text-center"
+                    style="background-color :#B3B3B3 !important;" >
+                    <span style="color: white;">Tất cả câu hỏi</span>
+                  </p>
+                </div> -->
+                <div class="col-xs-3">
+                  <p
+                    class="abc text-center"
+                    style="background-color:white !important;"
+                  >
+                    <span style="color: #1da1f2;">Câu hỏi chưa trả lời</span>
+                  </p>
+                </div>
+                <div class="col-xs-3">
+                  <p
+                    class="abc text-center"
+                    style="background-color:#6AC259 !important;"
+                  >
+                    <span style="color:white;">Đáp án đúng</span>
+                  </p>
+                </div>
+                <div class="col-xs-3">
+                  <p
+                    class="abc text-center"
+                    style="background-color: #F05228 !important;"
+                  >
+                    <span style="color: white;">Đáp án sai</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row container">
+              <div class="col-lg-12">
+                <div class="scroll">
+                  <a
+                    *ngFor="let question of listQuestion; let i = index"
+                    data-dismiss="modal"
+                    (click)="onClickQuestion(question, i)"
+                    class="btn btn-sq-sm qts"
+                    [ngStyle]="{
+                      'background-color': mapCheckQuestion.get(question['id'])
+                    }"
+                  >
+                    <div
+                      style="height: 20px;text-align: right;
+                        float: right;
+                        margin-top: -23px;
+                        margin-right: -10px;"
+                    >
+                      <i
+                        *ngIf="mapMark.get(question['id'])"
+                        class="fa fa-flag"
+                        aria-hidden="true"
+                      ></i>
+                    </div>
+                    <div
+                      style="height: 30px;line-height: 30px; margin-top: -5px;"
+                    >
+                      <h4
+                        [ngStyle]="{
+                          color:
+                            mapCheckQuestion.get(question['id']) === 'white'
+                              ? '#1da1f2'
+                              : 'white'
+                        }"
+                        style="margin-top: 6px"
+                      >
+                        {{ i + 1 }}
+                      </h4>
+                    </div>
+                  </a>
+                </div>
+
+                <!---->
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              Đóng
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

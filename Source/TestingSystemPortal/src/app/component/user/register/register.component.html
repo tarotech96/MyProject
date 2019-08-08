@@ -1,0 +1,181 @@
+<div class="registertong">
+  <div class="formlogin">
+    <div class="panel">
+      <h2 style="font-size: 60px;text-align: center;color: #1d9ed5;">
+        <i class="fa fa-group"></i>
+      </h2>
+      <br />
+    </div>
+    <div style="text-align: center"><h4>Đăng kí</h4></div>
+    <form
+      style="padding:0px;"
+      [formGroup]="createForm"
+      (ngSubmit)="onSubmitInsert()"
+      enctype="multipart/form-data"
+      class="col-md-12"
+    >
+      <div class="form-group">
+        <label class="col-lg-12 control-label"
+          >Họ và tên *:
+          <mat-error
+            *ngIf="
+              createForm.get('fullname').hasError('required') &&
+              createForm.get('fullname').touched "
+            style="color: red" >
+           Tên không được để trống
+          </mat-error>
+          <mat-error 
+            *ngIf="createForm.get('fullname').hasError('maxlength')" 
+            style="color: red" >
+           Tên không được quá 100 kí tự
+          </mat-error>
+          <mat-error 
+            *ngIf="createForm.get('fullname').hasError('minlength')" 
+            style="color: red" >
+           Tên không được ít hơn 6 kí tự
+          </mat-error>
+            <mat-error 
+            *ngIf="createForm.get('fullname').hasError('pattern')">
+              Tên không được nhập space!
+            </mat-error>
+        </label>
+        <div class="col-lg-12">
+          <input class="form-control" type="text" formControlName="fullname" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-lg-12 control-label"
+          >Email *
+          <mat-error
+            *ngIf="
+              createForm.get('email').hasError('required') &&
+              createForm.get('email').touched
+            "
+            style="color: red"
+          >
+           email không được để trống!
+          </mat-error>
+          <mat-error *ngIf="createForm.get('email').hasError('pattern')"
+            >email không hợp lệ</mat-error
+          >
+        </label>
+        <div class="col-lg-12">
+          <input class="form-control" type="text" formControlName="email" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-lg-12 control-label"
+          >Số điện thoại *
+          <mat-error
+            *ngIf="
+              createForm.get('phone').hasError('required') &&
+              createForm.get('phone').touched
+            "
+            style="color: red"
+          >
+            không được để trống!
+          </mat-error>
+          <mat-error *ngIf="createForm.get('phone').hasError('pattern')"
+            >chỉ được nhập số!</mat-error
+          >
+          <mat-error *ngIf="createForm.get('phone').hasError('maxlength')"
+            >không được quá 11 số!</mat-error
+          >
+        </label>
+        <div class="col-lg-12">
+          <input class="form-control" type="text" formControlName="phone" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-lg-12 control-label"
+          >Mật khẩu *:
+          <mat-error
+            *ngIf="
+              createForm.get('pass.password').hasError('required') &&
+              createForm.get('pass.password').touched
+            "
+            style="color: red"
+          >
+            không được để trống!
+          </mat-error>
+          <mat-error
+            *ngIf="createForm.get('pass.password').hasError('minlength')">
+            ít nhất 6 kí tự
+          </mat-error>
+          <mat-error
+            *ngIf="createForm.get('pass.password').hasError('maxlength')">
+            không được quá 100 kí tự
+          </mat-error>
+          <mat-error *ngIf="createForm.get('pass.password').hasError('pattern')"
+            >bao gồm số và chữ cái, không bao gồm dấu cách</mat-error
+          >
+        </label>
+        <div class="col-lg-12" formGroupName="pass">
+          <input
+            class="form-control"
+            type="password"
+            formControlName="password" 
+            autocomplete="new-password"
+          />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-lg-12 control-label"
+          >Xác nhận lại mật khẩu *
+          <mat-error
+            *ngIf="
+              createForm.get('pass.confirmPassword').hasError('required') &&
+              createForm.get('pass.confirmPassword').touched
+            "
+            style="color: red"
+          >
+            không được để trống!
+          </mat-error>
+          <!-- <mat-error *ngIf="createForm.get('pass.confirmPassword').hasError('minlength')">Mật khẩu ít nhất 6 kí tự</mat-error> -->
+        </label>
+        <div class="col-lg-12" formGroupName="pass">
+          <input
+            class="form-control"
+            type="password"
+            formControlName="confirmPassword"
+          />
+        </div>
+      </div>
+      <div
+        class="form-group alert alert-danger"
+        role="alert"
+        *ngIf="
+          createForm.get('pass').errors &&
+          createForm.get('pass.password').touched &&
+          createForm.get('pass.confirmPassword').touched
+        "
+      >
+        <span *ngIf="createForm.hasError('passwordNotMatch', ['pass'])">
+          mật khẩu không khớp!
+        </span>
+      </div>
+      <div style="margin: 15px;"
+        class="form-group alert alert-danger"
+        role="alert"
+        *ngIf="errorExistEmail !== ''"
+      >
+        <span> {{ errorExistEmail }} </span>
+      </div>
+      <div style="margin: 15px;"
+        class="form-group alert alert-success"
+        role="alert"
+        *ngIf="successExistEmail !== ''"
+      >
+        <span> {{ successExistEmail }} </span>
+      </div>
+      <div class="loginbutton">
+        <input
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="!createForm.valid"
+          value="Đăng ký"
+        />
+      </div>
+    </form>
+  </div>
+</div>

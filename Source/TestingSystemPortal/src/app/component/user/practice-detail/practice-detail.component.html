@@ -1,0 +1,111 @@
+<div class="tong">
+  <div class="divtabletrai">
+    <div class="header">
+      <span
+        ><i class="fa fa-file-text" aria-hidden="true"></i> &nbsp;CHI TIẾT BÀI
+        THI THỬ</span
+      >
+    </div>
+    <table class="table table-light">
+      <tr>
+        <th>Tên bài thi thử</th>
+        <td *ngIf="exam">{{ exam['1'] }}</td>
+      </tr>
+      <tr>
+        <th>Bộ môn</th>
+        <td *ngIf="exam">{{ exam['2'] }}</td>
+      </tr>
+      <tr>
+        <th>Chương</th>
+        <td>
+          <div style="display: inline;" *ngFor="let chap of chapters">
+            <label
+              style="background-color: #0097e6; border-radius: 5px; padding: 0px 5px 0px 5px; color: white"
+              >{{ chap }} </label
+            >&nbsp;&nbsp;
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th>Kĩ năng</th>
+        <td>
+          <div style="display: inline;" *ngFor="let do of domains">
+            <label
+              style="background-color: #0097e6; border-radius: 5px; padding: 0px 5px 0px 5px; color: white"
+              >{{ do }}</label
+            >&nbsp;&nbsp;
+          </div>
+        </td>
+      </tr>
+      <!-- <tr>
+        <th>Ngày bắt đầu</th>
+        <td>{{ exam.start_date | date: 'dd/MM/yyyy' }}</td>
+      </tr> -->
+      <tr>
+        <th>Ngày kết thúc</th>
+        <td>Không giới hạn</td>
+      </tr>
+      <tr>
+        <th>Số câu hỏi</th>
+        <td *ngIf="exam">{{ exam['5'] }}</td>
+      </tr>
+      <!-- <tr>
+        <th>Mô tả</th>
+        <td>{{ exam.decription }}</td>
+      </tr> -->
+      <tr>
+        <th>Số lần thi</th>
+        <td *ngIf="exam">{{ exam['7'] }}</td>
+      </tr>
+      <!-- <tr>
+        <th>Điểm đỗ (%)</th>
+        <td>{{ exam.percent_passing }}</td>
+      </tr> -->
+      <tr>
+        <th>Thời gian làm bài</th>
+        <td>Không giới hạn</td>
+      </tr>
+      <tr style="margin: 5px;">
+        <div class="btn btn-toolbar ">
+          <div class="btn-group btn-group-justified">
+            <button (click)="onBack()" type="button" class="btn btn-dark">
+              <i class="fa fa-arrow-left" aria-hidden="true"></i> &nbsp;Quay lại
+            </button>
+            <button
+              (click)="clickVaoThi(exam['0'])"
+              type="button"
+              class="btn btn-primary"
+              *ngIf="quaLuot === 'false'"
+            >
+              <i class="fa fa-hourglass-start" aria-hidden="true"></i> &nbsp;Bắt
+              đầu thi thử
+            </button>
+            <button
+              class="btn btn-warning"
+              style="cursor: not-allowed"
+              *ngIf="quaLuot === 'true'"
+            >
+              HẾT LƯỢT!
+            </button>
+          </div>
+        </div>
+      </tr>
+    </table>
+  </div>
+
+  <div class="noti" *ngIf="notificationVisibilityWhenVaoThi">
+    <div id="snackbard">
+      <div class="chu">Bạn có chắc muốn thi bài thi này không?</div>
+      <div class="yn">
+        <div id="bss1" (click)="oncg(true)">Yes</div>
+        <div id="bss2" (click)="oncg(false)">No</div>
+      </div>
+    </div>
+  </div>
+  <div class="noti" *ngIf="notificationVisibilityWhenMaxAttemptExcess">
+    <div id="snackbards">
+      Bạn đã làm quá số lần cho phép, vui lòng chọn bài thực hành khác!
+      <button class="btn btn-success" (click)="oncgNotLogin()">OK</button>
+    </div>
+  </div>
+</div>

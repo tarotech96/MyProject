@@ -1,0 +1,396 @@
+// Khong cho outline khi tro chuot vao cac the + khong hien thi scroll bar
+* {
+  outline: 0px !important;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+::-moz-scrollbar {
+  display: none;
+}
+::-ms-scrollbar {
+  display: none;
+}
+h1 {
+  background-color: #fdfdfe;
+  box-shadow: 1px 8px 10px gray;
+  text-align: center;
+  font-size: 20px;
+  padding: 10px;
+}
+.tong {
+  background-image: url('../../../../assets/images/Candy.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+// Slide Banner
+::ng-deep {
+  .carousel-item {
+    transition: opacity 2.5s ease !important;
+    position: absolute !important;
+    display: block !important;
+    opacity: 0;
+    color: #1c9ed6;
+  }
+  .carousel-item.active {
+    position: relative !important;
+    opacity: 1;
+    color: #1c9ed6;
+  }
+}
+.sildershow {
+  height: 100vh;
+  min-height: 300px;
+  width: 100%;
+}
+.sildershow img {
+  height: 100vh;
+  width: 100%;
+  min-height: 300px;
+}
+
+// Div Duoi Sildeshow phan BAI THI TU DO va TIN NOI BAT
+.baithitudo {
+  height: auto;
+  width: 100%;
+  padding: 1.5% 1.5% 1.5% 1.5%;
+  background: repeat center center fixed;
+  background-size: cover;
+  color: #2b2b2b;
+  display: flex;
+  flex-direction: row;
+  background-size: cover;
+  background-color: rgba(144, 199, 220, 0.1);
+}
+.btnaction {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+}
+.divtabletrai {
+  width: 70%;
+  height: auto;
+  padding-left: 0%;
+  padding-right: 0.5%;
+  overflow: hidden;
+}
+
+.tablebaithi {
+  background-color: white;
+  height: 700px;
+  box-shadow: 1px 8px 10px gray;
+  margin-bottom: 2%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.divphaitintuc {
+  width: 30%;
+  height: auto;
+  min-height: 200px;
+  padding-left: 1%;
+  margin-bottom: 2%;
+}
+td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tintuc {
+  width: 100%;
+  height: 700px;
+  background-color: #fdfdfe;
+  box-shadow: 1px 8px 20px gray;
+  -ms-overflow-style: none;
+  overflow: auto;
+}
+table {
+  table-layout: fixed;
+  width: 100%;
+  height: auto;
+  font-size: 15px;
+}
+// Sesstion duoi banner chinh
+
+//***************************** TIN TUC*************************
+.newstitle {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: justify;
+  margin-left: 10px;
+  color: #242222;
+  font-weight: 500;
+}
+.baivietganday {
+  display: block;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: 14px;
+}
+.chitietbaivietganday {
+  display: flex;
+  flex-direction: row;
+}
+.chitietbaivietganday img {
+  border-radius: 3px;
+  width: 80px;
+  height: 80px;
+}
+.imgtieude {
+  border-radius: 3px;
+  width: 80px;
+  height: 80px;
+}
+#newsul {
+  padding-left: 0px !important;
+}
+#newsul:hover {
+  background-color: rgb(196, 208, 221);
+  border-radius: 5px;
+}
+
+ul li {
+  cursor: pointer;
+}
+.carousel-caption {
+  right: 0px !important;
+  width: 100% !important;
+  height: 70px !important;
+  left: 0px !important;
+  bottom: 0px !important;
+  padding-top: 2px !important;
+  padding-left: 5% !important;
+  padding-right: 5% !important;
+  background-color: rgba(0, 0, 0, 0.2) !important;
+}
+.slogantitle p {
+  padding: 5px 0px 0px 0px;
+  margin: 0px;
+  color: #1c9ed6;
+}
+.slogantitle h5 {
+  padding: 0px;
+  margin: 0px;
+  color: #1c9ed6;
+}
+// Popup tự viết
+.noti {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  z-index: 300000;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+#snackbard {
+  width: 350px;
+  height: 86.5px;
+  background-color: #ffffff;
+  color: #718093;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 4;
+  font-size: 18px;
+  margin: 0 auto;
+  margin-top: 20%;
+}
+#snackbards {
+  padding: 5px;
+  width: 600px;
+  height: 100px;
+  background-color: rgb(71, 71, 71);
+  color: #ffffff;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 4;
+  font-size: 18px;
+  margin: 0 auto;
+  margin-top: 20%;
+  border-radius: 5px;
+  border: 1px solid red;
+}
+
+.yn {
+  display: flex;
+  flex-direction: row;
+  vertical-align: center;
+}
+
+#bss1 {
+  background: #ff0000;
+  width: 50px;
+  height: 86.5px;
+  font-size: 20px;
+  vertical-align: center;
+  color: #ffffff;
+  padding: 25px 0px 25px 0px;
+  cursor: pointer;
+}
+
+.chu {
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  align-content: center;
+}
+#bss2 {
+  background: #128af3;
+  width: 50px;
+  height: 86.5px;
+  font-size: 20px;
+  vertical-align: center;
+  color: #ffffff;
+  padding: 25px 0px 25px 0px;
+  cursor: pointer;
+}
+#bss1:hover {
+  background: #db0000;
+}
+
+#bss2:hover {
+  background: #0070d3;
+}
+
+//Phan trang-------------------------------------------------------
+
+.phantrang {
+  width: 100%;
+  position: relative;
+  bottom: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px 0 10px;
+}
+.lt span {
+  color: rgb(70, 68, 68);
+}
+.pagi {
+  position: relative;
+  top: 8px;
+}
+
+@media all and (max-width: 1600px) {
+  .carousel-caption {
+    height: 100px !important;
+    padding-left: 1% !important;
+    padding-right: 1% !important;
+  }
+}
+@media all and (max-width: 1200px) {
+  .baithitudo {
+    // height: 200vh;
+    // min-height: 170vh;
+    // max-height: 200vh;
+    flex-direction: column;
+    padding: 0%;
+  }
+  .divtabletrai {
+    width: 100%;
+    // height: auto;
+    padding-left: 0%;
+    padding-right: 0%;
+  }
+  .divphaitintuc {
+    margin-top: 12px;
+    width: 100%;
+    padding-top: 0%;
+    padding-right: 0%;
+    padding-left: 0%;
+    // height: auto;
+  }
+  .tintuc {
+    width: 100%;
+    // height: 100vh;
+    background-color: #fdfdfe;
+    box-shadow: 1px 8px 20px gray;
+    -ms-overflow-style: none;
+    overflow: auto;
+  }
+  // table {
+  //   box-shadow: 1px 8px 20px gray;
+  // }
+  // Sesstion duoi banner chinh
+  .sildershow {
+    height: 70vh;
+  }
+  .sildershow img {
+    height: 70vh;
+  }
+  .newstitle {
+    display: flex;
+    text-align: justify;
+    justify-content: flex-start;
+    margin-left: 10px;
+  }
+  .chitietbaivietganday {
+    display: flex;
+    text-align: justify;
+    justify-content: flex-start;
+  }
+  // .tablebaithi {
+  //   height: 85vh !important;
+  // }
+  // .divphaitintuc {
+  //   height: 500px !important;
+  // }
+}
+
+@media all and (max-width: 800px) {
+  .noti {
+    height: 200vh;
+  }
+  .baithitudo {
+    flex-direction: column;
+    margin-left: 0px;
+    padding: 0% 0% 0% 0%;
+    min-width: 550px;
+  }
+  .divtabletrai {
+    padding-left: 0%;
+    padding-right: 0%;
+    padding-bottom: 0%;
+  }
+  .divphaitintuc {
+    padding-left: 0%;
+    padding-right: 0%;
+    padding-bottom: 0%;
+  }
+
+  .chude {
+    display: none;
+  }
+  .sildershow {
+    min-width: 550px;
+  }
+  .sildershow {
+    height: 50vh;
+  }
+  .sildershow img {
+    height: 50vh;
+  }
+  .carousel-caption {
+    height: 130px !important;
+  }
+  th {
+    min-width: 120px;
+  }
+  td {
+    min-width: 120px;
+  }
+}

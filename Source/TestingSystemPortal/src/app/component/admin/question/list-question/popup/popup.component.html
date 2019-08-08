@@ -1,0 +1,21 @@
+
+  <h2 mat-dialog-title>Import Question</h2>
+  <mat-dialog-content class="mat-typography">
+      <div class="themfile">
+          <div class="form-group">
+            <input
+              #myInput
+              type="file"
+              class="form-control"
+              (change)="onAddExcel($event)"
+              accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" 
+            />
+          </div>
+          </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial [disabled]= "this.fileExist !== 1" (click)="getListQuestion()">Import</button>
+  </mat-dialog-actions>
+
+

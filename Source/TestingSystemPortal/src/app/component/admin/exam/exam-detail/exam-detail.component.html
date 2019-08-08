@@ -1,0 +1,442 @@
+<div class="container-fluid">
+  <div class="card text-center border-success">
+    <div class="card-header text-center text-white bg-primary">
+      <h3>CHI TIẾT ĐỀ THI</h3>
+    </div>
+    <div class="card-body">
+      <div class="form-group row">
+        <label
+          style="color: red; font-weight: bold;  text-align: center "
+          class="col-sm-2 col-form-label"
+        >
+          Chọn cách cấu hình:</label
+        >
+        <div class="form-group col-sm-6" [formGroup]="addDetail">
+          <select
+            class="form-control"
+            [value]="typeSelect"
+            (change)="onChangeType($event.target.value)"
+            formControlName="type"
+          >
+            <option [value]="type1.key" *ngFor="let type1 of listType">
+              {{ type1.value }}</option
+            >
+          </select>
+        </div>
+      </div>
+      <div
+        class="card text-center border-warning"
+        style="margin-top:30px"
+        *ngIf="showRandom"
+      >
+        <div class="card-header ">
+          <p
+            style="font-weight: 700; font-size: 25px; text-transform: uppercase; color: red"
+          >
+            Cấu hình random đề thi
+          </p>
+          <label>
+            Số lượng câu hỏi của bài thi : {{ exam['question_num'] }}
+          </label>
+        </div>
+        <div >
+            <form [formGroup]="addDetail" >
+              <div class="row" >
+                <div class="col-sm-3"></div>
+                  <div class="form-group col-sm-2" >
+                    Chương
+                    <select
+                      class="form-control"
+                      (change)="selectChapter($event)"
+                      formControlName="selectChapter"
+                    >
+                      <option
+                        [value]="chapter.id"
+                        *ngFor="let chapter of listChapter"
+                        >{{ chapter.name }}</option
+                      >
+                    </select>
+                  </div>
+                  <div class="form-group col-sm-2" >
+                    Kĩ năng
+                    <select
+                      class="form-control"
+                      (change)="selectDomain($event)"
+                      formControlName="selectDomain"
+                    >
+                      <option
+                        [value]="domain.id"
+                        *ngFor="let domain of listDomain"
+                        >{{ domain.name }}</option
+                      >
+                    </select>
+                  </div>
+                  <div class="form-group col-sm-2" >
+                    Số lượng câu hỏi
+                    <input
+                      type="number"
+                      min="0"
+                      (keyup)="validateMax($event.target.value)"
+                      onkeypress="return event.charCode >= 48"
+                      formControlName="numberQuestion"
+                      style="height: 40px; border-radius: 5px;border: 1px solid gray"
+                    />
+                  </div>
+                  <div class="col-sm-3" style="margin-top: 20px">
+                      <button
+                      *ngIf="isDisable; else disable"
+                      class="btn btn-primary"
+                      (click)="onAdd(addDetail.controls.detailSelect)" >
+                      Thêm câu hỏi
+                    </button>
+                    <div style="font-size : 15px;" *ngIf="showWarning">
+                      Quá số lượng câu hỏi của chapter và domain này !!
+                    </div>
+                    <ng-template #disable>
+                      <button
+                        disabled
+                        class="btn btn-primary"
+                        (click)="onAdd(addDetail.controls.detailSelect)"
+                      >
+                        Thêm câu hỏi
+                      </button>
+                    </ng-template>
+                  </div>
+                <div formArrayName="detailSelect" class="col-sm-12">
+                  <div
+                    style="margin-top: 10px;"
+                    *ngFor="
+                      let option of addDetail.get('detailSelect').controls;
+                      let i = index
+                    "
+                  >
+                    <div [formGroupName]="i">
+                      <div
+                        class="form-group row "
+                        style="margin: 10px 0;"
+                      >
+                      <div class="col-sm-3"></div>
+                        <div class="form-group col-sm-2" >
+                          <select
+                            formControlName="chapter"
+                            class="form-control"
+                            (change)="selectArray($event, i)"
+                          >
+                            <option
+                              [value]="chapter.id"
+                              *ngFor="let chapter of listChapter"
+                              >{{ chapter.name }}</option
+                            >
+                          </select>
+                        </div>
+                        <div class="form-group col-sm-2" >
+                          <select
+                            formControlName="domain"
+                            class="form-control"
+                            (change)="selectArray($event, i)"
+                          >
+                            <option
+                              [value]="domain.id"
+                              *ngFor="let domain of listDomain"
+                              >{{ domain.name }}</option
+                            >
+                          </select>
+                        </div>
+                        <div
+                          class="form-group col-sm-2"
+
+                        >
+                          <input
+                            (click)="hideWarning()"
+                            style="
+                            height: 40px;
+                            border-radius: 5px;
+                            border: 1px solid gray;"
+                            type="number"
+                            min="0"
+                            onkeypress="return event.charCode >= 48"
+                            (keyup)="validateMaxArray($event.target.value, i)"
+                            formControlName="number"
+                          />
+                        </div>
+                        <div class="form-group col-sm-3" style="padding-top: 12px">
+                        <input
+                          class="checkValidBt"
+                          type="button"
+                          formControlName="tooltip"
+                          style="margin-left: 10px;border-radius: 50%"
+                        />
+
+                        <i
+                          class="fa fa-trash-o"
+                          style="font-size: 20px;margin-left: 10px;color: red"
+                          (click)="
+                            deleteOption(addDetail.controls.detailSelect, i)
+                          "
+                        ></i>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <br />
+
+              </div>
+            </form>
+          <button
+            *ngIf="isApdungshow"
+            style="margin-top: 50px"
+            (click)="generateQuestion()"
+            class="btn btn-primary"
+          >
+            Áp Dụng
+          </button>
+          <div *ngIf="isExceedTotalQuestion">
+            <span style="font-size : 15px"> Qúa số lượng câu hỏi</span>
+          </div>
+          <div *ngIf="isExceedDomainChapter">
+            <span style="font-size : 15px"> Qúa số lượng câu hỏi ở chapter và domain</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--box chon de thi-->
+    <div class="card-deck" style="margin-top:15px">
+      <div class="card text-while border-info">
+        <div class="card-header bg-info">
+          <div class="form-row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+              <h4
+                style="font-weight: bold;color:#ffffff;text-align: center;text-transform: uppercase"
+              >
+                Ngân hàng câu hỏi
+              </h4>
+            </div>
+            <div class="col-md-4"></div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-4 mb-3">
+              <input
+                [(ngModel)]="key"
+                type="text"
+                class="form-control"
+                placeholder="Tìm kiếm"
+                required
+              />
+            </div>
+            <div class="col-md-3 mb-3">
+              <select
+                selected="false"
+                (change)="onChangeChapter($event.target.value)"
+                id="inputState"
+                class="form-control"
+              >
+                <option
+                  [value]="chapter.id"
+                  *ngFor="let chapter of listChapter"
+                  >{{ chapter.name }}</option
+                >
+              </select>
+            </div>
+            <div class="col-md-3 mb-3">
+              <select
+                selected="false"
+                (change)="onChangeDomain($event.target.value)"
+                id="inputState"
+                class="form-control"
+              >
+                <option [value]="domain.id" *ngFor="let domain of listDomain">{{
+                  domain.name
+                }}</option>
+              </select>
+            </div>
+            <div class="col-md-2 mb-3">
+              <button (click)="getListRestQuestion()" class="btn btn-primary ">
+                Tìm kiếm
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- ben chon -->
+        <div class="card-body" style="min-height: 100vh;max-height: 100vh">
+          <div class="example-container " style="height: 450px;">
+            <div
+              cdkDropList
+              #todoList="cdkDropList"
+              [cdkDropListData]="todo"
+              [cdkDropListConnectedTo]="[doneList]"
+              class="example-list"
+              (cdkDropListDropped)="drop($event)"
+              style="min-height: 95vh;max-height: 95vh"
+            >
+              <div
+                class="example-box text-danger"
+                *ngFor="let item of todo"
+                cdkDrag
+                style="padding: 5px;"
+              >
+                <div style="font-size: 16px; text-align: left;">
+                  <strong style="font-size: 16px; text-align: left">
+                    {{ item.content | truncate: 105 }}</strong
+                  >
+                </div>
+                <div class="row">
+                  <div class="col-md-4" style="text-align: left">
+                    <em> Môn thi:&nbsp; {{ item['subject']!=null? item['subject']['name']:'' }} </em>
+                  </div>
+                  <div class="col-md-3" style="text-align: left">
+                    <em> Chương:&nbsp; {{ item['chapter']!=null?item['chapter']['name']:'' }} </em>
+                  </div>
+                  <div class="col-md-5" style="text-align: left">
+                    <em>Kĩ năng:&nbsp; {{ item['domain']!=null?item['domain']['name']:'' }}</em>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ket qua -->
+      <div class="card border-success">
+        <div
+          class="card-header bg-success text-center"
+          style="min-height: 115px"
+        >
+          <div class="form-row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+              <h4
+                style="font-weight: bold;color:#ffffff;text-align: center;text-transform: uppercase"
+              >
+                Đề Thi
+              </h4>
+            </div>
+            <div class="col-md-4"></div>
+          </div>
+          <div class="form-row">
+            <div class="col-md-4">
+              <p
+                style="font-size: 16px;color: #ffffff;font-weight: bold;border: 2px solid #88cea0"
+              >
+                {{ numberQuestion }} / {{ numberQuestionOfExam }} câu hỏi
+              </p>
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+              <p
+                style="font-size: 16px;color: #ffffff;font-weight: bold;border: 2px solid #88cea0"
+              >
+                {{ time }} / {{ timeMax }} (s)
+              </p>
+              <p *ngIf="timewarning" style="color: red;">
+                Qúa thời gian cho phép
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="card-body" style="min-height: 100vh;max-height: 100vh">
+          <div class="example-container" style="height: 450px;">
+            <div
+              cdkDropList
+              #doneList="cdkDropList"
+              [cdkDropListData]="done"
+              [cdkDropListConnectedTo]="[todoList]"
+              class="example-list"
+              (cdkDropListDropped)="drop($event)"
+              style="min-height: 95vh!important;max-height: 95vh"
+            >
+              <div
+                class="example-box1 text-success"
+                *ngFor="let item of done"
+                cdkDrag
+                style="padding: 5px;"
+              >
+                <div style="font-size: 16px; text-align: left;">
+                  <strong style="font-size: 16px; text-align: left;">
+                    {{ item.content | truncate: 105 }}</strong
+                  >
+                </div>
+                <div class="row">
+                  <div class="col-md-4" style="text-align: left">
+                    <em>
+                      Môn thi:&nbsp;
+                      {{
+                        item['subject'] != null ? item['subject']['name'] : ''
+                      }}
+                    </em>
+                  </div>
+                  <div class="col-md-3" style="text-align: left">
+                    <em>
+                      Chương:&nbsp;
+                      {{
+                        item['chapter'] != null ? item['chapter']['name'] : ''
+                      }}
+                    </em>
+                  </div>
+                  <div class="col-md-5" style="text-align: left">
+                    <em
+                      >Domain:&nbsp;
+                      {{
+                        item['domain'] != null ? item['domain']['name'] : ''
+                      }}</em
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--box chọn đề thi-->
+    <div
+      class="col-sm-1"
+      style="margin-top: 50px;margin-left: 0%; margin-bottom: 50px; width:100%;"
+      *ngIf="isShowEditQuestion; else update"
+    >
+      <button class="btn btn-primary " (click)="updateExamDetail()">
+        Create Exam
+      </button>
+      <button
+        style="margin-left: 10px;"
+        type="button"
+        class="btn btn-danger"
+        [routerLink]="['/cms/exam']"
+      >
+        Huỷ
+      </button>
+    </div>
+    <div class="">
+      <ng-template #update>
+        <div
+          style="margin-top: 50px;margin-left: 0%; margin-bottom: 50px; width:100%;"
+        >
+          <button class="btn btn-primary " (click)="updateExamDetail()">
+            Update Exam
+          </button>
+          <div *ngIf="!isUpdate"><span>Phải thêm đủ số lượng câu</span></div>
+          <button
+            style="margin-left: 10px;"
+            type="button"
+            class="btn btn-danger"
+            [routerLink]="['/cms/exam']"
+          >
+            Huỷ
+          </button>
+        </div>
+      </ng-template>
+    </div>
+    <popup
+      #popupConfirm
+      (confirmClick)="confirm()"
+      (cancelClick)="cancle()"
+      style="width: 100%;height: 100%;background-color: rgba(65, 65, 65, 0.5)"
+    >
+      Ngân Hàng Câu Hỏi Không đủ ? Bạn có muốn thêm câu hỏi ?
+    </popup>
+    <popup #popupDangger (confirmClick)="confirmDanger()">
+      Tổng số phần trăm phải nhỏ hơn hoặc bằng 100 !!!!!
+    </popup>
+  </div>
+</div>

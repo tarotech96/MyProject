@@ -1,0 +1,77 @@
+<div class="container-fluid">
+      <div class="card">
+        <div class="card-header text-center text-white bg-primary">
+          <h3>THÔNG TIN BÀI THI</h3>
+        </div>
+        <div class="card-body">
+          <ul class="list-group textview">
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              Tên bài thi: <strong class="text-muted">{{exam.title}}</strong>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+            số lượng câu hỏi: <strong class="text-muted"> {{exam.question_num}} </strong>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+            ngày tạo: <strong class="text-muted">{{exam.created_at | date : 'dd/MM/yyyy'}} </strong>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+            ngày bắt đầu:
+              <strong class="text-muted">{{exam.start_date | date : 'dd/MM/yyyy'}} </strong>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+            ngày kết thúc:
+              <strong class="text-muted">{{exam.end_date | date : 'dd/MM/yyyy'}} </strong>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center">
+            số người đã thi:
+              <strong class="text-muted">{{numberUserCompleted}} </strong>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center">
+            số người chưa thi:
+              <strong class="text-muted"
+                >{{numberUserInCompleted}}
+              </strong>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    <div class="card-deck" style="margin-top:20px">
+        
+        <div class="card">
+            <div class="card-header text-center text-white bg-info"><h3>DANH SÁCH ĐÃ THI</h3></div>
+          <div class="card-body ">
+              <div class="container mt-3 listnhanvien">
+                  <ul class="list-group" *ngFor="let user of listUserComplete">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{user['users']['fullname']}}
+                      <span class="badge badge-primary "><button type="button" class="btn btn-primary" (click)="onViewResult(user['id'],user['exam']['id'])">View Detail</button></span>
+                  </ul>
+                </div>
+          </div>
+        </div>
+    
+        <div class="card">
+          <div class="card-header text-center text-white bg-warning"><h3>DANH SÁCH CHƯA THI</h3></div>
+          <div class="card-body ">
+            <div class="listnhanvien">
+              <ul class="list-group" *ngFor="let user of listUserInComplete">
+                  <li class="list-group-item"> {{user['fullname']}}</li>
+                </ul>
+              </div>
+          </div>
+        </div>
+      </div>
+</div>

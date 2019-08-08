@@ -1,0 +1,345 @@
+<!-- Page Content -->
+<div id="content" *ngIf="showTable">
+  <div id="fu">
+    <input id="search_box" class="form-control" type="search" placeholder="Tìm kiếm theo tên" aria-label="Search"
+      (keyup)="search($event)" />
+    <button type="button" class="btn btn-primary abtn" (click)="onClickAddNew()"
+      *ngIf="showTable && checkRolePermission('insertusers'); else disable">
+      + Thêm nội dung
+    </button>
+    <ng-template #disable></ng-template>
+  </div>
+  <table class="table table-bordered " style="margin-top: 10px;">
+    <thead>
+      <tr>
+        <th style="text-align: center">ID</th>
+        <th style="vertical-align: middle;text-align: left;" (click)="sort('fullname')">
+          Họ và tên<i class="fa fa-sort float-right" aria-hidden="true"></i>
+        </th>
+        <th style="vertical-align: middle;text-align: left;" (click)="sort('email')">
+          Email<i class="fa fa-sort float-right" aria-hidden="true"></i>
+        </th>
+        <th>Điện thoại</th>
+        <th>Địa chỉ</th>
+        <th style="text-align: center">Ảnh</th>
+        <th style="vertical-align: middle;text-align: center;">Trạng thái</th>
+        <th style="text-align: center">Thiết lập</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="
+          let user of (listUser
+            | paginate: { itemsPerPage: [perPage], currentPage: p });
+          trackBy: trackByFn
+        ">
+        <td style="text-align: center">{{ user.id }}</td>
+        <td style="text-align: left">{{ user.fullname }}</td>
+        <td style="text-align: left">{{ user.email }}</td>
+        <td style="text-align: left">{{ user.phone }}</td>
+        <td style="text-align: left">{{ user.address }}</td>
+        <td style="text-align: center">
+          <img style="border-radius: 50%;width:50px; height:50px" class="avaimg"
+            src="{{ baseURL }}/resources/images/user/{{ user.img }}"
+            onerror="this.src='../../../../assets/images/default-avatar.png'" />
+        </td>
+        <td style="text-align: left;">
+          <div style="text-align: center">
+            <span *ngIf="user.status === 1" class="labelStatus active" style="width: 80px">Active</span>
+            <span *ngIf="user.status === 0" class="labelStatus inactive" style="width: 80px">Inactive</span>
+          </div>
+        </td>
+
+        <td style="text-align: center">
+          <i class="fa fa-pencil btn btn-primary icon" (click)="onClickUpdate(user)"></i>
+          <i *ngIf="checkRolePermission('deleteusers'); else disable" class="fa fa-trash-o btn btn-danger icon"
+            (click)="onClickDelete(user)"></i>
+          <i class="fa fa-info-circle btn btn-success icon" (click)="infor(user.email)"></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="phantrang">
+    <div class="lt">
+      <span for="sel1">Results per page: </span>
+      <select class="ft" id="sel1" (change)="onChange($event)">
+        <option>5</option>
+        <option>10</option>
+        <option>15</option>
+        <option>25</option>
+        <option>50</option>
+      </select>
+    </div>
+    <div class="pagi">
+      <pagination-controls *ngIf="showTable" class="text-center" (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="container">
+    <form [formGroup]="insertForm" (ngSubmit)="onSubmitInsert()" *ngIf="showInsertForm">
+      <div style="text-align: center">
+        <h4>Thêm mới User</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label> Họ và tên *</label>
+          <input type="text" class="form-control" formControlName="fullname" (change)="checkSpaceFullName($event)" />
+        </div>
+        <div class="form-group alert alert-danger" role="alert" *ngIf="
+                            insertForm.get('fullname').errors &&
+                            insertForm.get('fullname').touched
+                          ">
+          <span *ngIf="
+                              insertForm.hasError('required', ['fullname'])
+                            ">
+            Tên không được để trống !
+          </span>
+          <span *ngIf="
+                              insertForm.get('fullname').hasError('whitespace')
+                            ">
+            Tên không được nhập space!
+          </span>
+          <span *ngIf="
+                              insertForm.hasError('maxlength', ['fullname'])
+                            ">
+            Tên không được quá 50 kí tự!
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label> Email *</label>
+          <input type="text" class="form-control" formControlName="email" />
+        </div>
+        <div class="form-group alert alert-danger" role="alert" *ngIf="
+                            insertForm.get('email').errors &&
+                            insertForm.get('email').touched
+                          ">
+          <span *ngIf="insertForm.hasError('required', ['email'])">
+            Bạn không được để trống Email!
+          </span>
+          <span *ngIf="insertForm.hasError('email', ['email'])">
+            Email sai định dạng!
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label> Password *</label>
+          <input type="password" class="form-control" formControlName="password" />
+        </div>
+        <div class="form-group alert alert-danger" role="alert" *ngIf="
+                            insertForm.get('password').errors &&
+                            insertForm.get('password').touched
+                          ">
+          <span *ngIf="
+                              insertForm.hasError('required', ['password'])
+                            ">
+            Password không được để trống!
+          </span>
+          <span *ngIf="
+                              insertForm.hasError('minlength', ['password'])
+                            ">
+            Password tối thiểu 6 kí tự!
+          </span>
+          <span *ngIf="
+                              insertForm.hasError('maxlength', ['password'])
+                            ">
+            Password không được quá 32 kí tự!
+          </span>
+          <span *ngIf="
+                              insertForm.get('password').hasError('pattern')
+                            ">
+            Password không được nhập space!
+          </span>
+        </div>
+        <div class="form-group">
+          <label> Địa chỉ:</label>
+          <input type="text" class="form-control" formControlName="address" />
+        </div>
+        <div class="form-group alert alert-danger" role="alert" *ngIf="
+                            insertForm.get('address').errors &&
+                            insertForm.get('address').touched
+                          ">
+          <span *ngIf="insertForm.hasError('required', ['address'])">
+            Bạn không được để trống địa chỉ!
+          </span>
+          <span *ngIf="
+                              insertForm.hasError('maxlength', ['address'])
+                            ">
+            Địa chỉ không được quá 255 kí tự!
+          </span>
+        </div>
+        <div class="form-group">
+          <label> Điện thoại:</label>
+          <input type="text" class="form-control" formControlName="phone" />
+        </div>
+        <div class="form-group alert alert-danger" role="alert" *ngIf="
+                            insertForm.get('phone').errors &&
+                            insertForm.get('phone').touched
+                          ">
+          <span *ngIf="insertForm.hasError('required', ['phone'])">
+            Bạn không được để trống điện thoại!
+          </span>
+          <span *ngIf="insertForm.hasError('maxlength', ['phone'])">
+            Điện thoại không được quá 12 kí tự!
+          </span>
+          <span *ngIf="insertForm.get('phone').hasError('pattern')">
+            Điện thoại chỉ được nhập số!
+          </span>
+        </div>
+        <div class="form-group">
+          <label> Ngày sinh:</label>
+          <input type="date" class="form-control" formControlName="birthday" />
+        </div>
+        <div class="form-group alert alert-danger" role="alert" *ngIf="
+                            insertForm.get('birthday').errors &&
+                            insertForm.get('birthday').touched
+                          ">
+          <span *ngIf="
+                              insertForm.hasError('required', ['birthday'])
+                            ">
+            Bạn không được để trống ngày sinh!
+          </span>
+          <span *ngIf="
+                              insertForm.get('birthday').hasError('response')
+                            ">
+            Ngày sinh không được vượt quá ngày hiện tại
+          </span>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-6">
+            <label> Ảnh:</label>
+            <input type="file" class="form-control" formControlName="img" (change)="onChangeFile($event)" />
+          </div>
+          <div class="col-md-6">
+            <img *ngIf="!showMedia" style="width: 120px;height: 80px;" [src]="imageSrc || 'http://placehold.it/180'"
+              alt="your image" onerror="this.src='../../../../assets/images/default-avatar.png'" />
+            <!-- <img
+                              *ngIf="showMedia"
+                              src="{{ baseURL }}/resources/images/user/{{
+                                user.img
+                              }}"
+                              alt=""
+                              style="width: 120px;height: 80px;"
+                              onerror="this.src='../../../../assets/images/default-avatar.png'"
+                            /> -->
+          </div>
+        </div>
+        <div class="form-group alert alert-danger" role="alert" *ngIf="errorExistEmail !== ''">
+          <span> {{ errorExistEmail }} </span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success">
+          Thêm mới
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="onClickCloseForm()">
+          Đóng
+        </button>
+      </div>
+    </form>
+    <!-- Form update -->
+    <form [formGroup]="updateForm" (ngSubmit)="onSubmitUpdate()" *ngIf="showUpdateForm">
+      <div style="text-align: center">
+        <h4>Chỉnh sửa User</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label> Tên:</label>
+          <input type="text" class="form-control" formControlName="fullname" (change)="checkSpaceFullName($event)" />
+        </div>
+        <div class="form-group alert alert-danger" role="alert" *ngIf="
+                            updateForm.get('fullname').errors &&
+                            updateForm.get('fullname').touched
+                          ">
+          <span *ngIf="
+                              updateForm.hasError('required', ['fullname'])
+                            ">
+            Bạn không được để trống tên!
+          </span>
+          <span *ngIf="
+                              updateForm.hasError('maxlength', ['fullname'])
+                            ">
+            Tên không được quá 50 kí tự!
+          </span>
+          <span *ngIf="updateForm.get('name').hasError('pattern')">
+            Tên không được nhập space!
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label> Email:</label>
+          <input type="text" class="form-control" formControlName="email" readonly="true;" />
+        </div>
+        <div class="form-group">
+          <label> Địa chỉ:</label>
+          <input type="text" class="form-control" formControlName="address" />
+        </div>
+        <div class="form-group alert alert-danger" role="alert" *ngIf="
+                            updateForm.get('address').errors &&
+                            updateForm.get('address').touched
+                          ">
+          <span *ngIf="updateForm.hasError('required', ['address'])">
+            Bạn không được để trống địa chỉ!
+          </span>
+          <span *ngIf="updateForm.hasError('maxlength', ['phone'])">
+            Địa chỉ không được quá 255 kí tự!
+          </span>
+        </div>
+        <div class="form-group">
+          <label> Điện thoại:</label>
+          <input type="phone" class="form-control" formControlName="phone" />
+        </div>
+        <div class="form-group alert alert-danger" role="alert" *ngIf="
+                            updateForm.get('phone').errors &&
+                            updateForm.get('phone').touched
+                          ">
+          <span *ngIf="updateForm.hasError('required', ['phone'])">
+            Bạn không được để trống điện thoại!
+          </span>
+          <span *ngIf="updateForm.hasError('maxlength', ['phone'])">
+            Điện thoại không được quá 12 kí tự!
+          </span>
+        </div>
+        <div class="form-group">
+          <label>
+            Status <span class="required_field"></span></label>
+          <select class="form-control" formControlName="status">
+            <option *ngFor="let choose of selectForm" value="{{ choose.id }}">{{ choose.name }}</option>
+            >
+          </select>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-6">
+            <label> Ảnh:</label>
+            <input type="file" class="form-control" formControlName="img" (change)="onChangeFile($event)" />
+          </div>
+          <div class="col-md-6">
+            <img *ngIf="!showMedia" style="width: 120px;height: 80px;" [src]="imageSrc || 'http://placehold.it/180'"
+              alt="your image" onerror="this.src='../../../../assets/images/default-avatar.png'" />
+            <img *ngIf="showMedia" src="{{ baseURL }}/resources/images/user/{{
+                                user.img
+                              }}" alt="" style="width: 120px;height: 80px;"
+              onerror="this.src='../../../../assets/images/default-avatar.png'" />
+          </div>
+        </div>
+        <div class="form-group alert alert-danger" role="alert" *ngIf="errorExistEmail !== ''">
+          <span> {{ errorExistEmail }} </span>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success">
+          Cập nhật
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="onClickCloseForm()">
+          Đóng
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<popup #popupDelete (confirmClick)="confirmDeleteClick()">
+  Bạn có chắc chắn muốn xóa ?
+</popup>
+
+<popup #popupApplyFailed> Cần ít nhất 2 bản ghi được kích hoạt ! </popup>

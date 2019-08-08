@@ -1,0 +1,82 @@
+
+<!-- Page Content -->
+<div id="content" >
+  <h2> Group: {{groupDTO.nameGroup}}</h2>
+  <div id="fu">
+    <input id="search_box" class="form-control" type="search" placeholder="Tìm kiếm theo tên" aria-label="Search"
+      (keyup)="search($event)" />
+<div  class="col-md-4" style="margin-left: auto" >
+  <ng-multiselect-dropdown
+  [placeholder]="'custom placeholder'"
+  [data]="groupDTO.listUserRest"
+  [(ngModel)]="selectedUser"
+  [settings]="dropdownSettingUser"
+  (onSelect)="onItemSelect($event)"
+  (onSelectAll)="onSelectAll($event)"
+>
+</ng-multiselect-dropdown>
+
+
+
+  </div>
+  <button style="margin-left: 10px" type="button" class="btn btn-primary" (click)="onClickAddUser()"
+      >
+       Thêm
+    </button>
+  </div>
+  <table class="table table-bordered text-center " style="margin-top: 10px;">
+    <thead>
+      <tr>
+        <th colspan="3">ID</th>
+        <th style="vertical-align: middle;text-align: left;" colspan="3" >
+          Họ và tên<i class="fa fa-sort float-right" aria-hidden="true"></i>
+        </th>
+        <th style="vertical-align: middle;text-align: left;" colspan="3">
+          Email
+        </th>
+        <th style="vertical-align: middle;text-align: left;" colspan="3">
+          Thiết lập
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="
+        let user of (groupDTO.listUser
+          | paginate: { itemsPerPage: [perPage], currentPage: p });
+        trackBy: trackByFn
+      ">
+      <td colspan="3">{{ user.id}}</td>
+      <td style="text-align: left" colspan="3">{{ user.fullName }}</td>
+
+      <td style="text-align: left" colspan="3">
+        {{ user.email }}
+      </td>
+
+      <td>
+        <i style="color:white; margin-left: 10px;"
+        class="fa fa-trash-o btn btn-danger" (click)="onClickDelete(user.id)"></i>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div class="phantrang">
+    <div class="lt">
+      <span for="sel1">Results per page: </span>
+      <select class="ft" id="sel1" (change)="onChange($event)">
+        <option>5</option>
+        <option>10</option>
+        <!-- <option>15</option> -->
+      </select>
+    </div>
+    <div class="pagi">
+      <pagination-controls  class="text-center" (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+</div>
+<popup #popupDelete (confirmClick)="confirmDeleteClick()"> {{ xyz }} </popup>
+<popup #popupDeleteChildren (confirmClick)="confirmDeleteClick()">
+  <!-- <div *ngIf="this.errDelete != ''">
+    <span>{{ this.errDelete }}</span>
+  </div> -->
+</popup>
+<popup #popupApplyFailed> Cần ít nhất 2 bản ghi được kích hoạt ! </popup>

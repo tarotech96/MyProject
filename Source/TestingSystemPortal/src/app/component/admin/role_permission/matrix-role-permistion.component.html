@@ -1,0 +1,54 @@
+<div class="tong">
+  <div class="searchadd">
+    <input
+      (keyup)="onSearch($event)"
+      [(ngModel)]="keysearch"
+      class="form-control"
+      type="search"
+      placeholder="Search"
+      aria-label="Search"
+    />
+  </div>
+
+  <table class="table table-bordered text-left">
+    <thead>
+      <tr>
+        <th style="text-align: left">Permission/Role</th>
+        <th
+          style="text-align: center; width: 200px;"
+          *ngFor="let role of Permistion"
+        >
+          {{ role.value }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of Role">
+        <td>{{ p.value }}</td>
+        <td
+          style="padding-left: 88px; width: 200px;"
+          *ngFor="let check of Permistion"
+        >
+          <label class="container">
+            <input
+              name="checked"
+              *ngIf="isCheck(check.value, p.value); else elseBlock"
+              type="checkbox"
+              checked
+              (change)="onSelect(p.value, check.value, $event)"
+            />
+            <span class="checkmark"></span>
+          </label>
+          <ng-template #elseBlock>
+            <input
+              name="checked"
+              type="checkbox"
+              (change)="onSelect(p.value, check.value, $event)"
+          /></ng-template>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="phantrang"><div class="lt"></div></div>
+</div>

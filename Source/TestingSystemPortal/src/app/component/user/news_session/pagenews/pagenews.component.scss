@@ -1,0 +1,220 @@
+// Khong cho outline khi tro chuot vao cac the + khong hien thi scroll bar
+* {
+  outline: 0px !important;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+::-moz-scrollbar {
+  display: none;
+}
+::-ms-scrollbar {
+  display: none;
+}
+// Khong cho outline khi tro chuot vao cac the + khong hien thi scroll bar
+
+.tong {
+  // background-image: linear-gradient(
+  //   to bottom right,
+  //   rgb(234, 231, 240),
+  //   rgb(143, 195, 218)
+  // );
+  min-height: 100vh;
+  // background-color: #9ECDE1!important;
+  background-image: url('../../../../../assets/images/Candy.jpg');
+  background-size: cover;
+}
+
+// Tin tức tổng hợp
+.divtongtintuc {
+  display: flex;
+  flex-direction: row;
+  padding-top: 60px;
+}
+
+// Phân trang cho div tin tức tổng hợp
+.phantrang {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px 0 10px;
+}
+.lt span {
+  color: rgb(70, 68, 68);
+}
+.pagi {
+  position: relative;
+  top: 8px;
+}
+// Phân trang cho div tin tức tổng hợp
+
+// Tin tức tổng hợp
+
+//Tin tức nhỏ bên phải
+.divtrai {
+  width: 70%;
+  margin-top: 2%;
+  margin-left: 10%;
+  margin-bottom: 2%;
+  margin-right: 0%;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 1px 18px 30px gray;
+}
+.divphai {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 1px 18px 30px gray;
+  font-size: 16;
+  margin-top: 2%;
+  margin-right: 10%;
+  margin-bottom: 2%;
+  margin-left: 2%;
+}
+.baivietganday {
+  display: block;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: 14px;
+  -ms-overflow-style: none;
+  overflow: auto;
+}
+.chitietbaivietganday {
+  display: flex;
+  flex-direction: row;
+}
+.chitietbaivietganday img {
+  border-radius: 3px;
+  width: 80px;
+  height: 80px;
+}
+.imgtieude {
+  border-radius: 3px;
+  width: 80px;
+  height: 80px;
+}
+
+.newstitle {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: justify;
+  margin-left: 10px;
+}
+#newsul {
+  padding-left: 0px !important;
+}
+#newsul:hover {
+  background-color: rgb(196, 208, 221);
+  border-radius: 5px;
+}
+//Tin tức nhỏ bên phải
+
+// Phan tim kiem tin tuc
+.searchnewstong {
+  width: 100%;
+  height: auto;
+  background-color: #2596c7;
+}
+.searchnewstong input {
+  border-radius: 0px;
+  border: 0px solid rgb(255, 255, 255);
+  outline: 0px !important;
+  margin: 5% 0% 5% 5%;
+  font-size: 16px;
+  width: 90%;
+  height: 40px;
+  border-radius: 3px;
+}
+.ketquasearch {
+  width: 100%;
+  height: auto;
+  background-color: #2596c7;
+  overflow: auto;
+  margin-bottom: 10px;
+}
+// Ket qua tim kiem
+.ketqua {
+  background-color: rgb(6, 138, 23);
+  width: 80px;
+  height: 28px;
+  font-size: 18px;
+  font-weight: 400;
+  color: #ffffff;
+  margin-bottom: 5px;
+  text-align: center;
+  border-radius: 3px;
+}
+// Tin tuc nong
+.tinnong {
+  background-color: rgb(200, 0, 0);
+  width: 80px;
+  height: 28px;
+  font-size: 18px;
+  font-weight: 400;
+  color: #ffffff;
+  margin-bottom: 5px;
+  text-align: center;
+  border-radius: 3px;
+}
+
+// Phan div nhung tin da duoc PINNED
+.pinnednews {
+  width: 100%;
+  height: auto;
+  display: block;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-size: 14px;
+  overflow: auto;
+}
+ul li {
+  cursor: pointer;
+}
+
+@media all and (max-width: 1200px) {
+  .divtongtintuc {
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 50px;
+  }
+  .divtrai {
+    width: 90%;
+    margin-left: 5%;
+    box-shadow: 1px 8px 30px gray;
+  }
+  .divphai {
+    width: 90%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-left: 5%;
+    box-shadow: 1px 8px 30px gray;
+  }
+  .newstitle {
+    display: flex;
+    text-align: justify;
+    justify-content: flex-start;
+    margin-left: 10px;
+  }
+  .chitietbaivietganday {
+    display: flex;
+    text-align: justify;
+    justify-content: flex-start;
+  }
+}
+
+@media all and (max-width: 800px) {
+  .divtrai {
+    width: 100%;
+    margin-left: 0%;
+    min-width: 550px;
+  }
+  .divphai {
+    width: 100%;
+    margin-left: 0%;
+    min-width: 550px;
+  }
+}

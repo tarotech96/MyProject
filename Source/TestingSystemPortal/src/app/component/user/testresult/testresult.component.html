@@ -1,0 +1,233 @@
+<!-- <div class="header">
+    <span>Exam Dashboard</span> <button class="btn">Start Simulation</button>
+  </div> -->
+
+<div class="mainview">
+    <div class="pyro">
+        <div class="before"></div>
+        <div class="after"></div>
+      </div>
+  <div class="divphai">
+    <div class="headerdivphai">
+      <span>
+        <span *ngIf="ex?.type === 0">{{ name | uppercase }}</span>
+        <span *ngIf="ex?.type != 0"> {{ name | uppercase }}</span>
+        <span
+          >&nbsp;&nbsp;|&nbsp;&nbsp;NGÀY LÀM:
+          {{ created_at | date: 'dd/MM/yyyy' }}</span
+        >
+      </span>
+    </div>
+    <div class="header_duoi">
+      <div class="divs_core">
+        <div class="divs_per">
+          <h4>ĐIỂM SỐ</h4>
+          <span style="color: rgb(212, 13, 13);font-size: 60px"
+            >{{ score }}/10</span
+          >
+          <span *ngIf="ex?.type === 0">
+            <span *ngIf="pass === false" style="text-align: center"
+              >Trượt Bài Thi</span
+            >
+            <span *ngIf="pass === true" style="text-align: center"
+              >Đỗ Bài Thi</span
+            ></span
+          >
+        </div>
+        <div *ngIf="!isFreeTest" class="btnduoi" (click)="clickRewviewTest()">
+          <button class="btn btn-primary btn-sm" style="width: 100%">
+            Xem lại bài thi
+          </button>
+        </div>
+      </div>
+      <div class="divs_graph">
+        <div class="bieu_do">
+          <div class="bieu_do_trai">
+            <h4>THỐNG KÊ CHI TIẾT</h4>
+            <div class="sb correct">
+              <span>Số câu trả lời đúng</span
+              ><span
+                id="sbspan"
+                style="background-color: #27AE60;color: white; font-size: 22px"
+              >
+                {{ corect }}
+              </span>
+            </div>
+            <div class="sb incorrect">
+              <span style="text-align: left">Số câu trả lời sai</span
+              ><span
+                id="sbspan"
+                style="background-color:#C0392B;color: white; font-size: 22px"
+              >
+                {{ incorect - cauHoiChuaLam }}
+              </span>
+            </div>
+            <div class="sb percentage">
+              <span>Số câu chưa trả lời</span
+              ><span
+                id="sbspan"
+                style="background-color: #2980B9;color: white; font-size: 22px"
+                >{{ cauHoiChuaLam }}</span
+              >
+            </div>
+          </div>
+          <div class="bieu_do_phai">
+            <h6>TỈ LỆ</h6>
+            <div class="clearfix">
+              <div class="c100 p{{ passPercen }} big green">
+                <span>{{ passPercen }}%</span>
+                <div class="slice">
+                  <div class="bar"></div>
+                  <div class="fill"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="thong_ke">
+          <div class="tk thong_ke1">
+            <span class="tks"> {{ timeperques }} Giây</span>
+            <span>Thời Gian Trung Bình/1 Câu Hỏi </span>
+          </div>
+          <div class="tk thong_ke2">
+            <span class="tks">{{ totaltime }} (phút:giây)</span>
+            <span>Thời Gian Đã Làm</span>
+          </div>
+          <div class="tk thong_ke3">
+            <span class="tks"> Bài Thi Có {{ question_num }} Câu Hỏi</span>
+            <span *ngIf="ex?.type === 0">Thời Gian {{ minute }} Phút</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divtrai" *ngIf="domainsLens !== 0">
+    <br />
+    <div class="headerdivtraiss">
+      <div *ngFor="let do of listDomn; let i = index">
+        <button
+          class="btn btn-warning btn-sm"
+          (click)="clickViewDomainDetail(i)"
+          style="margin-left: 10px; font-size: 12px;"
+        >
+          {{ do['name'] }}
+          <span style="color: #C0392B"> | {{ do['per'] }}%</span>
+        </button>
+      </div>
+    </div>
+    <br />
+    <div class="header_duoi_divtrai" *ngIf="showHideDomainDetail">
+      <div class="divs_core_duoi">
+        <div class="divs_per_duoi">
+          <span style="font-size: 40px; color: rgb(212, 13, 13)"
+            >{{ per1 }}%</span
+          >
+        </div>
+        <div class="divs_per_duoi">
+          <span style="font-size: 20px; color: rgb(212, 13, 13)"> ĐÚNG</span>
+          <span style="font-size: 30px; color: rgb(212, 13, 13)"
+            >{{ q1 }}/{{ q2 }}</span
+          >
+        </div>
+      </div>
+      <div class="divtrais_graph">
+        <div class="sb_phai correct">
+          <div id="map_graph" style="color:#27AE60; font-weight: 500">
+            Đúng : {{ q1 }} câu
+          </div>
+          <div id="sbspan_phai_parent">
+            <div class="charts">
+              <div
+                class="charts__chart chart--p{{ per1 }} chart--green"
+                data-percent
+              ></div>
+            </div>
+          </div>
+        </div>
+        <div class="sb_phai incorrect">
+          <div id="map_graph" style="color:#C0392B; font-weight: 500">
+            Sai : {{ q2 - q1 }} câu
+          </div>
+          <div id="sbspan_phai_parent">
+            <div class="charts">
+              <div
+                class="charts__chart chart--p{{ per3 }} chart--red"
+                data-percent
+              ></div>
+            </div>
+          </div>
+        </div>
+        <div class="sb_phai percentage">
+          <div id="map_graph" style="color:#2980B9; font-weight: 500">
+            Tỉ lệ %
+          </div>
+          <div id="sbspan_phai_parent">
+            <div class="charts">
+              <div
+                class="charts__chart chart--p{{ per1 }} chart--blue"
+                data-percent
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div class="btn btn-toolbar headerdivtrai headerdivtrais">
+    <!-- <button class="btn btn-default" (click)="onBack()">
+        <label *ngIf="!isFreeTest"
+          ><i class="fa fa-arrow-left" aria-hidden="true"></i> &nbsp;Quay
+          lại</label
+        >
+        <label *ngIf="isFreeTest"
+          ><i class="fa fa-refresh" aria-hidden="true"></i> &nbsp;Thi lại</label
+        >
+      </button> -->
+    <div style="width: auto" class="btn-group btn-group-justified">
+      <button
+        *ngIf="!isFreeTest"
+        class="btn btn-primary"
+        (click)="onClickQuayVe(ex?.type)"
+      >
+        <i class="fa fa-arrow-left" aria-hidden="true"></i> &nbsp;&nbsp;Quay về
+      </button>
+      <button *ngIf="isFreeTest" class="btn btn-primary" (click)="onBack()">
+        <i class="fa fa-refresh" aria-hidden="true"></i> &nbsp;&nbsp;Thi lại
+      </button>
+      <button
+        class="an"
+        style="width: auto"
+        class="btn btn-primary"
+        [routerLink]="['/hometotal/home']"
+      >
+        <i class="fa fa-home" aria-hidden="true"></i>&nbsp;&nbsp;Trang chủ
+      </button>
+      <button
+        style="width: auto"
+        class="btn btn-primary"
+        (click)="baiThucHanhCMS(ex?.type)"
+      >
+        <i class="fa fa-file-text" aria-hidden="true"></i>&nbsp;&nbsp;Bài thực
+        hành
+      </button>
+      <button
+        style="width: auto"
+        class="btn btn-primary"
+        (click)="baiThiHanhCMS(ex?.type)"
+      >
+        <i class="fa fa-tags" aria-hidden="true"></i>&nbsp;&nbsp;Bài thi
+      </button>
+      <button
+        class="an"
+        style="width: auto"
+        class="btn btn-primary"
+        (click)="lichSuCMS()"
+      >
+        <i class="fa fa-history" aria-hidden="true"></i>&nbsp;&nbsp;Lịch sử
+      </button>
+    </div>
+  </div>
+ 
+</div>

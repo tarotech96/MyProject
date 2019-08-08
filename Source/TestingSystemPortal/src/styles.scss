@@ -1,0 +1,49 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '~bootstrap/scss/bootstrap';
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~bootstrap/dist/css/bootstrap.css';
+
+// @import "~font-awesome/css/font-awesome.css";
+html,
+body {
+  box-sizing: border-box;
+}
+html {
+  /* body will set it's height based on its parent, which is html */
+  height: 100%;
+
+  /* set full width as well */
+  width: 100%;
+}
+body {
+  /* min-height is needed for pages that might scroll, ie they may contain _more_ than 100% of viewport height */
+  min-height: 100%;
+
+  /* needed to prevent unwanted scroll-bars */
+  margin: 0;
+  padding: 0;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+body {
+  font-size: 12px;
+  font-family: 'Roboto', sans-serif;
+}
+// CSS cho slideshow
+.carousel-indicators {
+  bottom: -10px;
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  width: 12px;
+}
+.carousel-control-prev {
+  width: 50px;
+}
+.carousel-control-next {
+  width: 50px;
+}

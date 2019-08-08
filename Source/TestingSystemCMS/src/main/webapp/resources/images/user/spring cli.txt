@@ -1,0 +1,16 @@
+
+SCOOP:
+powershell
+Set-ExecutionPolicy RemoteSigned -scope CurrentUser
+iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
+
+scoop bucket add extras
+scoop install springboot
+
+
+HEROKU:
+git init
+heroku git:remote -a cmc-100
+git add .
+git commit -m "My first commit"
+git push heroku master

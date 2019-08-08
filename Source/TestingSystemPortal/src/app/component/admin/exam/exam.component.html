@@ -1,0 +1,866 @@
+<div id="content" *ngIf="showTable">
+  <div id="fu">
+    <input
+      id="search_box"
+      class="form-control"
+      type="text"
+      placeholder="Tìm kiếm theo tên"
+      aria-label="Search"
+      (keyup)="search($event)"
+    />
+
+    <div id="filter_select">
+      <select class="form-control col-xs-2" (change)="filterByType($event)">
+        <option disabled="true">Type</option>
+        <option value="^0$|^1$">All</option>
+        <option value="^0$">Exam</option>
+        <option value="^1$">Practice</option>
+      </select>
+      &nbsp;&nbsp;
+      <i class="fas fa-filter"></i>
+    </div>
+
+    <button
+      type="button"
+      class="btn btn-primary abtn"
+      (click)="onClickAddNew()"
+      *ngIf="showTable && checkRolePermission('insertexam')"
+    >
+      + Thêm nội dung
+    </button>
+  </div>
+  <table class="table table-bordered text-center " style="margin-top: 10px;">
+    <thead>
+      <tr>
+        <th style="text-align: center; vertical-align: middle">STT</th>
+        <th style="text-align: left; vertical-align: middle">Loại</th>
+        <th style="text-align: left; vertical-align: middle">Tên</th>
+
+        <th style="text-align: left; vertical-align: middle">Môn thi</th>
+        <th style="text-align: left; vertical-align: middle">Ngày bắt đầu</th>
+        <th style="text-align: left; vertical-align: middle">Ngày kết thúc</th>
+        <th colspan="3">Số câu hỏi</th>
+        <th colspan="3">Tỉ lệ qua</th>
+        <th colspan="3">Số lần thi</th>
+        <th colspan="3">Thời gian</th>
+        <th colspan="3">Trạng thái</th>
+        <th colspan="3">Thiết lập</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let exam of (listExam | paginate: config);
+          let i = index;
+          trackBy: trackByFn
+        "
+        [ngStyle]="{
+          'font-weight': mapType.get(exam['15']) === 'Practice' ? '400' : '500'
+        }"
+      >
+        <td style="text-align: center; vertical-align: middle">{{ i + 1 }}</td>
+        <td style="text-align: left; vertical-align: middle">
+          {{ mapType.get(exam['15']) }}
+        </td>
+        <td style="text-align: left; vertical-align: middle">
+          {{ exam['1'] }}
+        </td>
+        <td style="text-align: left; vertical-align: middle">
+          {{ exam['2'] }}
+        </td>
+        <td style="text-align: left; vertical-align: middle">
+          {{ exam['3'] | date: 'dd/MM/yyyy' }}
+        </td>
+        <td style="text-align: left; vertical-align: middle">
+          {{ exam['4'] | date: 'dd/MM/yyyy' }}
+        </td>
+        <td style="text-align: center; vertical-align: middle" colspan="3">
+          {{ exam['5'] }}
+        </td>
+        <td style="text-align: center; vertical-align: middle" colspan="3">
+          {{ exam['6'] }}
+        </td>
+        <td style="text-align: center; vertical-align: middle" colspan="3">
+          {{ exam['7'] }}
+        </td>
+        <td style="text-align: center; vertical-align: middle" colspan="3">
+          {{ exam['10'] }}
+        </td>
+        <td style="text-align: left" colspan="3">
+          <div style="text-align: center" *ngIf="exam['0'] !== statusID">
+            <span *ngIf="exam['8'] === 0" class="labelStatus pending"
+              >Pending</span
+            >
+            <span *ngIf="exam['8'] === 1" class="labelStatus active"
+              >Active</span
+            >
+            <span *ngIf="exam['8'] === 2" class="labelStatus deleted"
+              >Deleted</span
+            >
+          </div>
+          <div *ngIf="exam['0'] === statusID" class="form-group">
+            <select
+              class="form-control select_status"
+              [(ngModel)]="selectedStatusAction"
+              (change)="onChangeStatus($event, exam['0'])"
+              [value]="exam['8']"
+              name=""
+              id=""
+            >
+              <option value="4">Change Status</option>
+              <option value="0">Pending</option>
+              <option value="1">Active</option>
+              <option value="2">Deleted</option>
+            </select>
+          </div>
+        </td>
+        <td style="text-align: left; vertical-align: middle" colspan="3">
+          <div class="form-group " style="margin-top:8px;">
+            <select
+              class="form-control text-center"
+              [(ngModel)]="selectedAction"
+              (change)="onChangeAction($event, exam)"
+              (mouseout)="focusOutFunction()"
+            >
+              <option value="action" selected disabled>Action</option>
+              <option
+                value="edit"
+                *ngIf="
+                  checkRolePermission('updateexam') &&
+                  checkRolePermission('updateFileexam') &&
+                  exam['8'] === 0
+                "
+                >Edit</option
+              >
+              <option *ngIf="exam['8'] === 0" value="edit_detail"
+                >Edit ViewDetail</option
+              >
+              <option value="view">View Result</option>
+              <option
+                value="change_status"
+                *ngIf="
+                  checkRolePermission('updateStatusexam') && exam['15'] !== 1
+                "
+                >Change Status</option
+              >
+            </select>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="phantrang">
+    <div class="lt">
+      <span for="sel1">Results per page: </span>
+      <select class="ft" id="sel1" (change)="onChange($event)">
+        <option>5</option>
+        <option>10</option>
+        <!-- <option>15</option> -->
+      </select>
+    </div>
+    <div class="pagi">
+      <pagination-controls
+        *ngIf="showTable"
+        class="text-center"
+        (pageChange)="pageChange($event)"
+      >
+      </pagination-controls>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="container">
+    <!-- form insert -->
+    <form
+      [formGroup]="insertForm"
+      (ngSubmit)="insertForm.valid && onSubmitInsert()"
+      enctype="multipart/form-data"
+      *ngIf="showInsertForm"
+    >
+      <div style="text-align: center">
+        <h4>Thêm mới nội dung</h4>
+      </div>
+      <!--     -->
+      <div class="modal-body">
+        <div class="form-group">
+          <label> Tiêu đề<span class="required_field">*</span></label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="title"
+            [ngClass]="{
+              'is-invalid':
+                insertForm.get('title').touched &&
+                insertForm.get('title').invalid
+            }"
+            required
+          />
+          <div class="invalid-feedback">
+            <div *ngIf="insertForm.hasError('maxlength', ['title'])">
+              Độ dài không vượt quá 255 kí tự
+            </div>
+            <div *ngIf="insertForm.hasError('whitespace', ['title'])">
+              Không được để trống
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label> Tên bài thi<span class="required_field">*</span></label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="name"
+            [ngClass]="{
+              'is-invalid':
+                insertForm.get('name').touched && insertForm.get('name').invalid
+            }"
+            required
+          />
+          <div class="invalid-feedback">
+            <div *ngIf="insertForm.hasError('maxlength', ['name'])">
+              Độ dài không vượt quá 50 kí tự
+            </div>
+            <div *ngIf="insertForm.hasError('whitespace', ['name'])">
+              Không được để trống
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label> Môn thi<span class="required_field">*</span></label>
+
+          <select
+            class="form-control"
+            formControlName="subject"
+            [ngClass]="{
+              'is-invalid':
+                insertForm.get('subject').touched &&
+                insertForm.get('subject').invalid
+            }"
+            required
+          >
+            <option *ngFor="let item of listSubject" value="{{ item.name }}">{{
+              item.name
+            }}</option>
+          </select>
+          <div class="invalid-feedback">
+            <div>Không được để trống</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label> Nhóm:</label>
+
+            <!-- <select class="form-control" formControlName="group_id">
+                                <option *ngFor="let item of listGroup " value = "{{item.id}}">{{item.name}}</option>
+                              </select> -->
+            <ng-multiselect-dropdown
+              [placeholder]="'custom placeholder'"
+              [data]="listGroup"
+              [(ngModel)]="selectedGroup"
+              [settings]="dropdownSettingGroup"
+              (onSelect)="onItemSelect($event)"
+              (onSelectAll)="onSelectAll($event)"
+              formControlName="group_id"
+            >
+            </ng-multiselect-dropdown>
+          </div>
+          <div class="form-group col-md-6">
+            <label> Tài khoản :</label>
+
+            <ng-multiselect-dropdown
+              [placeholder]="'custom placeholder'"
+              [data]="listUser"
+              [(ngModel)]="selectedUser"
+              [settings]="dropdownSettingUser"
+              (onSelect)="onItemSelect($event)"
+              (onSelectAll)="onSelectAll($event)"
+              formControlName="user_id"
+            >
+            </ng-multiselect-dropdown>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <div>
+              <label> Media:</label>
+              <input
+                type="file"
+                class="form-control"
+                formControlName="media"
+                (change)="onChangeFile($event)"
+              />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <img
+              *ngIf="!showMedia"
+              style="width: 120px;height: 80px;"
+              [src]="imageSrc || 'http://placehold.it/180'"
+              alt="your image"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-3">
+            <label> Thời gian<span class="required_field">*</span></label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="time"
+              [ngClass]="{
+                'is-invalid':
+                  insertForm.get('time').touched &&
+                  insertForm.get('time').invalid
+              }"
+              required
+            />
+            <div class="invalid-feedback">
+              <div *ngIf="insertForm.hasError('required', ['time'])">
+                Không được để trống!!
+              </div>
+              <div *ngIf="insertForm.hasError('pattern', ['time'])">
+                vui lòng nhập số!!
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-3">
+            <label> Số câu hỏi<span class="required_field">*</span></label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="question_num"
+              [ngClass]="{
+                'is-invalid':
+                  insertForm.get('question_num').touched &&
+                  insertForm.get('question_num').invalid
+              }"
+              required
+            />
+            <div class="invalid-feedback">
+              <div *ngIf="insertForm.hasError('required', ['question_num'])">
+                Không được để trống!!
+              </div>
+              <div *ngIf="insertForm.hasError('pattern', ['question_num'])">
+                vui lòng nhập số!!
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-3">
+            <label> Số lần thi<span class="required_field">*</span></label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="max_attempt"
+              [ngClass]="{
+                'is-invalid':
+                  insertForm.get('max_attempt').touched &&
+                  insertForm.get('max_attempt').invalid
+              }"
+              required
+            />
+            <div class="invalid-feedback">
+              <div *ngIf="insertForm.hasError('required', ['max_attempt'])">
+                Không được để trống!!
+              </div>
+              <div *ngIf="insertForm.hasError('pattern', ['max_attempt'])">
+                vui lòng nhập số!!
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-3">
+            <label> Tỉ lệ qua<span class="required_field">*</span></label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="percent_passing"
+              [ngClass]="{
+                'is-invalid':
+                  insertForm.get('percent_passing').touched &&
+                  insertForm.get('percent_passing').invalid
+              }"
+              required
+            />
+            <div class="invalid-feedback">
+              <div *ngIf="insertForm.hasError('required', ['percent_passing'])">
+                Không được để trống!!
+              </div>
+              <div *ngIf="insertForm.hasError('pattern', ['percent_passing'])">
+                vui lòng nhập số!!
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6" formGroupName="date">
+            <label> Ngày bắt đầu<span class="required_field">*</span></label>
+            <input
+              class="form-control"
+              type="date"
+              formControlName="start_date"
+              [ngClass]="{
+                'is-invalid':
+                  insertForm.get('date.start_date').touched &&
+                  insertForm.get('date.start_date').invalid
+              }"
+              required
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="insertForm.get('date.start_date').hasError('required')"
+            >
+              <div>Không được để trống!!</div>
+            </div>
+            <div
+              class="invalid-feedback"
+              *ngIf="
+                insertForm.get('date.start_date').hasError('datenotsatisfy') &&
+                insertForm.get('date.start_date').hasError('required') === false
+              "
+            >
+              <div>Ngày bắt đầu không nhỏ hơn ngày hiện tại!!</div>
+            </div>
+          </div>
+          <div class="form-group col-md-6" formGroupName="date">
+            <label> Ngày kết thúc<span class="required_field">*</span></label>
+            <input
+              class="form-control"
+              type="date"
+              formControlName="end_date"
+              [ngClass]="{
+                'is-invalid':
+                  insertForm.get('date.end_date').touched &&
+                  insertForm.get('date.end_date').invalid
+              }"
+              required
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="insertForm.get('date.end_date').hasError('required')"
+            >
+              <div>Không được để trống!!</div>
+            </div>
+            <div
+              class="invalid-feedback"
+              *ngIf="
+                insertForm.get('date.end_date').hasError('datenotsatisfy') &&
+                insertForm.get('date.end_date').hasError('required') === false
+              "
+            >
+              <div>Ngày kết thúc không nhỏ hơn ngày hiện tại!!</div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="form-group alert alert-danger"
+          role="alert"
+          *ngIf="
+            insertForm.get('date').errors &&
+            insertForm.get('date.start_date').valid &&
+            insertForm.get('date.end_date').valid
+          "
+        >
+          <span *ngIf="insertForm.hasError('twodatenotmatch', ['date'])">
+            Ngày kết thúc không nhỏ hơn ngày bắt đầu!!
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label> Mô tả<span class="required_field">*</span></label>
+          <textarea
+            class="form-control"
+            formControlName="description"
+            [ngClass]="{
+              'is-invalid':
+                insertForm.get('description').touched &&
+                insertForm.get('description').invalid
+            }"
+            required
+          ></textarea>
+          <div class="invalid-feedback">
+            <div *ngIf="insertForm.hasError('whitespace', ['description'])">
+              Không được để trống!
+            </div>
+            <div *ngIf="insertForm.hasError('maxlength', ['description'])">
+              Mô tả không quá 500 kí tự!!
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="form-group alert alert-danger"
+        role="alert"
+        *ngIf="error !== ''"
+      >
+        <span> {{ error }} </span>
+      </div>
+      <!-- -->
+
+      <div class="modal-footer">
+        <button
+          [disabled]="!insertForm.valid"
+          type="submit"
+          class="btn btn-success"
+        >
+          Thêm mới
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="onClickCloseForm()"
+        >
+          Đóng
+        </button>
+      </div>
+    </form>
+
+    <!-- form update -->
+    <form
+      [formGroup]="updateForm"
+      (ngSubmit)="updateForm.valid && onSubmitUpdate()"
+      enctype="multipart/form-data"
+      *ngIf="showUpdateForm"
+    >
+      <div style="text-align: center">
+        <h4>Cập nhật nội dung</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label> Tiêu đề<span class="required_field">*</span></label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="title"
+            [ngClass]="{
+              'is-invalid':
+                updateForm.get('title').touched &&
+                updateForm.get('title').invalid
+            }"
+            required
+          />
+          <div class="invalid-feedback">
+            <div *ngIf="updateForm.hasError('whitespace', ['title'])">
+              Không được để trống!!
+            </div>
+            <div *ngIf="updateForm.hasError('maxlength', ['title'])">
+              Độ dài không vượt quá 255 kí tự
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label> Tên bài thi<span class="required_field">*</span></label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="name"
+            [ngClass]="{
+              'is-invalid':
+                updateForm.get('name').touched && updateForm.get('name').invalid
+            }"
+            required
+          />
+          <div class="invalid-feedback">
+            <div *ngIf="updateForm.hasError('whitespace', ['name'])">
+              Không được để trống!!
+            </div>
+            <div *ngIf="updateForm.hasError('maxlength', ['name'])">
+              Độ dài không vượt quá 50 kí tự
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label> Môn thi<span class="required_field">*</span></label>
+
+          <select
+            class="form-control"
+            formControlName="subject"
+            [ngClass]="{
+              'is-invalid':
+                updateForm.get('subject').touched &&
+                updateForm.get('subject').invalid
+            }"
+            required
+          >
+            <option *ngFor="let item of listSubject" value="{{ item.name }}">{{
+              item.name
+            }}</option>
+          </select>
+          <div class="invalid-feedback">
+            <div>Không được để trống!!</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label> Nhóm:</label>
+
+            <!-- <select class="form-control" formControlName="group_id">
+                                <option *ngFor="let item of listGroup " value = "{{item.id}}">{{item.name}}</option>
+                              </select> -->
+            <ng-multiselect-dropdown
+              [placeholder]="'custom placeholder'"
+              [data]="listGroup"
+              [(ngModel)]="selectedGroup"
+              [settings]="dropdownSettingGroup"
+              (onSelect)="onItemSelect($event)"
+              (onSelectAll)="onSelectAll($event)"
+              formControlName="group_id"
+            >
+            </ng-multiselect-dropdown>
+          </div>
+          <div class="form-group col-md-6">
+            <label> Tài khoản :</label>
+
+            <ng-multiselect-dropdown
+              [placeholder]="'custom placeholder'"
+              [data]="listUser"
+              [(ngModel)]="selectedUser"
+              [settings]="dropdownSettingUser"
+              (onSelect)="onItemSelect($event)"
+              (onSelectAll)="onSelectAll($event)"
+              formControlName="user_id"
+            >
+            </ng-multiselect-dropdown>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <div>
+              <label> Media:</label>
+              <input
+                type="file"
+                class="form-control"
+                formControlName="media"
+                (change)="onChangeFile($event)"
+              />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <img
+              *ngIf="!showMedia"
+              style="width: 120px;height: 80px;"
+              [src]="imageSrc || 'http://placehold.it/180'"
+              alt="your image"
+            />
+            <img
+              *ngIf="showMedia"
+              src="{{ baseURL }}/resources/images/exam/{{ imageBefore }}"
+              alt=""
+              style="width: 120px;height: 80px;"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-3">
+            <label> Thời gian<span class="required_field">*</span></label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="time"
+              [ngClass]="{
+                'is-invalid':
+                  updateForm.get('time').touched &&
+                  updateForm.get('time').invalid
+              }"
+              required
+            />
+            <div class="invalid-feedback">
+              <div *ngIf="updateForm.hasError('required', ['time'])">
+                Không được để trống!!
+              </div>
+              <div *ngIf="updateForm.hasError('pattern', ['time'])">
+                vui lòng nhập số!!
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-3">
+            <label> Số câu hỏi<span class="required_field">*</span></label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="question_num"
+              [attr.disabled]="sumUserTest!==0?true:false"
+              [ngClass]="{
+                'is-invalid':
+                  updateForm.get('question_num').touched &&
+                  updateForm.get('question_num').invalid
+              }"
+              required
+            />
+            <div class="invalid-feedback">
+              <div *ngIf="updateForm.hasError('required', ['question_num'])">
+                Không được để trống!!
+              </div>
+              <div *ngIf="updateForm.hasError('pattern', ['question_num'])">
+                vui lòng nhập số!!
+              </div>
+              <div *ngIf="updateForm.hasError('min', ['question_num'])">
+                Số câu hỏi phải lớn hơn câu hiện tại!!
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-3">
+            <label> Số lần thi<span class="required_field">*</span></label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="max_attempt"
+              [ngClass]="{
+                'is-invalid':
+                  updateForm.get('max_attempt').touched &&
+                  updateForm.get('max_attempt').invalid
+              }"
+              required
+            />
+            <div class="invalid-feedback">
+              <div *ngIf="updateForm.hasError('required', ['max_attempt'])">
+                Không được để trống!!
+              </div>
+              <div *ngIf="updateForm.hasError('pattern', ['max_attempt'])">
+                vui lòng nhập số!!
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-3">
+            <label> Tỉ lệ qua<span class="required_field">*</span></label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="percent_passing"
+              [ngClass]="{
+                'is-invalid':
+                  updateForm.get('percent_passing').touched &&
+                  updateForm.get('percent_passing').invalid
+              }"
+              required
+            />
+            <div class="invalid-feedback">
+              <div *ngIf="updateForm.hasError('required', ['percent_passing'])">
+                Không được để trống!!
+              </div>
+              <div *ngIf="updateForm.hasError('pattern', ['percent_passing'])">
+                vui lòng nhập số!!
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6" formGroupName="date">
+            <label> Ngày bắt đầu<span class="required_field">*</span></label>
+            <input
+              class="form-control"
+              type="date"
+              data-date-format="dd/mm/yyyy"
+              formControlName="start_date"
+              [ngClass]="{
+                'is-invalid':
+                  updateForm.get('date.start_date').touched &&
+                  updateForm.get('date.start_date').invalid
+              }"
+              required
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="updateForm.get('date.start_date').hasError('required')"
+            >
+              <div>Không được để trống!!</div>
+            </div>
+            <!-- <div class="invalid-feedback" *ngIf="updateForm.get('date.start_date').hasError('datenotsatisfy') && updateForm.get('date.start_date').hasError('required')=== false" >
+                            <div>Ngày bắt đầu không nhỏ hơn ngày hiện tại!!</div>
+                          </div> -->
+          </div>
+          <div class="form-group col-md-6" formGroupName="date">
+            <label> Ngày kết thúc<span class="required_field">*</span></label>
+            <input
+              class="form-control"
+              type="date"
+              formControlName="end_date"
+              [ngClass]="{
+                'is-invalid':
+                  updateForm.get('date.end_date').touched &&
+                  updateForm.get('date.end_date').invalid
+              }"
+              required
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="updateForm.get('date.end_date').hasError('required')"
+            >
+              <div>Không được để trống!!</div>
+            </div>
+            <!-- <div class="invalid-feedback" *ngIf="updateForm.get('date.end_date').hasError('datenotsatisfy') && updateForm.get('date.end_date').hasError('required')=== false" >
+                                  <div>Ngày kết thúc không nhỏ hơn ngày hiện tại!!</div>
+                                </div> -->
+          </div>
+        </div>
+
+        <div
+          class="form-group alert alert-danger"
+          role="alert"
+          *ngIf="
+            updateForm.get('date').errors &&
+            (updateForm.get('date.start_date').valid &&
+              updateForm.get('date.end_date').valid)
+          "
+        >
+          <span *ngIf="updateForm.hasError('twodatenotmatch', ['date'])">
+            Ngày kết thúc không nhỏ hơn ngày bắt đầu!!
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label> Mô tả<span class="required_field">*</span></label>
+          <textarea
+            class="form-control"
+            formControlName="description"
+            [ngClass]="{
+              'is-invalid':
+                updateForm.get('description').touched &&
+                updateForm.get('description').invalid
+            }"
+            required
+          ></textarea>
+          <div class="invalid-feedback">
+            <div *ngIf="updateForm.hasError('whitespace', ['description'])">
+              Không được để trống!!
+            </div>
+            <div *ngIf="updateForm.hasError('maxlength', ['description'])">
+              Mô tả không quá 500 kí tự!!
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="form-group alert alert-danger"
+          role="alert"
+          *ngIf="error !== ''"
+        >
+          <span> {{ error }} </span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          [disabled]="!updateForm.valid"
+          type="submit"
+          class="btn btn-success"
+          (click)="onSubmitUpdate()"
+        >
+          Cập nhật
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="onClickCloseForm()"
+        >
+          Đóng
+        </button>
+      </div>
+    </form>
+  </div>
+  <div id="snackbar" *ngIf="showNoti">
+    {{ error }}
+  </div>
+</div>

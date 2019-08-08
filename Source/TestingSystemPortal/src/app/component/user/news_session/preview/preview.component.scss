@@ -1,0 +1,128 @@
+// Style phần tag dưới cùng bài viết
+#lb {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  display: inline;
+  padding: 0.2em 0.6em 0.3em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  color: rgb(238, 13, 13);
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25em;
+}
+.commentbutton {
+  position: relative;
+  float: right;
+  top: 2px;
+}
+#cmbox {
+  position: relative;
+  border: 5px, solid;
+  left: 10px;
+}
+
+#cmboxspan {
+  border: 5px, solid, gray;
+}
+
+#commentblock {
+  display: inline-block;
+}
+.fcg a {
+  font-size: 15px;
+}
+
+.editdelete {
+  position: relative;
+  left: 10px;
+}
+#a2 {
+  position: relative;
+  left: 20px;
+}
+.newsimage {
+  width: 250px;
+  height: 150px;
+}
+.newstitle {
+  font-size: 30px;
+  padding-top: 10px;
+  text-align: justify;
+  font-weight: 700;
+}
+.newsimage_descrip {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.newsimage_descripimg {
+  border-radius: 3px;
+  height: 195px;
+  width: 295px;
+}
+.newsimage_descripimg img {
+  border-radius: 3px;
+  height: 195px;
+  width: 295px;
+}
+#newsli {
+  padding-left: 30px;
+  padding-right: 30px;
+  margin-top: 10px;
+}
+.newsimage_descrip {
+  margin-top: 10px;
+}
+.newsdes_date {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-left: 10px;
+  font-size: 16px;
+  text-align: justify;
+  font-style: italic;
+  font-weight: 600;
+}
+.divtintuchinh {
+  display: block;
+  margin-left: 0px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+.newscontent {
+  text-align: justify;
+  font-size: 16px;
+}
+.expand {
+  font-size: 16px;
+}
+.newscontent::ng-deep img {
+  width: 100%;
+}
+@media all and (max-width: 1300px) {
+}
+@media all and (max-width: 750px) {
+  .newsimage_descrip {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+  }
+  .newsimage_descripimg {
+    height: auto;
+    width: 100%;
+  }
+  .newsimage_descrip img {
+    width: 100%;
+    height: auto;
+  }
+  .newsdes_date {
+    padding-left: 0px;
+  }
+  .newstitle {
+    font-size: 18px;
+  }
+}

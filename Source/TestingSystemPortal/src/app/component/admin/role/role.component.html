@@ -1,0 +1,302 @@
+<!-- Page Content -->
+<div id="content" *ngIf="showTable">
+  <div id="fu">
+    <input
+      id="search_box"
+      class="form-control"
+      type="search"
+      placeholder="Tìm kiếm theo tên"
+      aria-label="Search"
+      (keyup)="filterByTitle($event)"
+    />
+
+    <div>
+      <button
+        type="button"
+        class="btn btn-primary abtn"
+        (click)="onClickAddNew()"
+        *ngIf="showTable && checkRolePermission('insertrole')"
+      >
+        + Thêm nội dung
+      </button>
+    </div>
+  </div>
+  <table class="table table-bordered text-center " style="margin-top: 10px;">
+    <thead>
+      <tr>
+        <th style="vertical-align: middle;text-align: center;">ID</th>
+        <th
+          style="vertical-align: middle;text-align: left;"
+          colspan="3"
+          (click)="sort()"
+        >
+          Tên role<i class="fa fa-sort float-right" aria-hidden="true"></i>
+        </th>
+        <th style="vertical-align: middle;text-align: left;" colspan="3">
+          Mô tả
+        </th>
+        <th>Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let role of (listRole
+            | paginate: { itemsPerPage: [perPage], currentPage: p });
+          trackBy: trackByFn
+        "
+      >
+        <td style="text-align: center">{{ role.id }}</td>
+        <td style="text-align: left" colspan="3">{{ role.name }}</td>
+        <td style="text-align: left" colspan="3" title="{{ role.id }}">
+          {{ role.description }}
+        </td>
+
+        <td>
+          <i
+            style="color: white"
+            *ngIf="checkRolePermission('updaterole')"
+            class="btn btn-primary fa fa-pencil"
+            (click)="onClickUpdate(role)"
+          ></i>
+          <i
+            style="color: white; margin-left: 10px"
+            *ngIf="checkRolePermission('deleterole')"
+            class="fa fa-trash-o btn btn-danger icon"
+            (click)="onClickDelete(role)"
+          ></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="phantrang">
+    <div class="lt">
+      <span for="sel1">Results per page: </span>
+      <select class="ft" id="sel1" (change)="onChange($event)">
+        <option>5</option>
+        <option>10</option>
+        <!-- <option>15</option> -->
+      </select>
+    </div>
+    <div class="pagi">
+      <pagination-controls
+        *ngIf="showTable"
+        class="text-center"
+        (pageChange)="p = $event"
+      ></pagination-controls>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="container">
+                    <form
+                      [formGroup]="insertForm"
+                      (ngSubmit)="insertForm.valid && onSubmitInsert()"
+                      enctype="multipart/form-data"
+                      *ngIf="showInsertForm"
+                    >
+                      <div style="text-align: center">
+                        <h3>Thêm mới nội dung</h3>
+                      </div>
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <label>
+                            Tên<span class="required_field">*</span></label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="name"
+                            [ngClass]="{
+                              'is-invalid':
+                                insertForm.get('name').touched &&
+                                insertForm.get('name').invalid
+                            }"
+                            required
+                          />
+                          <div class="invalid-feedback">
+                            <div
+                              *ngIf="
+                                insertForm.hasError('whitespace', ['name'])
+                              "
+                            >
+                              Không được để trống
+                            </div>
+                            <div
+                              *ngIf="insertForm.hasError('maxlength', ['name'])"
+                            >
+                              Độ dài không vượt quá 20 kí tự
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label>
+                            Mô tả<span class="required_field">*</span></label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="description"
+                            [ngClass]="{
+                              'is-invalid':
+                                insertForm.get('description').touched &&
+                                insertForm.get('description').invalid
+                            }"
+                            required
+                          />
+                          <div class="invalid-feedback">
+                            <div
+                              *ngIf="
+                                insertForm.hasError('whitespace', [
+                                  'description'
+                                ])
+                              "
+                            >
+                              Không được để trống
+                            </div>
+                            <div
+                              *ngIf="
+                                insertForm.hasError('maxlength', [
+                                  'description'
+                                ])
+                              "
+                            >
+                              Độ dài không vượt quá 50 kí tự
+                            </div>
+                          </div>
+                        </div>
+
+                        <div
+                          class="form-group alert alert-danger"
+                          role="alert"
+                          *ngIf="errorExistRole !== ''"
+                        >
+                          <span> {{ errorExistRole }} </span>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="submit"
+                          [disabled]="!insertForm.valid"
+                          class="btn btn-success"
+                        >
+                          Thêm mới
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          (click)="onClickCloseForm()"
+                        >
+                          Đóng
+                        </button>
+                      </div>
+                    </form>
+
+                    <form
+                      [formGroup]="updateForm"
+                      (ngSubmit)="updateForm.valid && onSubmitUpdate()"
+                      enctype="multipart/form-data"
+                      *ngIf="showUpdateForm"
+                    >
+                      <div style="text-align: center">
+                        <h4>Cập nhật nội dung</h4>
+                      </div>
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <label>
+                            Tên<span class="required_field">*</span></label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="name"
+                            [ngClass]="{
+                              'is-invalid':
+                                updateForm.get('name').touched &&
+                                updateForm.get('name').invalid
+                            }"
+                            required
+                          />
+                          <div class="invalid-feedback">
+                            <div
+                              *ngIf="
+                                updateForm.hasError('whitespace', ['name'])
+                              "
+                            >
+                              Không được để trống!!
+                            </div>
+                            <div
+                              *ngIf="updateForm.hasError('maxlength', ['name'])"
+                            >
+                              Độ dài không vượt quá 20 kí tự
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label>
+                            Mô tả<span class="required_field">*</span></label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="description"
+                            [ngClass]="{
+                              'is-invalid':
+                                updateForm.get('description').touched &&
+                                updateForm.get('description').invalid
+                            }"
+                            required
+                          />
+                          <div class="invalid-feedback">
+                            <div
+                              *ngIf="
+                                updateForm.hasError('whitespace', [
+                                  'description'
+                                ])
+                              "
+                            >
+                              Không được để trống!!
+                            </div>
+                            <div
+                              *ngIf="
+                                updateForm.hasError('maxlength', [
+                                  'description'
+                                ])
+                              "
+                            >
+                              Độ dài không vượt quá 50 kí tự
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="form-group alert alert-danger"
+                        role="alert"
+                        *ngIf="errorExistRole !== ''"
+                      >
+                        <span> {{ errorExistRole }} </span>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="submit"
+                          [disabled]="!updateForm.valid"
+                          class="btn btn-success"
+                        >
+                          Cập nhật
+                        </button>
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          (click)="onClickCloseForm()"
+                        >
+                          Đóng
+                        </button>
+                      </div>
+                    </form>
+  </div>
+</div>
+<popup #popupDelete (confirmClick)="confirmDeleteClick()">
+  Bạn có chắc chắn muốn xóa ?
+</popup>

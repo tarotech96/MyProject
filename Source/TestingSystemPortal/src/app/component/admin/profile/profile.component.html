@@ -1,0 +1,121 @@
+<div class="tong">
+  <div class="mainclass-fluid kc-top">
+    <!-- <div class="bannerimg"></div> -->
+    <div class="bannerimg">
+      <div class="container">
+        <div class="rowsss">
+          <div style="padding:2%">
+            <div class="text-center">
+              <img
+                width="80px"
+                height="80px"
+                class="avaimg"
+                src="{{ img }}"
+                onerror="this.src='../../../../assets/images/default-avatar.png'"
+              />
+
+              <h3 style="margin:2%">{{ adminname }}</h3>
+            </div>
+            <div class="text-center action">
+              <!-- <img src="../../../../assets/images/Picture1.jpg" /> -->
+              <button class="btn btn-primary" (click)="editprofile()">
+                Edit Profile
+              </button>
+              <button class="btn btn-danger" (click)="changepass()">
+                Change Password
+              </button>
+            </div>
+          </div>
+          <div class="">
+            <table id="customers">
+              <tr>
+                <td>Id</td>
+                <td>{{ adminID }}</td>
+              </tr>
+              <tr>
+                <td>Trạng thái</td>
+                <td>{{ adminStatus }}</td>
+              </tr>
+              <tr>
+                <td>Email</td>
+                <td>{{ adminemail }}</td>
+              </tr>
+              <tr>
+                <td>Điện thoại</td>
+                <td>{{ adminPhone }}</td>
+              </tr>
+              <tr>
+                <td>Địa chỉ</td>
+                <td>{{ adminAddress }}</td>
+              </tr>
+              <tr>
+                <td>Quốc gia</td>
+                <td>Việt Nam</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-5 listExamByUser">
+        <h3 class="text-center">Bài thi</h3>
+        <table class="table table-light">
+          <thead>
+            <tr>
+              <!-- <th>STT</th> -->
+              <th>Tên Bài Thi</th>
+              <th>Chủ đề</th>
+              <th>Số câu hỏi</th>
+              <th>Thời gian làm bài</th>
+              <th>% Đỗ</th>
+              <th>Số lần thi tối đa</th>
+              <th>Số lần đã thi</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let item of listResult">
+            <tr>
+              <!-- <td>{{ item['0'] }}</td> --> 
+              <td>{{ item['exam'][1] }}</td>
+              <td>{{ item['exam'][2] }}</td>
+              <td>{{ item['exam'][3] }}</td>
+              <td>{{ item['exam'][4] }}</td>
+              <td>{{ item['exam'][5] }}</td>
+              <td>{{ item['exam'][6] }}</td>
+              <td>{{ item['result'].length }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-5 listPracticeByUser">
+        <h3 class="text-center">Bài thực hành</h3>
+        <table class="table table-light">
+          <thead>
+            <tr>
+              <!-- <th>STT</th> -->
+              <th>Tên Bài Thi</th>
+              <th>Chủ đề</th>
+              <th>Số câu hỏi</th>
+              <th>Ngày tạo</th>
+              <th>Số lần thi</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let item of listPractice">
+            <tr>
+              <!-- <td>{{ item['0'] }}</td> -->
+              <td>{{ item['exam1'][1] }}</td>
+              <td>{{ mapNameSubject.get(item['exam1']['10']) }}</td>
+              <td>{{ item['exam1'][3] }}</td>
+              <td>{{ item['exam1']['9'] | date: 'dd/MM/yyyy' }}</td>
+              <td>{{ item['result1'].length }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+  </div>
+</div>

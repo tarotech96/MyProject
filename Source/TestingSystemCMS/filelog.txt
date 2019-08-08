@@ -1,0 +1,7 @@
+2019-03-24 09:25:40 ERROR UploadFileImpl:64 - Co loi khi upload file
+2019-05-24 22:14:33 ERROR UploadFileImpl:62 - Co loi khi upload file
+2019-05-25 16:46:42 ERROR UploadFileImpl:62 - Co loi khi upload file
+2019-05-25 16:47:29 ERROR UploadFileImpl:62 - Co loi khi upload file
+2019-05-25 16:48:14 ERROR UploadFileImpl:62 - Co loi khi upload file
+2019-08-08 10:45:54 ERROR UploadFileImpl:62 - Co loi khi upload file
+2019-08-08 10:46:03 ERROR UploadFileImpl:62 - Co loi khi upload file

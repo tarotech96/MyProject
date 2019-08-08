@@ -1,0 +1,349 @@
+<div class="arrowdown" *ngIf="arrowdowns">
+  <!-- <span class="text" style="padding-left: 20px">Thi thử</span> -->
+  <div class="chevron"></div>
+  <div class="chevron"></div>
+  <div class="chevron"></div>
+  <span class="text">Cuộn Xuống thi thử</span>
+</div>
+<div class="abc">
+  <div id="avas" *ngIf="us.userLogin.fullname !== ''">
+    <div class="namaes">
+      {{ us.userLogin.fullname | uppercase }} <i class="fa fa-angle-down"></i>
+    </div>
+    <div>
+      <img
+        src="{{ baseURL }}/resources/images/user/{{ us.userLogin.img }}"
+        onerror="this.src='../../../../assets/images/default-avatar.png'"
+      />
+    </div>
+  </div>
+  <div style="text-align: left;" class="menumobilemoi">
+    <div [routerLink]="['/hometotal/userexam']" [ngStyle]="{ color: baiThi }">
+      <i class="fa fa-tags"></i> <i> Bài thi</i>
+      <label
+        *ngIf="userserviceService.sizeExamAssign != 0"
+        class="baithi_notification_pro"
+        [routerLink]="['/hometotal/examhistory']"
+        title="Bài thi sắp đến hạn"
+      >
+        {{ userserviceService.sizeExamAssign }}
+      </label>
+    </div>
+    <div
+      [routerLink]="['/hometotal/practice']"
+      *ngIf="us.userLogin.fullname !== ''"
+      [ngStyle]="{ color: thucHanh }"
+    >
+      <i class="fa fa-file-text"></i> <i>Thực hành</i>
+    </div>
+    <div
+      *ngIf="us.userLogin.fullname !== ''"
+      [routerLink]="['/hometotal/examhistory']"
+      [ngStyle]="{ color: lichSu }"
+    >
+      <i class="fa fa-history"></i> <i>Lịch sử</i>
+    </div>
+    <div *ngIf="us?.role" [routerLink]="['/cms']">
+      <i class="fas fa-toolbox"></i><i>CMS</i> <br />
+    </div>
+    <div
+      [routerLink]="['/hometotal/profile-user']"
+      [ngStyle]="{ color: profileUserIndicate }"
+    >
+      <i class="fa fa-address-card"></i> <i>Profile</i>
+    </div>
+    <div (click)="logout()"><i class="fa fa-sign-out"></i><i>Logout</i></div>
+  </div>
+</div>
+
+<!-- FLoat Button -->
+<div id="container-floating">
+  <div
+    [routerLink]="['/hometotal/contactus']"
+    class="nd5 nds"
+    *ngIf="
+      us.userLogin.fullname === null ||
+      us.userLogin.fullname === undefined ||
+      us.userLogin.fullname === ''
+    "
+  >
+    <span class="sp">LIÊN HỆ</span><i class="fa fa-user"></i>
+  </div>
+  <div
+    *ngIf="route === '/hometotal/home'"
+    (click)="clickScrollToThiThu()"
+    class="nd4 nds"
+  >
+    <span
+      style="color: #ffffff;background-color: #0984e3;border-radius: 4px;"
+      class="sp"
+      >THI THỬ</span
+    >
+    <i class="fa fa-level-down"></i>
+  </div>
+
+  <div [routerLink]="['/hometotal/pagenews']" class="nd3 nds">
+    <span class="sp">TIN TỨC</span><i class="fa fa-newspaper-o"></i>
+  </div>
+
+  <div [routerLink]="['/hometotal/home']" class="nd1 nds">
+    <span class="sp">TRANG CHỦ</span> <i class="fa fa-home"></i>
+  </div>
+
+  <div id="floating-button">
+    <p class="plus">+</p>
+    <img
+      class="edit"
+      src="https://ssl.gstatic.com/bt/C3341AA7A1A076756462EE2E5CD71C11/1x/bt_compose2_1x.png"
+    />
+  </div>
+</div>
+<!-- FLoat Button -->
+
+<div
+  class="tong"
+  (window:resize)="onResize($event)"
+  (click)="clickedOutside($event)"
+>
+  <div class="navbarss" [ngStyle]="{ 'background-color': navbarbg }">
+    <div
+      class="adbutton"
+      (click)="showHideMenuMobile()"
+      (click)="clickedInside($event)"
+    >
+      <i class="fa fa-bars"></i>
+    </div>
+    <div
+      style="text-align: left;"
+      (click)="showHideMenuMobile()"
+      class="menumobile"
+      [ngStyle]="{ display: menuMobile }"
+    >
+      <div [routerLink]="['/hometotal/home']" [ngStyle]="{ color: trangChu }">
+        <i class="fas fa-home"></i><i> Trang chủ</i>
+      </div>
+      <div
+        [routerLink]="['/hometotal/pagenews/news']"
+        [ngStyle]="{ color: tinTuc }"
+      >
+        <i class="fa fa-newspaper-o"></i> <i> Tin tức</i>
+      </div>
+      <div [routerLink]="['/hometotal/userexam']" [ngStyle]="{ color: baiThi }">
+        <i class="fa fa-tags"></i> <i> Bài thi</i>
+        <label
+          *ngIf="userserviceService.sizeExamAssign != 0"
+          class="baithi_notification_pro"
+          [routerLink]="['/hometotal/examhistory']"
+          title="Bài thi sắp đến hạn"
+        >
+          {{ userserviceService.sizeExamAssign }}
+        </label>
+      </div>
+      <div
+        [routerLink]="['/hometotal/practice']"
+        *ngIf="us.userLogin.fullname !== ''"
+        [ngStyle]="{ color: thucHanh }"
+      >
+        <i class="fa fa-file-text"></i> <i>Thực hành</i>
+      </div>
+      <div
+        *ngIf="us.userLogin.fullname !== ''"
+        [routerLink]="['/hometotal/examhistory']"
+        [ngStyle]="{ color: lichSu }"
+      >
+        <i class="fa fa-history"></i> <i>Lịch sử</i>
+      </div>
+      <div
+        [routerLink]="['/hometotal/contactus']"
+        [ngStyle]="{ color: lienHe }"
+      >
+        <i class="fa fa-envelope"></i> <i> Liên hệ</i>
+      </div>
+    </div>
+
+    <div
+      style="text-align: left; margin-left: 30px;"
+      id="profile"
+      (click)="showHideProfilePannel()"
+      [ngStyle]="{ display: showProfilePannel }"
+    >
+      <div *ngIf="role" [routerLink]="['/cms/dashboard']">
+        <i class="fas fa-toolbox"></i><i>CMS</i>
+      </div>
+
+      <div [routerLink]="['/hometotal/userexam']" [ngStyle]="{ color: baiThi }">
+        <i class="fa fa-tags"></i> <i> Bài thi</i>
+        <label
+          *ngIf="userserviceService.sizeExamAssign != 0"
+          class="baithi_notification_pro"
+          [routerLink]="['/hometotal/examhistory']"
+          title="Bài thi sắp đến hạn"
+        >
+          {{ userserviceService.sizeExamAssign }}
+        </label>
+      </div>
+      <div
+        [routerLink]="['/hometotal/practice']"
+        *ngIf="us.userLogin.fullname !== ''"
+        [ngStyle]="{ color: thucHanh }"
+      >
+        <i class="fa fa-file-text"></i> <i>Thực hành</i>
+      </div>
+      <div
+        *ngIf="us.userLogin.fullname !== ''"
+        [routerLink]="['/hometotal/examhistory']"
+        [ngStyle]="{ color: lichSu }"
+      >
+        <i class="fa fa-history"></i> <i>Lịch sử</i>
+      </div>
+      <div *ngIf="us.role" [routerLink]="['/cms/dashboard']">
+        <i class="fas fa-toolbox"></i><i>CMS</i>
+      </div>
+      <div
+        [routerLink]="['/hometotal/profile-user']"
+        [ngStyle]="{ color: profileUserIndicate }"
+      >
+        <i class="fa fa-address-card"></i> <i>Profile</i>
+      </div>
+      <div (click)="logout()"><i class="fa fa-sign-out"></i><i>Logout</i></div>
+    </div>
+    <div class="imgs" [routerLink]="['/hometotal/home']">
+      <img
+        style="min-width: 126px;height: 55px;margin-left: 12px;"
+        src="../../../../assets/images/logotesting3.png"
+        alt=""
+      />
+    </div>
+    <div class="trangchutintuc">
+      <div [routerLink]="['']" [ngStyle]="{ color: trangChu }">
+        <label class="tctt">TRANG CHỦ</label>
+      </div>
+      <div
+        [routerLink]="['/hometotal/pagenews/news']"
+        [ngStyle]="{ color: tinTuc }"
+      >
+        <label class="tctt">TIN TỨC</label>
+      </div>
+
+      <div
+        [routerLink]="['/hometotal/practice']"
+        *ngIf="us.userLogin.fullname !== ''"
+        [ngStyle]="{ color: thucHanh }"
+      >
+        <label class="tctt"> THỰC HÀNH</label>
+      </div>
+      <div
+        *ngIf="us.userLogin.fullname !== ''"
+        style="display: flex; flex-direction: row;"
+        [ngStyle]="{ color: baiThi }"
+      >
+        <label class="tctt" [routerLink]="['/hometotal/userexam']">
+          BÀI THI</label
+        >
+        <div
+          *ngIf="userserviceService.sizeExamAssign != 0"
+          [routerLink]="['/hometotal/examhistory']"
+          title="Bài thi sắp đến hạn"
+          class="baithi_notification tctt"
+        >
+          {{ userserviceService.sizeExamAssign }}
+        </div>
+      </div>
+      <div
+        *ngIf="us.userLogin.fullname !== ''"
+        [routerLink]="['/hometotal/examhistory']"
+        [ngStyle]="{ color: lichSu }"
+      >
+        <label class="tctt">LỊCH SỬ</label>
+      </div>
+      <div
+        [routerLink]="['/hometotal/contactus']"
+        [ngStyle]="{ color: lienHe }"
+      >
+        <label class="tctt"> LIÊN HỆ</label>
+      </div>
+      <div class="dangki_dangnhap">
+        <div
+          class=""
+          *ngIf="
+            us.userLogin.fullname === null ||
+            us.userLogin.fullname === undefined ||
+            us.userLogin.fullname === ''
+          "
+        >
+          <div
+            id="navss"
+            [routerLink]="['/hometotal/login']"
+            class="btn btn-primary btn-sm"
+          >
+            <i class="fas fa-sign-in-alt"></i> ĐĂNG NHẬP
+          </div>
+        </div>
+        <div
+          class=""
+          *ngIf="
+            us.userLogin.fullname === null ||
+            us.userLogin.fullname === undefined ||
+            us.userLogin.fullname === ''
+          "
+        >
+          <div
+            id="navss"
+            [routerLink]="['/hometotal/register']"
+            class="btn btn-warning btn-sm"
+          >
+            <i class="fas fa-registered"></i> ĐĂNG KÝ
+          </div>
+        </div>
+      </div>
+      <div
+        id="ava"
+        (click)="showHideProfilePannel()"
+        *ngIf="us.userLogin.fullname !== ''"
+      >
+        <div class="namae">
+          {{ us.userLogin.fullname | uppercase }}
+          <i class="fa fa-angle-down"></i>
+        </div>
+        <div>
+          <img
+            src="{{ baseURL }}/resources/images/user/{{ us.userLogin.img }}"
+            onerror="this.src='../../../../assets/images/default-avatar.png'"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="routerout"><router-outlet></router-outlet></div>
+
+  <footer>
+    <div class="footer_bottom">
+      <div [routerLink]="['/hometotal/home']">
+        <!-- <img
+          src="https://tuyendung.cmc.com.vn/static/img/portal/common/logo_vn_white.png"
+        /> -->
+      </div>
+      <div>Hệ thống test online-2019</div>
+      <div class="ful">
+        <a href="https://www.facebook.com/TuyendungCMCCorp">
+          <i class="fa fa-facebook" aria-hidden="true"></i>
+        </a>
+        <a href="https://www.youtube.com/channel/UCGoc_KCIRUn4OAO8w-4HxRA">
+          <i
+            style="color:rgb(224, 0, 0)"
+            class="fa fa-youtube-play"
+            aria-hidden="true"
+          ></i>
+        </a>
+        <a href="https://www.linkedin.com/company/837549/">
+          <i
+            style="color:rgb(35, 121, 179)"
+            class="fa fa-linkedin"
+            aria-hidden="true"
+          ></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+</div>

@@ -1,0 +1,779 @@
+// Khong cho outline khi tro chuot vao cac the + khong hien thi scroll bar
+* {
+  outline: 0px !important;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+::-moz-scrollbar {
+  display: none;
+}
+::-ms-scrollbar {
+  display: none;
+}
+// FLOAT BUTTON ***************************************************************************************
+.sp {
+  position: absolute;
+  right: 50px;
+  color: transparent;
+  width: 90px;
+  font-size: 13px;
+  text-align: center;
+  font-weight: 500;
+  height: 25px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+  padding-left: 10px;
+}
+#floating-button {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: #1c9ed6;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+#floating-button:hover {
+  background-color: red;
+}
+.plus {
+  left: 12.5px;
+  bottom: -20px;
+  color: white;
+  position: absolute;
+  display: block;
+  text-align: center;
+  line-height: 55px;
+  font-size: 38px;
+  font-family: 'Roboto';
+  font-weight: 300;
+  animation: plus-out 0.3s;
+  transition: all 0.3s;
+}
+#container-floating {
+  position: fixed;
+  width: 45px;
+  height: 45px;
+  bottom: 20px;
+  right: 20px;
+  z-index: 50000;
+}
+#container-floating:hover {
+  height: 400px;
+  width: 90px;
+  padding: 30px;
+}
+#container-floating:hover .plus {
+  animation: plus-in 0.15s linear;
+  animation-fill-mode: forwards;
+}
+.edit {
+  position: absolute;
+  top: 0;
+  display: block;
+  bottom: 0;
+  left: 0;
+  display: block;
+  right: 0;
+  padding: 0;
+  opacity: 0;
+  margin: auto;
+  line-height: 65px;
+  transform: rotateZ(-70deg);
+  transition: all 0.3s;
+  animation: edit-out 0.3s;
+}
+#container-floating:hover .edit {
+  animation: edit-in 0.2s;
+  animation-delay: 0.1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes edit-in {
+  from {
+    opacity: 0;
+    transform: rotateZ(-70deg);
+  }
+  to {
+    opacity: 1;
+    transform: rotateZ(0deg);
+  }
+}
+
+@keyframes edit-out {
+  from {
+    opacity: 1;
+    transform: rotateZ(0deg);
+  }
+  to {
+    opacity: 0;
+    transform: rotateZ(-70deg);
+  }
+}
+
+@keyframes plus-in {
+  from {
+    opacity: 1;
+    transform: rotateZ(0deg);
+  }
+  to {
+    opacity: 0;
+    transform: rotateZ(180deg);
+  }
+}
+
+@keyframes plus-out {
+  from {
+    opacity: 0;
+    transform: rotateZ(180deg);
+  }
+  to {
+    opacity: 1;
+    transform: rotateZ(0deg);
+  }
+}
+
+.nds {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  position: fixed;
+  z-index: 300;
+  transform: scale(0);
+  cursor: pointer;
+}
+.nds:hover {
+  background-color: red;
+}
+.nds:hover span {
+  color: #ffffff;
+  background-color: #0984e3;
+  border-radius: 4px;
+}
+.nd1 {
+  background: #01b11e;
+  right: 30px;
+  bottom: 90px;
+  animation-delay: 0.2s;
+  animation: bounce-out-nds 0.3s linear;
+  animation-fill-mode: forwards;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+  color: white;
+}
+
+.nd3 {
+  background: #055ef8;
+  right: 30px;
+  bottom: 150px;
+  animation-delay: 0.15s;
+  animation: bounce-out-nds 0.15s linear;
+  animation-fill-mode: forwards;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+  color: white;
+}
+
+.nd4 {
+  background: #a600c3;
+  right: 30px;
+  bottom: 210px;
+  animation-delay: 0.1s;
+  animation: bounce-out-nds 0.1s linear;
+  animation-fill-mode: forwards;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+  color: white;
+}
+
+.nd5 {
+  background: #ff9305;
+  right: 30px;
+  bottom: 270px;
+  animation-delay: 0.08s;
+  animation: bounce-out-nds 0.1s linear;
+  animation-fill-mode: forwards;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+  color: white;
+}
+.nd6 {
+  background: #0099ff;
+  right: 30px;
+  bottom: 330px;
+  animation-delay: 0.08s;
+  animation: bounce-out-nds 0.1s linear;
+  animation-fill-mode: forwards;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+  color: white;
+}
+.nd7 {
+  background: orangered;
+  right: 30px;
+  bottom: 390px;
+  animation-delay: 0.08s;
+  animation: bounce-out-nds 0.1s linear;
+  animation-fill-mode: forwards;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+  color: white;
+}
+@keyframes bounce-nds {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes bounce-out-nds {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0);
+  }
+}
+#container-floating:hover .nds {
+  animation: bounce-nds 0.1s linear;
+  animation-fill-mode: forwards;
+}
+#container-floating:hover .nd3 {
+  animation-delay: 0.08s;
+}
+#container-floating:hover .nd4 {
+  animation-delay: 0.15s;
+}
+#container-floating:hover .nd5 {
+  animation-delay: 0.2s;
+}
+// FLOAT BUTTON ***************************************************************************************
+.tong {
+  min-width: 550px;
+}
+// Button ẩn hiện menu Mobline
+.adbutton {
+  display: none;
+  height: 20px;
+  width: 20px;
+  font-size: 20px;
+  color: rgb(255, 255, 255);
+  z-index: 30;
+  padding: 2px;
+}
+.adbutton:hover {
+  color: rgb(255, 0, 0);
+}
+// Thanh dieu huong chuyen thanh menumobile khi man hinh nho
+.menumobile {
+  position: absolute;
+  background-color: rgb(77, 78, 80);
+  color: #ffffff;
+  left: 0px;
+  top: 60px;
+  height: auto;
+  width: 250px;
+  z-index: 10;
+  font-size: 18px;
+  padding: 0px;
+  // box-shadow: 1px 8px 10px rgb(77, 77, 77);
+  -ms-overflow-style: none;
+  cursor: pointer;
+  overflow: auto;
+  border-top: 0.5px solid gray;
+}
+.menumobile i {
+  padding-left: 10px;
+  cursor: pointer;
+}
+.menumobile div {
+  border-radius: 5px;
+  height: 45px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+}
+.menumobile div:hover {
+  background-color: #36393d;
+}
+#navss {
+  font-size: 12px;
+  margin-left: 10px;
+  width: 100px;
+  padding: 5px;
+}
+// Thanh dieu huong chuyen thanh menumobile khi man hinh nho
+// Menu button chi xuat hien che do mobile man hinh nho
+
+// Thanh dieu huong tren cung
+.navbarss {
+  height: 60px;
+  width: 100%;
+  // background-color: #36393d;
+  // box-shadow: 1px 10px 20px rgba(109, 109, 109, 0.7);
+  position: fixed;
+  top: 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  z-index: 100;
+  padding-left: 10px;
+}
+
+.trangchutintuc {
+  clear: both;
+  vertical-align: right;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  color: rgb(255, 255, 255);
+  width: auto;
+}
+.trangchutintuc label {
+  font-size: 14px;
+  margin: 0px 12px;
+  font-weight: 500;
+  float: right;
+  cursor: pointer;
+}
+.trangchutintuc label:hover {
+  color: #1fbcff;
+}
+.baithi_notification {
+  width: 16px;
+  height: 16px;
+  background-color: #e90000;
+  color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+  // border: 1px solid #0984e3;
+  border-radius: 50%;
+  font-size: 12px;
+  font-family: 'Times New Roman', Times, serif;
+  border: 1px solid #e90000;
+  cursor: pointer;
+  position: relative;
+  top: -10px;
+  right: 8px;
+}
+
+.baithi_notification_pro {
+  width: 16px;
+  height: 16px;
+  background-color: #e90000;
+  color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-size: 12px;
+  font-family: 'Times New Roman', Times, serif;
+  border: 1px solid #e90000;
+  cursor: pointer;
+  position: relative;
+  left: 8px;
+  top: -5px;
+}
+
+.baithi_notification:hover {
+  background-color: #ff0000;
+}
+.baithi_notification_pro:hover {
+  background-color: #ff0000;
+}
+.dangki_dangnhap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 10px;
+}
+// Thanh dieu huong tren cung
+
+// Thanh bottom
+.footer_bottom {
+  background-color: rgb(51, 51, 51);
+  padding: 10px 100px 10px 10px;
+  display: flex;
+  align-items: center;
+  vertical-align: middle;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 14px;
+  height: 60px;
+
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+.ful {
+  width: 200px;
+  font-size: 30px;
+  align-items: center;
+  align-content: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+footer {
+  position: relative;
+  bottom: 0px;
+  color: white;
+}
+// Thanh bottom
+
+// Phan thong tin ca nhan avatar - ten tuoi
+#ava {
+  visibility: hidden;
+  height: 60px;
+  // min-width: 250px;
+  width: auto;
+  color: transparent;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 10px;
+  padding-left: 10px;
+  cursor: pointer;
+}
+.adbutton i {
+  cursor: pointer;
+}
+
+#ava img {
+  visibility: hidden;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+}
+// #ava img:hover {
+//   border-color: red;
+// }
+.namae {
+  color: transparent;
+  font-size: 14px;
+  font-weight: 500;
+  border-left: 2px solid transparent;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+// .namae:hover {
+//   color: red;
+// }
+
+// Phan thong tin ca nhan avatar - ten tuoi
+
+#profile {
+  position: absolute;
+  background-color: rgb(77, 78, 80);
+  color: #ffffff;
+  right: 0px;
+  top: 60px;
+  height: auto;
+  width: 300px;
+  z-index: 20;
+  font-size: 18px;
+  padding: 25px 0px 25px 0px;
+  // box-shadow: 1px 8px 10px rgb(77, 77, 77);
+}
+#profile i {
+  margin-left: 10px;
+  cursor: pointer;
+}
+#profile div {
+  border-radius: 5px;
+  height: 45px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+}
+#profile div:hover {
+  background-color: #36393d;
+}
+.ft-contact {
+  text-align: center;
+  margin: 10px;
+}
+span.ic-contact a {
+  font-size: 25px;
+  padding: 5px 20px;
+  margin: 10px 30px;
+}
+span.ic-contact a:hover {
+  background: #fff;
+  color: #222121;
+  border-radius: 4px;
+}
+// .routerout {
+//   margin-bottom: 30px;
+// }
+
+// Phan thong tin ca nhan avatar - ten tuoi
+
+// Dropdown menu profile moi
+.menumobilemoi {
+  display: none;
+  position: relative;
+  width: auto;
+  min-width: 150px;
+  background-color: rgb(77, 78, 80);
+  right: 0px;
+  color: #ffffff;
+  height: auto;
+  font-size: 18px;
+  padding: 0px;
+  -ms-overflow-style: none;
+  cursor: pointer;
+  overflow: auto;
+  border-top: 0.5px solid gray;
+}
+.menumobilemoi i {
+  padding-left: 10px;
+  cursor: pointer;
+}
+.menumobilemoi div {
+  border-radius: 5px;
+  height: 45px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+}
+.menumobilemoi div:hover {
+  background-color: #36393d;
+}
+
+.abc {
+  position: fixed;
+  width: auto;
+  height: 60px;
+  top: 0px;
+  right: 0px;
+  z-index: 500;
+}
+.abc:hover {
+  height: auto;
+}
+.abc:hover .menumobilemoi {
+  display: block;
+}
+
+// Phan thong tin ca nhan avatar - ten tuoi
+#avas {
+  height: 60px;
+  width: auto;
+  color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 10px;
+  padding-left: 10px;
+  cursor: pointer;
+}
+#avas img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #0984e3;
+}
+#avas img:hover {
+  border-color: red;
+}
+.namaes {
+  color: rgb(255, 255, 255);
+  font-size: 14px;
+  font-weight: 500;
+  border-left: 2px solid #0984e3;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.namaes:hover {
+  color: red;
+}
+
+// Mũi tên scrol down START
+.arrowdown {
+  position: fixed;
+  left: 50px;
+  bottom: 80px;
+  width: 24px;
+  height: 24px;
+  z-index: 1000000000;
+}
+
+.chevron {
+  position: absolute;
+  left: 20px;
+  width: 28px;
+  height: 8px;
+  opacity: 0;
+  transform: scale3d(0.5, 0.5, 0.5);
+  animation: move 3s ease-out infinite;
+}
+
+.chevron:first-child {
+  animation: move 3s ease-out 1s infinite;
+}
+
+.chevron:nth-child(2) {
+  animation: move 3s ease-out 2s infinite;
+}
+
+.chevron:before,
+.chevron:after {
+  content: ' ';
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 51%;
+  background: #1c9ed6;
+}
+
+.chevron:before {
+  left: 0;
+  transform: skew(0deg, 30deg);
+}
+
+.chevron:after {
+  right: 0;
+  width: 50%;
+  transform: skew(0deg, -30deg);
+}
+
+@keyframes move {
+  25% {
+    opacity: 1;
+  }
+  33% {
+    opacity: 1;
+    transform: translateY(30px);
+  }
+  67% {
+    opacity: 1;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(55px) scale3d(0.5, 0.5, 0.5);
+  }
+}
+
+.text {
+  display: block;
+  margin-top: 75px;
+  margin-left: -30px;
+  font-family: 'Helvetica Neue', 'Helvetica', Arial, sans-serif;
+  font-size: 12px;
+  color: #1c9ed6;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0.25;
+  animation: pulse 2s linear alternate infinite;
+  font-weight: 600;
+}
+
+@keyframes pulse {
+  to {
+    opacity: 1;
+  }
+}
+// Mũi tên scrol down END
+
+@media all and (max-width: 1500px) {
+  #ava {
+    width: auto;
+    padding-left: 10px;
+  }
+}
+
+@media all and (max-width: 1200px) {
+  #ava {
+    width: auto;
+    padding-left: 10px;
+  }
+  #profile {
+    width: 300px;
+  }
+  .navbarss {
+    padding-left: 10px;
+  }
+  .arrowdown {
+    display: none;
+  }
+}
+@media all and (max-width: 950px) {
+  .footer_bottom {
+    align-items: center;
+    vertical-align: middle;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 180px;
+    padding: 10px 10px 10px 10px;
+  }
+  .tctt {
+    display: none;
+  }
+  .adbutton {
+    display: flex;
+    position: absolute;
+    top: 20px;
+    left: 10px;
+  }
+  .imgs img {
+    width: auto;
+    height: 4vh;
+    min-height: 40px;
+    margin-left: 40px;
+  }
+  .navbarss {
+    min-width: 500px;
+  }
+}
+@media all and (max-width: 400px) {
+  #ava {
+    width: 270px;
+    padding-left: 0px;
+  }
+}

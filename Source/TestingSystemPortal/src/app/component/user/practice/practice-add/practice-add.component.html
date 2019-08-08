@@ -1,0 +1,269 @@
+<div class="tong">
+  <div class="themmoibaithi">
+    <br />
+    <form [formGroup]="addDetail" enctype="multipart/form-data">
+      <div style="text-align: center"><h4>TẠO BÀI THI THỬ</h4></div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label> Tên bài thi thử <span class="required_field">*</span></label>
+          <input
+            type="text"
+            class="form-control"
+            (change)="checkSpaceName($event)"
+            formControlName="nameofpractise"
+          />
+        </div>
+        <div
+          class="form-group alert alert-danger"
+          role="alert"
+          *ngIf="
+            addDetail.get('nameofpractise').errors &&
+            addDetail.get('nameofpractise').touched
+          "
+        >
+          <span *ngIf="addDetail.hasError('required', ['nameofpractise'])">
+            Vui lòng nhập tên bài thi thử!
+          </span>
+          <span *ngIf="addDetail.hasError('whitespace', ['nameofpractise'])"
+            >Vui lòng nhập giá trị cho câu hỏi & chứa trên kí tự</span
+          >
+          <span *ngIf="addDetail.hasError('maxlength', ['nameofpractise'])">
+            Tên bài thi không được vượt quá 100 kí tự!
+          </span>
+          <span *ngIf="addDetail.hasError('minlength', ['nameofpractise'])">
+            Tên bài thi không được dưới 10 kí tự!
+          </span>
+        </div>
+        <div class="form-group">
+          <label>
+            Tổng số câu (Tối thiểu 10, tối đa 100)<span class="required_field"
+              >*</span
+            ></label
+          >
+          <input
+            type="number"
+            min="10"
+            onkeypress="return event.charCode >= 48"
+            class="form-control"
+            formControlName="numofquestion"
+          />
+        </div>
+        <div
+          class="form-group alert alert-danger"
+          role="alert"
+          *ngIf="
+            addDetail.get('numofquestion').errors &&
+            addDetail.get('numofquestion').touched
+          "
+        >
+          <span *ngIf="addDetail.hasError('required', ['numofquestion'])">
+            Vui lòng nhập tổng số câu hỏi muốn tạo!
+          </span>
+          <span *ngIf="addDetail.hasError('max', ['numofquestion'])">
+            Tổng số câu hỏi không được phép vượt quá 100 câu!
+          </span>
+          <span *ngIf="addDetail.hasError('min', ['numofquestion'])">
+            Tổng số câu hỏi không được dưới 10 câu!
+          </span>
+        </div>
+        <div class="form-group">
+          <label> Chủ đề <span class="required_field">*</span></label>
+          <select
+            class="form-control"
+            formControlName="subject"
+            (change)="onChange($event)"
+          >
+            <option
+              *ngFor="let subject of subjects"
+              value="{{ subject.id }}"
+              selected
+              >{{ subject.name }}</option
+            >
+          </select>
+        </div>
+        <div
+          class="form-group alert alert-danger"
+          role="alert"
+          *ngIf="
+            addDetail.get('subject').errors && addDetail.get('subject').touched
+          "
+        >
+          <span *ngIf="addDetail.hasError('required', ['subject'])">
+            Vui lòng nhập chủ đề!
+          </span>
+        </div>
+        <div class="addCauHoi">
+          <div class="form-group cauhinhrandom">
+            <div class="form-group" style="width: 30%">
+              Chương
+              <select
+                style=" border: 1px solid gray;"
+                class="form-control"
+                [(ngModel)]="defaultCt"
+                (change)="selectChapter($event)"
+                formControlName="selectChapter"
+              >
+                <option [value]="chapter.id" *ngFor="let chapter of chapters">{{
+                  chapter.name
+                }}</option>
+              </select>
+            </div>
+            <div class="form-group" style="width: 30%">
+              Kĩ năng
+              <select
+                style=" border: 1px solid gray;"
+                class="form-control"
+                [(ngModel)]="defaultDm"
+                (change)="selectDomain($event)"
+                formControlName="selectDomain"
+              >
+                <option [value]="domain.id" *ngFor="let domain of domains">
+                  {{ domain.name }}</option
+                >
+              </select>
+            </div>
+            <div class="form-group " style="width: 30%;">
+              Số câu hỏi
+              <input
+                type="number"
+                min="0"
+                (keyup)="validateMax($event.target.value)"
+                onkeypress="return event.charCode >= 48"
+                formControlName="numberQuestion"
+                style="width: 200px; height: 35px; border-radius: 5px; border: 1px solid gray;"
+              />
+            </div>
+          </div>
+          <div
+            formArrayName="detailSelect"
+            class="cauhinhrandom"
+            style="display: block;"
+          >
+            <div
+              style="height: 30px;margin-top: 10px; width: 100%;"
+              *ngFor="
+                let option of addDetail.get('detailSelect').controls;
+                let i = index
+              "
+            >
+              <div
+                [formGroupName]="i"
+                style="height: 30px;margin-top: 10px; width: 100%;"
+              >
+                <div
+                  class="form-group cauhinhrandom"
+                  style="height: 30px;margin-left: 0px; width: 100%; padding-left: 0px;"
+                >
+                  <div class="form-group" style="width: 30%">
+                    <select
+                      style=" border: 1px solid gray;"
+                      formControlName="chapter"
+                      class="form-control"
+                      (change)="selectArray($event, i)"
+                    >
+                      <option
+                        [value]="chapter1.id"
+                        *ngFor="let chapter1 of chapters"
+                        >{{ chapter1.name }}</option
+                      >
+                    </select>
+                  </div>
+                  <div
+                    class="form-group"
+                    style="width: 30%; position: relative; left: -37px"
+                  >
+                    <select
+                      style=" border: 1px solid gray;"
+                      formControlName="domain"
+                      class="form-control"
+                      (change)="selectArray($event, i)"
+                    >
+                      <option
+                        [value]="domain1.id"
+                        *ngFor="let domain1 of domains"
+                        >{{ domain1.name }}</option
+                      >
+                    </select>
+                  </div>
+                  <div
+                    class="form-group"
+                    style="width: 20%;
+                            display:flex;
+                             flex-direction:row;
+                             border:1px solid none;
+                             border-radius: 5px; position: relative; left: -74px"
+                  >
+                    <input
+                    (click)="hideWarning()"
+                      style=" border: 1px solid gray;"
+                      class="checkValidIp"
+                      type="number"
+                      min="0"
+                      onkeypress="return event.charCode >= 48"
+                      formControlName="number"
+                    />
+                    <input
+                      class="checkValidBt"
+                      type="button"
+                      formControlName="tooltip"
+                    />
+                    <i
+                      style="color: red; margin-left: 10px; margin-top: 10px"
+                      class="fa fa-trash-o"
+                      (click)="deleteOption(addDetail.controls.detailSelect, i)"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <span *ngIf="addDetail.hasError('minLengthArray', ['detailSelect'])">
+            Vui lòng chọn câu hỏi theo chủ đề, chương và kĩ năng!
+          </span>
+          <br />
+          <button
+            *ngIf="isDisable; else disable"
+            class="btn btn-primary"
+            style="width: 30%; position: relative;float: right;"
+            (click)="onAdd(addDetail.controls.detailSelect)">
+            Thêm câu hỏi
+          </button>
+          <div *ngIf="showWarning">
+            Quá số lượng câu hỏi của chapter và domain này !!
+          </div>
+          <ng-template #disable>
+            <button
+              disabled
+              style="width: 30%; position: relative;float: right;"
+              class="btn btn-primary"
+              (click)="onAdd(addDetail.controls.detailSelect)"
+            >
+              Thêm câu hỏi
+            </button>
+          </ng-template>
+        </div>
+        <br />
+        <button
+          (click)="onSubmitInsert()"
+          class="btn btn-success"
+          
+        >
+          Tạo bài thi thử
+        </button>
+        <button
+          style="margin-left: 30px; width: 70px"
+          (click)="onBack()"
+          class="btn btn-dark">
+          Đóng
+        </button>
+        <div *ngIf="isExceedDomainChapter">
+          Qúa số lượng câu hỏi của chapter và domain
+        </div>
+        <div *ngIf="isExceedTotalQuestion">
+          Qúa số lượng câu hỏi
+        </div>
+        <span> {{ error }} </span>
+      </div>
+    </form>
+  </div>
+</div>

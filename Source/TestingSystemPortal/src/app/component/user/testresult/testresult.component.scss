@@ -1,0 +1,707 @@
+.header {
+  height: 60px;
+  background-color: #66c282;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+.header span {
+  font-size: 20px;
+  color: white;
+}
+.mainview {
+  background-color: #ffffff;
+  padding: 10%;
+  width: 100%;
+  display: block;
+  border-radius: 5px;
+  min-height: 100vh;
+  background-image: url('../../../../assets/images/Candy.jpg');
+  background-size: cover;
+  overflow: hidden;
+}
+
+// DIVPHAI ****************************************************
+.divphai {
+  height: 560px;
+  margin-left: 10%;
+  width: 80%;
+  background-color: #efefef;
+  border-radius: 5px 5px 0px 0px;
+  display: flex;
+  flex-direction: column;
+}
+.headerdivphai {
+  border-radius: 5px 5px 0px 0px;
+  background-color: #4d4d4d;
+  color: white;
+  font-size: 18px;
+  padding: 10px;
+}
+.header_duoi {
+  margin-left: 2.5%;
+  width: 95%;
+  display: flex;
+  padding-top: 2.5%;
+}
+.divs_core {
+  width: 20%;
+}
+.btnduoi {
+  margin-top: 30px;
+  width: 100%;
+}
+.divs_per {
+  height: 200px;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 2.5%;
+  border-radius: 5px;
+}
+.divs_per span {
+  font-size: 25px;
+  vertical-align: center;
+}
+.divs_graph {
+  width: 80%;
+}
+.bieu_do {
+  background-color: rgb(255, 255, 255);
+  height: 350px;
+  width: 97%;
+  margin-left: 3%;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.bieu_do_trai {
+  width: 50%;
+  height: 200px;
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.sb {
+  background-color: white;
+  width: 80%;
+  height: 40px;
+  padding: 0px 0px 0px 10px;
+  border-radius: 5px;
+  align-items: center;
+  border: 1px solid gray;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+#sbspan {
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  border: 1px solid gray;
+  border-radius: 0px 5px 5px 0px;
+  width: 60px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.clearfix {
+  width: 242px;
+  height: 242px;
+}
+
+.bieu_do_phai {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  align-content: center;
+}
+.thong_ke {
+  height: 70px;
+  width: 97%;
+  margin-top: 3%;
+  margin-left: 3%;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.tk {
+  font-size: 16px;
+  background-color: white;
+  height: 70px;
+  width: 30%;
+  border-top: 10px solid #149dcc;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+}
+.tks {
+  font-weight: 700;
+}
+
+// DIVTRAI ****************************************************
+.divtrai {
+  height: auto;
+  margin-left: 10%;
+  width: 80%;
+  background-color: #efefef;
+  border-radius: 0px 0px 5px 5px;
+  display: flex;
+  flex-direction: column;
+}
+.headerdivtrai {
+  border-radius: 0px 0px 5px 5px;
+  background-color: transparent;
+  color: white;
+  font-size: 18px;
+  padding: 0px;
+  border-radius: 5px;
+  margin-left: 10%;
+  width: 80%;
+}
+.headerdivtraiss {
+  width: 100%;
+}
+.headerdivtraiss div {
+  display: inline;
+}
+
+// .headerdivtrai div {
+//   margin-left: 20px;
+// }
+// .headerdivtrai button {
+//   width: auto;
+// }
+// .headerdivtrai label {
+//   padding-top: 10px;
+//   font-size: 16px;
+// }
+.header_duoi_divtrai {
+  display: flex;
+  flex-direction: row;
+  width: 95%;
+  margin-left: 5%;
+  margin: 0px 30px 30px 30px;
+  background-color: white;
+}
+.divs_core_duoi {
+  height: 300px;
+  width: 25%;
+  background-color: white;
+  align-items: center;
+  padding: 3%;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.divs_per_duoi {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  align-content: center;
+  height: 100px;
+  width: 100%;
+  border: 10px solid rgb(199, 199, 199);
+  border-radius: 5px;
+}
+.divtrais_graph {
+  background-color: white;
+  padding: 3%;
+  width: 85%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 5px;
+}
+.btn {
+  font-size: 20px !important;
+}
+.headerdivtrai .btn {
+  font-size: 16px !important;
+}
+.sb_phai {
+  font-size: 16px;
+  background-color: rgb(199, 199, 199);
+  width: 100%;
+  height: 40px;
+  padding-left: 15px;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-radius: 5px;
+}
+.map_graph {
+  padding-left: 10px;
+}
+#sbspan_phai {
+  padding-left: 5px;
+  width: 70%;
+  height: 20px;
+  vertical-align: middle;
+  border-radius: 10px;
+}
+#sbspan_phai_parent {
+  width: 90%;
+  margin: 0px;
+  margin-right: 15px;
+  padding: 0px;
+}
+.charts div {
+  border-radius: 15px;
+}
+#map_graph {
+  width: 150px;
+}
+// DIVTRAI ****************************************************
+
+@media all and (max-width: 1200px) {
+  .thong_ke {
+    height: 100px;
+  }
+  .tk {
+    height: 100px;
+  }
+  .mainview {
+    padding: 5%;
+    width: 100%;
+    padding-top: 10%;
+  }
+}
+@media all and (max-width: 1000px) {
+  .an {
+    display: none;
+  }
+  .mainview {
+    padding: 5% 1% 1% 1%;
+  }
+  .divtrong {
+    height: 1680px;
+  }
+  .divphai {
+    margin-top: 7%;
+    margin-left: 0%;
+    width: 100%;
+    height: 1000px;
+  }
+  .header_duoi {
+    height: 1200px;
+    flex-direction: column;
+  }
+  .divs_core {
+    width: 100%;
+  }
+  .divs_graph {
+    height: 650px;
+    width: 100%;
+  }
+  .btnduoi {
+    margin-top: 10px;
+  }
+  .bieu_do {
+    margin-top: 10px;
+    height: 550px;
+    margin-left: 0px;
+    width: 100%;
+    flex-direction: column;
+  }
+  .bieu_do_trai {
+    font-size: 20px;
+    width: 100%;
+    height: 250px;
+  }
+  .bieu_do_phai {
+    width: 100%;
+    height: 250px;
+    margin-bottom: 30px;
+  }
+
+  .thong_ke {
+    width: 100%;
+    margin-top: 1%;
+    margin-left: 0%;
+    margin-right: 0%;
+    height: 100px;
+  }
+  .tk {
+    width: 33%;
+    height: 80px;
+  }
+
+  .divtrai {
+    height: 550px;
+    margin-top: 5%;
+    margin-left: 0%;
+    width: 100%;
+    flex-direction: column;
+  }
+  .btn-group-justified button {
+    font-size: 20px;
+  }
+  .headerdivtrai div {
+    margin-left: 5px;
+  }
+  .headerdivtrai button {
+    width: 100%;
+  }
+  // .headerdivtrai {
+  //   font-size: 18px;
+  //   padding: 0px;
+  // }
+
+  // .header_duoi_divtrai {
+  //   flex-direction: column;
+  //   width: 95%;
+  //   margin: 0% 0% 0% 2.5%;
+  // }
+  .headerdivtrai {
+    width: 100%;
+    margin-left: 0%;
+  }
+  .divs_core_duoi {
+    width: 100%;
+    height: 180px;
+    padding: 3%;
+    flex-direction: row;
+  }
+
+  .divs_per_duoi {
+    flex-direction: column;
+    align-items: center;
+    height: 100px;
+    width: 45%;
+  }
+  .divtrais_graph {
+    width: 100%;
+    height: 200px;
+  }
+  .headerdivtrais {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+  }
+}
+
+/****************************************************************
+ *
+ * CSS Percentage Circle
+ * Author: Andre Firchow
+ *
+*****************************************************************/
+
+// Compass utilities
+@import '~compass-mixins/lib/compass/css3';
+
+// VARS
+$circle-width: 0.08em;
+$circle-width-hover: 0.04em;
+
+// colors default
+$primary-color: #307bbb;
+$secondary-color: #ccc;
+$bg-color: #f5f5f5;
+
+$primary-color-green: #4db53c;
+$primary-color-orange: #dd9d22;
+
+// colors dark skin
+$primary-color-dark: #c6ff00;
+$secondary-color-dark: #777;
+$bg-color-dark: #666;
+
+$primary-color-green-dark: #5fd400;
+$primary-color-orange-dark: #e08833;
+
+// CIRCLE
+// classes 2 extend
+.rect-auto {
+  clip: rect(auto, auto, auto, auto);
+}
+
+.pie {
+  position: absolute;
+  border: $circle-width solid $primary-color;
+  width: 1 - (2 * $circle-width);
+  height: 1 - (2 * $circle-width);
+  clip: rect(0em, 0.5em, 1em, 0em);
+  border-radius: 50%;
+  @include rotate(0deg);
+}
+
+.pie-fill {
+  @include rotate(180deg);
+}
+
+// main
+.c100 {
+  *,
+  *:before,
+  *:after {
+    @include box-sizing(content-box);
+  }
+
+  position: relative;
+  font-size: 120px;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  float: left;
+  margin: 0 0.1em 0.1em 0;
+  background-color: $secondary-color;
+
+  // center circle to its parent
+  &.center {
+    float: none;
+    margin: 0 auto;
+  }
+
+  // bigger size
+  &.big {
+    font-size: 240px;
+  }
+
+  // smaller size
+  &.small {
+    font-size: 80px;
+  }
+
+  // centered value inside circle
+  > span {
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 5em;
+    line-height: 5em;
+    font-size: 0.2em;
+    color: $secondary-color;
+    display: block;
+    text-align: center;
+    white-space: nowrap;
+    @include transition-property(all);
+    @include transition-duration(0.2s);
+    @include transition-timing-function(ease-out);
+  }
+
+  // background inside the circle
+  &:after {
+    position: absolute;
+    top: $circle-width;
+    left: $circle-width;
+    display: block;
+    content: ' ';
+    border-radius: 50%;
+    background-color: $bg-color;
+    width: 1 - (2 * $circle-width);
+    height: 1 - (2 * $circle-width);
+    @include transition-property(all);
+    @include transition-duration(0.2s);
+    @include transition-timing-function(ease-in);
+  }
+
+  // the slice (mask)
+  .slice {
+    position: absolute;
+    width: 1em;
+    height: 1em;
+    clip: rect(0em, 1em, 1em, 0.5em);
+  }
+
+  // circle to show the status
+  .bar {
+    @extend .pie;
+  }
+
+  // loop to create all needed elements automatically
+  @for $j from 51 through 100 {
+    &.p#{$j} .slice {
+      @extend .rect-auto;
+    }
+
+    &.p#{$j} .bar:after {
+      @extend .pie-fill;
+    }
+
+    &.p#{$j} .fill {
+      @extend .pie;
+      @extend .pie-fill;
+    }
+  }
+
+  // loop to rotate all 100 circles
+  @for $j from 1 through 20 {
+    &.p#{$j} .bar {
+      @include rotate((360/100 * $j) + deg);
+    }
+  }
+
+  // green skin
+  &.green {
+    .bar,
+    .fill {
+      border-color: $primary-color-green !important;
+    }
+
+    &:hover {
+      > span {
+        color: $primary-color-green;
+      }
+    }
+  }
+
+  &.green.dark {
+    .bar,
+    .fill {
+      border-color: $primary-color-green-dark !important;
+    }
+
+    &:hover {
+      > span {
+        color: $primary-color-green-dark;
+      }
+    }
+  }
+}
+//firework animation
+$particles: 50;
+$width: 500;
+$height: 500;
+
+// Create the explosion...
+$box-shadow: ();
+$box-shadow2: ();
+@for $i from 0 through $particles {
+  $box-shadow: $box-shadow,
+               random($width)-$width / 2 + px
+               random($height)-$height / 1.2 + px
+               hsl(random(360), 100, 50);
+  $box-shadow2: $box-shadow2, 0 0 #fff
+}
+@mixin keyframes ($animationName) {
+    @-webkit-keyframes #{$animationName} {
+        @content;
+    }
+
+    @-moz-keyframes #{$animationName} {
+        @content;
+    }
+
+    @-o-keyframes #{$animationName} {
+        @content;
+    }
+
+    @-ms-keyframes #{$animationName} {
+        @content;
+    }
+
+    @keyframes #{$animationName} {
+        @content;
+    }
+}
+
+@mixin animation-delay ($settings) {
+    -moz-animation-delay: $settings;
+    -webkit-animation-delay: $settings;
+    -o-animation-delay: $settings;
+    -ms-animation-delay: $settings;
+    animation-delay: $settings;
+}
+
+@mixin animation-duration ($settings) {
+    -moz-animation-duration: $settings;
+    -webkit-animation-duration: $settings;
+    -o-animation-duration: $settings;
+    -ms-animation-duration: $settings;
+    animation-duration: $settings;
+}
+
+@mixin animation ($settings) {
+    -moz-animation: $settings;
+    -webkit-animation: $settings;
+    -o-animation: $settings;
+    -ms-animation: $settings;
+    animation: $settings;
+}
+
+@mixin transform ($settings) {
+    transform: $settings;
+    -moz-transform: $settings;
+    -webkit-transform: $settings;
+    -o-transform: $settings;
+    -ms-transform: $settings;
+}
+// .pyro > .before, .pyro > .after {
+//   position: absolute;
+//   width: 5px;
+//   height: 5px;
+//   border-radius: 50%;
+//   box-shadow: $box-shadow2;
+//   @include animation((1s bang ease-out infinite backwards, 1s gravity ease-in infinite backwards, 5s position linear infinite backwards));
+// }
+    
+// .pyro > .after {
+//   @include animation-delay((1.25s, 1.25s, 1.25s));
+//   @include animation-duration((1.25s, 1.25s, 6.25s));
+// }
+        
+// @include keyframes(bang) {
+//   to {
+//     box-shadow:$box-shadow;
+//   }
+// }
+    
+// @include keyframes(gravity)  {
+//   to {
+//     @include transform(translateY(200px));
+//     opacity: 0;
+//   }
+// }
+    
+// @include keyframes(position) {
+//   0%, 19.9% {
+//     margin-top: 10%;
+//     margin-left: 40%;
+//   }
+//   20%, 39.9% {
+//     margin-top: 40%;
+//     margin-left: 30%;
+//   }
+//   40%, 59.9% {  
+//     margin-top: 20%;
+//     margin-left: 70%
+//   }
+//   60%, 79.9% {  
+//     margin-top: 30%;
+//     margin-left: 20%;
+//   }
+//   80%, 99.9% {  
+//     margin-top: 30%;
+//     margin-left: 80%;
+//   }
+// }
+
+//

@@ -1,0 +1,335 @@
+<!-- <img class="gambare" src="../../../../assets/images/tenor.gif" alt="" /> -->
+<div class="tongcha">
+  <div class="tongcon">
+    <div class="row container" style=" margin: 0 auto;">
+      <div class="col-md-12">
+        <div class="head">
+          <div>
+            <i class="fa fa-cog fa-spin fa-1x fa-fw"> </i>
+            <label for=""> {{ tenBaiThi }} - Chủ đề: {{ chuDeBaiThi }}</label>
+          </div>
+          <div class="positionAndTime">
+            <i class="fa fa-map-marker" aria-hidden="true">
+              &nbsp;{{ position }}/{{ len }}</i
+            >
+            &nbsp;
+            <i class="fa fa-clock-o" aria-hidden="true">
+              &nbsp;{{ displayTime }}</i
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <br />
+    <!--Body-->
+
+    <div class="row container" style=" margin: 0 auto;">
+      <div class="col-md-12">
+        <div class="currentquestion">
+          <div style="font-size: 20px;color: white;">{{ position }})</div>
+          <div style="font-size: 20px;color: white;">
+            Question ID : {{ currentQuestion['id'] }}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div id="content_question">{{ currentQuestion['content'] }} ?</div>
+      </div>
+      <div class="col-md-12">
+        <div
+          style="text-align: center; display: flex; justify-items: center; justify-content: center; justify-content: columns;background-color: white"
+        >
+          <div>
+            <audio
+              (play)="playClick()"
+              (pause)="pauseClick()"
+              *ngIf="fileExtension === 'mp3'"
+              style="width: 480px;height: 20px;"
+              controls="controls"
+            >
+              <source
+                src="{{ baseUrl }}/resources/images/question/{{
+                  currentQuestion['media']
+                }}"
+                type="audio/mpeg"
+              />
+              Your browser does not support the audio element.
+            </audio>
+
+            <video
+              (play)="playClick()"
+              (pause)="pauseClick()"
+              *ngIf="fileExtension === 'mp4'"
+              controls="controls"
+              style="width: 480px;height: 240px;"
+            >
+              <source
+                src="{{ baseUrl }}/resources/images/question/{{
+                  currentQuestion['media']
+                }}"
+                type="video/mp4"
+              />
+              <source
+                src="{{ baseUrl }}/resources/images/question/{{
+                  currentQuestion['media']
+                }}"
+                type="video/ogg"
+              />
+              Your browser does not support the video element.
+            </video>
+
+            <img
+              *ngIf="fileExtension === 'img'"
+              src="{{ baseUrl }}/resources/images/question/{{
+                currentQuestion['media']
+              }}"
+              alt=""
+              style="width: 480px;height: 240px;"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div id="answer_question">
+          <!-- <div class="radio"  *ngFor="let item of currentQuestion['answer_Options']; let i=index" >
+          <label><input type="radio" name="optradio" [value]="item['id']"  [(ngModel)]="defaultChoice" (change)="onSelectionChange(item['id'])">{{mapABC.get(i)}}.{{item['content']}}</label>
+        </div> -->
+          <div
+            class="form-check"
+            *ngFor="
+              let item of currentQuestion['answer_Options'];
+              let i = index
+            "
+          >
+            <label class="containerss"
+              >{{ mapABC.get(i) }}.{{ item['content'] }}
+              <input
+                class="form-check-input"
+                [checked]="mapCheckedAnser.get(item['id'])"
+                (change)="onChange(item['id'], $event.target.checked)"
+                type="checkbox"
+              />
+              <span class="checkmarks"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <button
+          class="btn  btn-warning "
+          style="margin: 10px;"
+          (click)="clickMark(currentQuestion['id'])"
+        >
+          <span *ngIf="mapMark.get(currentQuestion['id'])">Bỏ đánh dấu</span
+          ><span *ngIf="!mapMark.get(currentQuestion['id'])">Đánh dấu</span>
+        </button>
+      </div>
+      <br />
+      <br />
+      <div class="col-md-12">
+        <div class="footerbutton">
+          <div>
+            <button
+              href="#myModal"
+              class="btn btn-default music"
+              data-toggle="modal"
+              data-target="#myModal"
+              role="button"
+            >
+              <h4 style="color:white;">Danh sách câu hỏi</h4>
+            </button>
+            <button
+              style="margin-left:10px;"
+              data-toggle="modal"
+              data-target="#myModalEx"
+              class="btn btn-default music"
+              href="#"
+              role="button"
+              *ngIf="currentQuestion['explantion']!=null && currentQuestion['explantion'] !==''"
+            >
+              <h4 style="color:white;">Gợi ý</h4>
+            </button>
+          </div>
+
+          <div>
+            <button
+              style="margin-right:10px"
+              class="btn btn-default music"
+              (click)="clickPrev()"
+              role="button"
+            >
+              <h4 style="color:white;">Quay lại</h4>
+            </button>
+
+            <button
+              class="btn btn-default music"
+              (click)="clickNext()"
+              role="button"
+            >
+              <h4 *ngIf="position < len" style="color:white;">Tiếp theo</h4>
+              <h4 *ngIf="position === len" style="color:white;">Nộp bài</h4>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Footer-->
+    <!-- <div id="footer">
+  <div class="row"  id ="inner"style="width: 90%;
+  margin: 0 auto;height: 60px;">
+    <div class="col-md-3 "><a class="music"><p class="text-footer" style="color: white">Review Result</p></a></div>
+    <div class="col-md-4"></div>
+    <div  class="col-md-2 "><a class="music" style="width: 200px;"><p class="text-footer" style="color: white">Explanation</p></a></div>
+    <div  class="col-md-3 "><a class="music"><p class="text-footer" style="color: white">Next</p></a></div>
+  </div>
+</div> -->
+  </div>
+  <div class="container">
+    <!-- Trigger the modal with a button --
+
+  <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+              &times;
+            </button>
+          </div>
+
+          <div class="modal-body">
+            <div class="container">
+              <h2>Danh sách câu hỏi</h2>
+              <br />
+              <div></div>
+              <div class="row container">
+                <div class="col-xs-2">
+                  <p class="abc text-center">
+                    <i class="fa fa-flag"></i> Đã đánh dấu
+                  </p>
+                </div>
+                <div class="col-xs-3">
+                  <p class="abc text-center">Câu đã trả lời</p>
+                </div>
+                <div class="col-xs-3">
+                  <p
+                    class="abc text-center"
+                    style="background-color: #B3B3B3!important;color:white"
+                  >
+                    Câu chưa trả lời
+                  </p>
+                </div>
+                <div class="col-xs-4">
+                  <button
+                    class="btn btn-primary"
+                    data-dismiss="modal"
+                    style="margin-left: 5px; min-height: 38px;margin-bottom: 10px;"
+                    (click)="clickScoreExam()"
+                  >
+                    Nộp bài
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="row container">
+              <div class="col-lg-12">
+                <!---->
+
+                <div>
+                  <a
+                    *ngFor="let question of listQuestion; let i = index"
+                    data-dismiss="modal"
+                    (click)="onClickQuestion(question, i)"
+                    class="btn btn-sq-sm "
+                    [ngStyle]="{
+                      'background-color':
+                        mapAnswer.get(question['id']).length === 0
+                          ? '#B3B3B3'
+                          : 'white'
+                    }"
+                  >
+                    <div
+                      style="height: 20px;text-align: right;
+                    float: right;
+                    margin-top: -23px;
+                    margin-right: -10px;"
+                    >
+                      <i
+                        *ngIf="mapMark.get(question['id'])"
+                        class="fa fa-flag"
+                        aria-hidden="true"
+                      ></i>
+                    </div>
+                    <div
+                      style="height: 30px;line-height: 30px; text-align: center;vertical-align: middle"
+                    >
+                      <h4
+                        [ngStyle]="{
+                          color:
+                            mapAnswer.get(question['id']).length === 0
+                              ? 'white'
+                              : '#1da1f2'
+                        }"
+                        style="margin-top: 6px;"
+                      >
+                        {{ i + 1 }}
+                      </h4>
+                    </div>
+                  </a>
+                </div>
+
+                <!---->
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="myModalEx" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4>Explantion</h4>
+            <button type="button" class="close" data-dismiss="modal">
+              &times;
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>{{ currentQuestion['explantion'] }}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="noti" *ngIf="notificationVisibilityWhenDelete">
+      <div id="snackbard">
+        <div class="chu">{{ notinaiyo }}</div>
+        <div class="yn">
+          <div class="btn btn-toolbar">
+            <div class="btn-group btn-group-justified">
+              <button class="btn btn-primary" id="bss1" (click)="oncg(true)">
+                Yes
+              </button>
+              <button class="btn btn-dark" id="bss2" (click)="oncg(false)">
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

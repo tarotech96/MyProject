@@ -1,0 +1,369 @@
+<div class="abc" (click)="clickedOutside($event)">
+  <div id="avas" *ngIf="us.userLogin.fullname !== ''">
+    <div class="namaes">
+      {{ us.userLogin.fullname | uppercase }} <i class="fa fa-angle-down"></i>
+    </div>
+    <div>
+      <img
+        src="{{ baseUrl }}/resources/images/user/{{ us.userLogin.img }}"
+        onerror="this.src='../../../../assets/images/default-avatar.png'"
+      />
+    </div>
+  </div>
+  <div style="text-align: left;" class="menumobilemoi">
+    <div [routerLink]="['/hometotal/userexam']">
+      <i class="fa fa-tags"></i> <i> Bài thi</i>
+      <label
+        *ngIf="userserviceService.sizeExamAssign != 0"
+        class="baithi_notification_pro"
+        [routerLink]="['/hometotal/examhistory']"
+        title="Bài thi sắp đến hạn"
+      >
+        {{ userserviceService.sizeExamAssign }}
+      </label>
+    </div>
+    <div [routerLink]="['/hometotal/practice']">
+      <i class="fa fa-file-text"></i> <i> Thực hành</i>
+    </div>
+    <div [routerLink]="['/hometotal/examhistory']">
+      <i class="fa fa-history"></i> <i> Lịch sử</i>
+    </div>
+    <div [routerLink]="['/cms/profile']">
+      <i class="fa fa-address-card"></i> <i>Profile</i>
+    </div>
+    <div (click)="logout()"><i class="fa fa-sign-out"></i><i>Logout</i></div>
+  </div>
+</div>
+
+<div
+  *ngIf="us.role"
+  id="tt"
+  (window:resize)="onResize($event)"
+  (click)="clickedOutside($event)"
+>
+  <button
+    *ngIf="divTraiWidth === '70px'"
+    id="adminbt1"
+    (click)="showHideSidebarMenu()"
+    class="fa fa-arrow-circle-o-right"
+    [ngStyle]="{ left: divTraiWidth }"
+    title="Phóng to sidebar"
+  ></button>
+  <button
+    *ngIf="divTraiWidth === '200px'"
+    id="adminbt1"
+    (click)="showHideSidebarMenu()"
+    class="fa fa-arrow-circle-o-left"
+    [ngStyle]="{ left: divTraiWidth }"
+    title="Thu nhỏ sidebar"
+  ></button>
+  <button
+    id="adminbtm"
+    (click)="showHideMenuMobile()"
+    (click)="clickedInside($event)"
+    class="fa fa-bars"
+    [ngStyle]="{ display: adminButtonSmall }"
+  ></button>
+
+  <div class="tong">
+    <!-- DIVTRAI1 -->
+    <div *ngIf="us.role" class="divtrai1" [ngStyle]="{ width: divTraiWidth }">
+      <div
+        id="sildetop"
+        [ngStyle]="{ width: divTraiWidth }"
+        [routerLink]="['/hometotal/home']"
+      >
+        <img
+          *ngIf="divTraiWidth == '200px'"
+          style="margin-left: 12px;min-width: 120px;height: 55px;"
+          src="../../../../assets/images/logotesting3.png"
+        />
+        <img
+          [ngStyle]="{ width: divTraiWidth }"
+          *ngIf="divTraiWidth == '70px'"
+          src="/../../../../assets/images/TSthugon.png"
+        />
+      </div>
+      <!-- <br /> -->
+      <div class="duoilogo">
+        <div *ngFor="let m of menuUser">
+          <div
+            [ngStyle]="{
+              'background-color':
+                m['parent']['name'] === nameOne ? '#4d4e50' : ''
+            }"
+            *ngIf="us.role"
+            class="menchinh"
+            (click)="showHideMenu(m['parent']['id'])"
+          >
+            <span class="divtraiu1" *ngIf="divTraiWidth === '200px'">
+              <label
+                style="width: 20px"
+                class="{{ m['parent']['icon'] }}"
+              ></label>
+              <label style="width: 130px;text-align: left">{{
+                m['parent']['name']
+              }}</label>
+              <label
+                style="font-weight: 900"
+                class="fa fa-angle-right"
+                *ngIf="mapShow.get(m['parent']['id']) === false"
+              ></label>
+              <label
+                style="font-weight: 900"
+                class="fa fa-angle-down"
+                *ngIf="mapShow.get(m['parent']['id']) === true"
+              ></label>
+            </span>
+            <span
+              class="divtraiu1"
+              *ngIf="divTraiWidth === '70px'"
+              style="padding-left: 5px;"
+              ><label class="{{ m['parent']['icon'] }}"></label>
+              <label
+                style="font-weight: 900"
+                class="fa fa-angle-right"
+                *ngIf="mapShow.get(m['parent']['id']) === false"
+              ></label>
+              <label
+                style="font-weight: 900"
+                class="fa fa-angle-down"
+                *ngIf="mapShow.get(m['parent']['id']) === true"
+              ></label>
+            </span>
+            <label
+              class="morongmenu"
+              *ngIf="divTraiWidth === '70px'"
+              [ngStyle]="{
+                'background-color':
+                  m['parent']['name'] === nameOne ? '#0984e3' : '#0984e3'
+              }"
+              >{{ m['parent']['name'] }}</label
+            >
+          </div>
+          <div
+            disabled="role"
+            class="icon1"
+            *ngIf="mapShow.get(m['parent']['id'])"
+          >
+            <div *ngFor="let c of m['childs']">
+              <div
+                *ngIf="us.role"
+                id="cn1"
+                routerLinkActive="active"
+                routerLink="{{ c['link'] }}"
+                [ngStyle]="{
+                  'background-color': c['link'] === route ? '#0984e3' : ''
+                }"
+              >
+                <div
+                  [ngStyle]="{
+                    'background-color': c['link'] === route ? '#0984e3' : ''
+                  }"
+                  class="indicator"
+                ></div>
+                <i
+                  style="width: 20px; margin-left: 22px;"
+                  class="{{ c['icon'] }}"
+                >
+                </i>
+                <i class="morong" *ngIf="divTraiWidth === '70px'">
+                  {{ c['name'] }}</i
+                >
+                <i
+                  id="nn"
+                  *ngIf="divTraiWidth === '200px'"
+                  style="width: 140px;text-align: left;"
+                >
+                  {{ c['name'] }}</i
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          *ngIf="!hide"
+          class="prodown"
+          [routerLink]="['/cms/profile']"
+          [ngStyle]="{ width: divTraiWidth }"
+          title="Trang cá nhân"
+        >
+          <i
+            class="fa fa-user"
+            [ngStyle]="{ color: route === '/cms/profile' ? 'red' : '' }"
+          ></i>
+        </div>
+      </div>
+    </div>
+    <!-- DIVTRAI1 -->
+
+    <!-- MENU MOBILE -->
+    <div class="menumobile" *ngIf="menuMobile">
+      <div
+        style="width: 100%;height: 50px;background-color: rgb(82, 82, 82); padding: 5px 0px 5px 0px; display: flex;flex-direction: column;align-items: center;"
+      >
+        <img
+          [routerLink]="['/hometotal/home']"
+          style="width: auto;height: 40px;"
+          src="../../../../assets/images/logotesting3.png"
+          alt=""
+        />
+      </div>
+      <div class="menum">
+        <!-- <br /> -->
+        <div *ngFor="let m of userService.menuUser">
+          <div
+            *ngIf="us.role"
+            class="menchinh"
+            [ngStyle]="{
+              'background-color':
+                m['parent']['name'] === nameOne ? '#4d4e50' : ''
+            }"
+            (click)="showHideMenuTestonline()"
+          >
+            <span class="divtraium">
+              <label
+                style="width: 20px"
+                class="{{ m['parent']['icon'] }}"
+              ></label>
+              <label style="width: 170px; text-align: left"
+                >{{ m['parent']['name'] }}
+              </label>
+              <label
+                style="font-weight: 900"
+                class="fa fa-angle-right"
+                *ngIf="checkStatusMenuTestonline === false"
+              ></label>
+              <label
+                style="font-weight: 900"
+                class="fa fa-angle-down"
+                *ngIf="checkStatusMenuTestonline === true"
+              ></label>
+            </span>
+          </div>
+          <div
+            class="iconm"
+            *ngIf="checkStatusMenuTestonline"
+            (click)="showHideMenuMobile()"
+          >
+            <div *ngFor="let c of m['childs']">
+              <div
+                *ngIf="us.role"
+                id="cnm"
+                routerLinkActive="active"
+                routerLink="{{ c['link'] }}"
+              >
+                <i
+                  [ngStyle]="{
+                    'border-color': c['link'] === route ? '#0984e3' : ''
+                  }"
+                  class="indicatorm"
+                ></i>
+                <i class="{{ c['icon'] }}"></i> <i id="nnm">{{ c['name'] }}</i>
+              </div>
+            </div>
+            <br />
+            <!-- <hr [ngStyle]="{ 'border-color': menuTestonlineIndicate }" /> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- MENU MOBILE -->
+
+    <!-- DIVPHAI -->
+
+    <div
+      *ngIf="us.role"
+      class="divphai"
+      [ngStyle]="{ 'margin-left': divTraiWidth }"
+    >
+      <!-- HEADER DIVPHAI -->
+
+      <div id="headerb">
+        <!--
+          <div id="homebutton">
+          <label
+            class="fa fa-institution"
+            [routerLink]="['/hometotal/home']"
+            title="Trang chủ"
+          >
+          </label>
+          <label
+            class="fa fa-newspaper"
+            [routerLink]="['/hometotal/pagenews/news']"
+            title="Tin tức"
+          ></label>
+          <label style="font-weight: 500;font-family: 'Roboto', sans-serif;">{{
+            tabName | uppercase
+          }}</label>
+          <label class="sd sds"> HIDE SIDEBAR</label>
+          <label class="switch sd">
+            <input type="checkbox" (change)="showHideSidebar($event)" />
+            <span class="slider round"></span>
+          </label>
+        </div>
+      -->
+        <div id="ava" (click)="showHideProfilePannel()">
+          <div class="namae">
+            {{ adminName }} <i class="fa fa-angle-down"></i>
+          </div>
+          <div>
+            <img
+              src="{{ img }}"
+              onerror="this.src='../../../../assets/images/default-avatar.png'"
+            />
+          </div>
+        </div>
+        <div
+          style="text-align: left; margin-left: 30px;"
+          id="profile"
+          (click)="showHideProfilePannel()"
+          [ngStyle]="{ display: showProfilePannel }"
+        >
+          <div [routerLink]="['/hometotal/userexam']">
+            <i class="fa fa-tags"></i> <i> Bài thi</i>
+            <label
+              *ngIf="userserviceService.sizeExamAssign != 0"
+              class="baithi_notification_pro"
+              [routerLink]="['/hometotal/examhistory']"
+              title="Bài thi sắp đến hạn"
+            >
+              {{ userserviceService.sizeExamAssign }}
+            </label>
+          </div>
+          <div [routerLink]="['/hometotal/practice']">
+            <i class="fa fa-file-text"></i> <i> Thực hành</i>
+          </div>
+          <div [routerLink]="['/hometotal/examhistory']">
+            <i class="fa fa-history"></i> <i> Lịch sử</i>
+          </div>
+          <div [routerLink]="['/cms/profile']">
+            <i class="fa fa-address-card"></i> <i>Profile</i>
+          </div>
+          <div (click)="logout()">
+            <i class="fa fa-sign-out"></i><i>Logout</i>
+          </div>
+        </div>
+      </div>
+      <!-- HEADER DIVPHAI -->
+
+      <div class="routerout">
+        <router-outlet></router-outlet>
+      </div>
+
+      <div id="bottomb">
+        <div>
+          <!-- <i class="fa fa-copyright" style="color: #ffffff; font-size: 18px;">
+            BY NGUYEN VAN TIEP
+          </i> -->
+        </div>
+
+        <div>
+          <i class="fa fa-clock-o" style="color: #ffffff; font-size: 18px;">
+            2019
+          </i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

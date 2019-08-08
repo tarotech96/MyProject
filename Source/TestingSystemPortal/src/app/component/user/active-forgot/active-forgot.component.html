@@ -1,0 +1,83 @@
+<div class="registertong">
+  <div class="formlogin">
+    <div class="iconlogin"><i class="fa fa-group"></i></div>
+    <div class="panel">
+      <h2
+        style="font-size: 35px;text-align: center;color: #1d9ed5; font-weight: 700"
+      >
+        Reset Password
+      </h2>
+      <br />
+    </div>
+    <form
+      [formGroup]="updateForm"
+      (ngSubmit)="forgotPass()"
+      enctype="multipart/form-data"
+      class="col-md-12"
+    >
+      <div>
+        <div class="form-group">
+          <label> Email *</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="email"
+            readonly
+            value="{{user.email}}"
+          />
+        </div>
+
+        <div class="form-group" formGroupName="pass">
+          <label> Mật khẩu *
+            <mat-error *ngIf="
+              updateForm.get('pass.password').hasError('required') &&
+              updateForm.get('pass.password').touched
+            "
+            style="color: red">
+            Không được để trống!
+          </mat-error>
+          <mat-error *ngIf="updateForm.get('pass.password').hasError('maxlength')">Không được quá 6 kí tự</mat-error>
+          <mat-error *ngIf="updateForm.get('pass.password').hasError('pattern')">Mật khẩu phải bao gồm ít nhất 1 số, không được có dấu cách, từ 6 đến 20 kí tự</mat-error>
+          </label>
+          <input
+            type="password"
+            class="form-control"
+            formControlName="password"
+            value=""
+          />
+        </div>
+
+        <div class="form-group" formGroupName="pass">
+          <label>Xác nhận lại mật khẩu *</label>
+          <input
+            type="password"
+            class="form-control"
+            formControlName="confirmPassword"
+            value=""
+          />
+        </div>
+        <div
+          class="form-group alert alert-danger"
+          role="alert"
+          *ngIf="
+            updateForm.get('pass').errors &&
+            updateForm.get('pass.password').touched &&
+            updateForm.get('pass.confirmPassword').touched
+          "
+        >
+          <span *ngIf="updateForm.hasError('passwordNotMatch', ['pass'])">
+            Mật khẩu không khớp!
+          </span>
+        </div>
+        <div class="loginbutton">
+          <input type="submit" class="btn btn-primary" value="Thay đổi" />
+        </div>
+      </div>
+    </form>
+
+    <div class="alert alert-success" *ngIf="message !== ''">
+      <h5>{{ message }}</h5>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,745 @@
+::-webkit-scrollbar {
+  display: none;
+}
+
+*:focus {
+  outline: none !important;
+}
+.tooltiptext {
+  visibility: hidden;
+  width: 70px;
+  height: 50px;
+  background-color: rgb(46, 48, 49);
+  color: rgb(28, 148, 206);
+  text-align: center;
+  vertical-align: middle;
+  position: absolute;
+  z-index: 1000;
+  top: 0px;
+  left: 0px;
+  font-size: 16px;
+  padding: 0px;
+}
+.tooltiptext::after {
+  content: '';
+  position: absolute;
+  text-align: center;
+  vertical-align: middle;
+}
+.menchinh:hover .tooltiptext {
+  visibility: visible;
+}
+.morongmenu {
+  background-color: gray;
+  border-top: 0.5px solid gray;
+  display: none;
+}
+.menchinh:hover {
+  border-radius: 0px 0px 0px 0px;
+  background-color: #0984e3;
+}
+.menchinh:hover .morongmenu {
+  display: flex;
+  position: absolute;
+  width: 150px;
+  left: 70px;
+  color: white;
+  background-color: #36393d;
+  height: 40px;
+  padding-left: 10px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+  border-radius: 0px 0px 0px 0px;
+}
+
+#snackbar {
+  min-width: 350px;
+  height: 86.5px;
+  background-color: #718093;
+  color: #ffff;
+  text-align: center;
+  vertical-align: middle;
+  padding: 26px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0px;
+  font-size: 25px;
+  box-shadow: 18px 18px 20px rgb(173, 173, 173);
+}
+.noti {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  z-index: 3;
+}
+.noti1 {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  background-color: #273f5f;
+  opacity: 0.5;
+  z-index: 2;
+}
+#snackbard {
+  width: 350px;
+  height: 86.5px;
+  background-color: #ffffff;
+  color: #718093;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: stretch;
+  z-index: 4;
+  font-size: 18px;
+  box-shadow: 18px 18px 20px #273f5f;
+  margin: 0 auto;
+  margin-top: 20%;
+}
+.yn {
+  display: flex;
+  flex-direction: row;
+  vertical-align: center;
+}
+#bss1 {
+  background: #ff0000;
+  width: 50px;
+  height: 86.5px;
+  font-size: 20px;
+  vertical-align: center;
+  color: #ffffff;
+  padding: 25px 0px 25px 0px;
+}
+.chu {
+  padding: 20px 0px 20px 0px;
+}
+#bss2 {
+  background: #128af3;
+  width: 50px;
+  height: 86.5px;
+  font-size: 20px;
+  vertical-align: center;
+  color: #ffffff;
+  padding: 25px 0px 25px 0px;
+}
+#bss1:hover {
+  background: #db0000;
+}
+
+#bss2:hover {
+  background: #0070d3;
+}
+#tt {
+  background-image: url('../../../../assets/images/Candy.jpg');
+  background-size: cover;
+}
+.tong {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+.routerout {
+  height: auto;
+  height: 100vh;
+  width: 100%;
+  margin-top: 50px;
+  -ms-overflow-style: none;
+  overflow: auto;
+}
+
+/////////////////////DIVTRAI ///////////////////////////
+.divtrai1 {
+ height: 100vh;
+  background-color: gray;
+  // background-color: rgba(34, 34, 34, 0.5);
+  // background-image: url('../../../../assets/images/Prog.jpg');
+  background-size: cover;
+  position: fixed;
+  z-index: 1;
+  display: block;
+  font-size: 16px;
+  // box-shadow: 8px 8px 18px rgb(173, 173, 173);
+  overflow-x: visible;
+}
+
+.divtraiu1 {
+  color: #ffffff;
+  font-weight: 500;
+  padding-top: 10px;
+  margin-left: 7px;
+  margin-right: 14px;
+  width: 186px !important;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+}
+.menchinh {
+  height: 40px;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  margin-bottom: 0px;
+  border-radius: 0px 0px 0px 0px;
+  // border-top: 0.5px solid gray;
+  border-left: 5px solid transparent;
+}
+.menchinh:hover .divtraiu1 {
+  color: white;
+}
+#cn1 {
+  padding: 10px 0px 10px 0px;
+  // border-left: 10px solid #36393d;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+}
+.indicator {
+  width: 5px;
+  height: 25px;
+}
+.indicatorm {
+  width: 5px;
+  height: 25px;
+  margin-right: 5px;
+  font-size: 2px;
+  border-left: 5px solid transparent;
+}
+.morong {
+  display: none;
+  width: 150px;
+  height: 40px;
+  background-color: #0984e3;
+  padding-left: 10px;
+  font-style: normal !important;
+}
+#nn {
+  font-style: normal !important;
+}
+#nnm {
+  font-style: normal !important;
+}
+#cn1:hover {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+  background-color: #0984e3;
+  width: 200px;
+}
+#cn1:hover .indicator {
+  background-color: #0984e3;
+}
+#cn1:hover .morong {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+  left: 53px;
+  position: absolute;
+}
+
+.duoilogo {
+  height: 90vh;
+  overflow: auto;
+  -ms-overflow-style: none;
+}
+
+.icon1 i {
+  color: #ffffff;
+  font-size: 14px;
+  margin-left: 17px;
+  cursor: pointer;
+}
+.divtrai1 span {
+  cursor: pointer;
+}
+.divtrai1 i {
+  cursor: pointer;
+}
+
+hr {
+  border: 5px solid rgb(255, 255, 255);
+  border-radius: 0px 0px 0px 0px;
+}
+/////////////////////DIVTRAI 11111111111111111111111111111111111111111111111111111111111
+#adminbt1 {
+  background-color: rgb(77, 78, 80);
+  width: 50px;
+  height: 50px;
+  position: fixed;
+  color: rgb(255, 255, 255);
+  z-index: 21;
+  border: 0px;
+  font-size: 18px;
+}
+#sildetop {
+  height: 50px;
+  // background-color: #23272b;
+  background-color: #36393d;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+  font-size: 25px;
+  color: rgb(28, 148, 206);
+  font-family: fantasy;
+  // box-shadow: 0px 0px 8px 8px rgb(116, 116, 116);
+}
+#sildetop:hover {
+  background-color: rgb(66, 68, 71);
+}
+#sildetop img {
+  padding: 5px;
+}
+#sildebottom {
+  position: relative;
+  height: 60px;
+  background-color: rgb(66, 68, 71);
+  text-align: center;
+  vertical-align: middle;
+  font-size: 40px;
+  color: #000000;
+  font-family: fantasy;
+  bottom: 0px;
+}
+#adminbtm {
+  background-color: rgb(77, 78, 80);
+  width: 49px;
+  height: 49px;
+  position: fixed;
+  color: rgb(255, 255, 255);
+  z-index: 15;
+  border: 0px;
+  font-size: 18px;
+}
+.divtraium {
+  color: rgb(0, 0, 0);
+  font-weight: 500;
+  padding-top: 10px;
+  margin-left: 14px;
+  margin-right: 14px;
+  width: 300px !important;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+  font-size: 16px;
+}
+.divtraium:hover {
+  color: white;
+}
+
+.iconm i {
+  color: #ffffff;
+  font-size: 14px;
+  padding: 10px;
+  margin-top: 5px;
+}
+
+#adminbt1:hover {
+  background-color: #0984e3;
+}
+#adminbtm:hover {
+  background-color: #0984e3;
+}
+
+//divtrai-------------------------------------------------------
+// divphai-------------------------------------------------------
+.divphai {
+  display: block;
+  background-color: #ffffff;
+  width: 100%;
+  height: 100vh;
+}
+
+// divphai-------------------------------------------------------
+// headerb-------------------------------------------------------
+
+#headerb {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 14px;
+  height: 50px;
+  // border-bottom: 0.5px solid gray;
+  background-color: #36393d;
+  // box-shadow: 8px 8px 8px rgb(173, 173, 173);
+  align-items: center;
+  padding: 0 20px 0 20px;
+  position: fixed;
+  top: 0;
+  z-index: 2;
+}
+#headerb i {
+  cursor: pointer;
+}
+#headerb span {
+  cursor: pointer;
+}
+#homebutton {
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+}
+#homebutton label {
+  position: relative;
+  left: 60px;
+  font-size: 14px;
+  color: rgb(255, 255, 255);
+  padding-right: 25px;
+  padding-left: 25px;
+  margin: 0px;
+}
+// Phan thong tin ca nhan avatar - ten tuoi
+#ava {
+  visibility: hidden;
+  height: 60px;
+  width: auto;
+  color: transparent;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 10px;
+  padding-left: 10px;
+  cursor: pointer;
+}
+.adbutton i {
+  cursor: pointer;
+}
+
+#ava img {
+  visibility: hidden;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+}
+// #ava img:hover {
+//   border-color: red;
+// }
+.namae {
+  color: transparent;
+  font-size: 14px;
+  font-weight: 500;
+  border-left: 2px solid transparent;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+// .namae:hover {
+//   color: red;
+// }
+
+// Phan thong tin ca nhan avatar - ten tuoi
+
+#profile {
+  position: fixed;
+  background-color: rgb(77, 78, 80);
+  color: #ffffff;
+  right: 0px;
+  top: 50px;
+  height: auto;
+  width: 300px;
+  z-index: 3;
+  font-size: 20px;
+  padding: 0px;
+  // box-shadow: 1px 8px 10px rgb(173, 173, 173);
+}
+#profile i {
+  margin-left: 10px;
+}
+#profile div {
+  border-radius: 5px;
+  height: 45px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+}
+#profile div:hover {
+  background-color: #0984e3;
+}
+#homebutton label:hover {
+  color: #0984e3;
+}
+.prodown {
+  position: fixed;
+  padding: 10px;
+  bottom: 0px;
+  left: 0px;
+  height: 50px;
+  background-color: rgb(77, 78, 80);
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  font-size: 30px;
+  color: white;
+  border-radius: 0px;
+}
+.prodown:hover {
+  background-color: #0993fb;
+}
+
+.sds {
+  border-left: 2px solid #0984e3;
+  padding-left: 0px;
+  font-weight: 500;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 15px;
+  height: 16px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: '';
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 0px;
+  background-color: rgb(255, 255, 255);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #2196f3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+//headerb-------------------------------------------------------
+
+#bottomb {
+  font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 50px;
+  background-color: rgb(77, 78, 80);
+  align-items: center;
+  padding: 0 20px 0 20px;
+  bottom: 0;
+  position: relative;
+  z-index: 1000;
+  color: #ffffff;
+}
+
+// mobileeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+.menumobile {
+  width: 300px;
+  background-color: gray;
+  // background-image: url('../../../../assets/images/Prog.jpg');
+  background-size: cover;
+  position: fixed;
+  top: 50px;
+  z-index: 10;
+  color: #ffffff;
+  // box-shadow: 1px 8px 10px rgb(173, 173, 173);
+}
+.menum {
+  height: auto;
+  max-height: 500px;
+  overflow: scroll;
+  -ms-overflow-style: none;
+}
+.menumobile span {
+  cursor: pointer;
+}
+.menumobile i {
+  cursor: pointer;
+}
+// #cnm {
+//   border-left: 10px solid #36393d;
+// }
+
+// #cnm:hover {
+//   border-bottom: 5px solid #0984e3;
+// }
+#cnm:hover i {
+  color: #0984e3;
+}
+
+.baithi_notification_pro {
+  width: 16px;
+  height: 16px;
+  background-color: #e90000;
+  color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-size: 12px;
+  font-family: 'Times New Roman', Times, serif;
+  border: 1px solid #e90000;
+  cursor: pointer;
+  position: relative;
+  left: 8px;
+  top: -5px;
+}
+
+.baithi_notification_pro:hover {
+  background-color: #ff0000;
+}
+// -----------------------------------------------------------------------------------------------------------------------------------
+
+// Dropdown menu profile moi
+.menumobilemoi {
+  display: none;
+  position: relative;
+  width: auto;
+  min-width: 150px;
+  background-color: rgb(77, 78, 80);
+  right: 0px;
+  color: #ffffff;
+  height: auto;
+  font-size: 18px;
+  padding: 0px;
+  -ms-overflow-style: none;
+  cursor: pointer;
+  overflow: auto;
+}
+
+.menumobilemoi i {
+  padding-left: 10px;
+  cursor: pointer;
+}
+.menumobilemoi div {
+  border-radius: 5px;
+  height: 45px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: center;
+}
+.menumobilemoi div:hover {
+  background-color: #36393d;
+}
+
+.abc {
+  position: fixed;
+  width: auto;
+  height: 50px;
+  top: 0px;
+  right: 0px;
+  z-index: 500;
+}
+.abc:hover {
+  height: auto;
+}
+.abc:hover .menumobilemoi {
+  display: block;
+}
+// Phan thong tin ca nhan avatar - ten tuoi
+#avas {
+  height: 50px;
+  width: auto;
+  color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 10px;
+  padding-left: 10px;
+  cursor: pointer;
+}
+#avas img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #0984e3;
+}
+#avas img:hover {
+  border-color: red;
+}
+.namaes {
+  color: rgb(255, 255, 255);
+  font-size: 14px;
+  font-weight: 500;
+  border-left: 2px solid #0984e3;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.namaes:hover {
+  color: red;
+}
+@media all and (max-width: 900px) {
+  .sds {
+    display: none;
+  }
+}
+@media all and (max-width: 750px) {
+  #adminbt1 {
+    display: none;
+  }
+  .divtrai1 {
+    display: none;
+  }
+  .divphai {
+    min-width: 560px;
+  }
+  #headerb {
+    min-width: 560px;
+  }
+
+  #homebutton label {
+    left: 60px;
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+  .sd {
+    display: none;
+  }
+}

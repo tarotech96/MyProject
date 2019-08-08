@@ -1,0 +1,198 @@
+<br />
+
+<div class="tong">
+  <div class="themmoibaithi">
+    <br />
+    <form [formGroup]="insertFormPractise" enctype="multipart/form-data">
+      <div style="text-align: center"><h4>Create Practice</h4></div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label> Name of practice</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="enter name of practice ..."
+            formControlName="nameofquestion"
+          />
+        </div>
+        <div
+          class="form-group alert alert-danger"
+          role="alert"
+          *ngIf="
+            insertFormPractise.get('nameofquestion').errors &&
+            insertFormPractise.get('nameofquestion').touched
+          "
+        >
+          <span
+            *ngIf="insertFormPractise.hasError('required', ['nameofquestion'])"
+          >
+            Please enter name of questions!
+          </span>
+          <span
+            *ngIf="insertFormPractise.hasError('maxlength', ['nameofquestion'])"
+          >
+            Name of questions must less than 100!
+          </span>
+        </div>
+        <div class="form-group">
+          <label> Number of questions</label>
+          <input
+            type="number"
+            class="form-control"
+            placeholder="enter number of questions ..."
+            formControlName="numofquestion"
+          />
+        </div>
+        <div
+          class="form-group alert alert-danger"
+          role="alert"
+          *ngIf="
+            insertFormPractise.get('numofquestion').errors &&
+            insertFormPractise.get('numofquestion').touched
+          "
+        >
+          <span
+            *ngIf="insertFormPractise.hasError('required', ['numofquestion'])"
+          >
+            Please enter number of questions!
+          </span>
+          <span
+            *ngIf="insertFormPractise.hasError('maxlength', ['numofquestion'])"
+          >
+            Number of questions must less than 100!
+          </span>
+        </div>
+        <div class="form-group">
+          <label> Subject:</label>
+          <select class="form-control" formControlName="subject">
+            <option
+              *ngFor="let subject of subjects"
+              value="{{ subject }}"
+              selected
+              >{{ subject.name }}</option
+            >
+          </select>
+        </div>
+        <div
+          class="form-group alert alert-danger"
+          role="alert"
+          *ngIf="
+            insertFormPractise.get('subject').errors &&
+            insertFormPractise.get('subject').touched
+          "
+        >
+          <span *ngIf="insertFormPractise.hasError('required', ['subject'])">
+            Please select subject!
+          </span>
+        </div>
+        <div class="form-group">
+          <label> Chapter:</label>
+          <div class="chuongloai">
+            <select class="form-control" formControlName="chapter">
+              <option
+                *ngFor="let chapter of chapters"
+                value="{{ chapter }}"
+                selected
+                >{{ chapter.name }}</option
+              >
+            </select>
+            <div class="form-group">
+              <input
+                style="margin-left: 10px"
+                type="text"
+                placeholder="percent..."
+                class="form-control"
+                formControlName="chapterper"
+              />
+            </div>
+            <i style="font-size: 28px; width: 50px;text-align: right"> %</i>
+          </div>
+        </div>
+        <!-- Canh bao nhap thieu CHAPTER VA CHAPTER PERCENT -->
+        <div
+          class="form-group alert alert-danger"
+          role="alert"
+          *ngIf="
+            insertFormPractise.get('chapter').errors &&
+            insertFormPractise.get('chapter').touched
+          "
+        >
+          <span *ngIf="insertFormPractise.hasError('required', ['chapter'])">
+            Please select chapter!
+          </span>
+        </div>
+        <div
+          class="form-group alert alert-danger"
+          role="alert"
+          *ngIf="
+            insertFormPractise.get('chapterper').errors &&
+            insertFormPractise.get('chapterper').touched
+          "
+        >
+          <span *ngIf="insertFormPractise.hasError('required', ['chapterper'])">
+            Please enter chapter percent!
+          </span>
+        </div>
+        <!-- Canh bao nhap thieu CHAPTER VA CHAPTER PERCENT -->
+        <div class="form-group">
+          <label> Domain:</label>
+          <div class="chuongloai">
+            <select class="form-control" formControlName="domain">
+              <option
+                *ngFor="let domain of domains"
+                value="{{ domain['1'] }}"
+                selected
+                >{{ domain['1'] }}</option
+              >
+            </select>
+            <div class="form-group">
+              <input
+                style="margin-left: 10px"
+                type="text"
+                placeholder="percent..."
+                class="form-control"
+                formControlName="domainper"
+              />
+            </div>
+            <i style="font-size: 28px; width: 50px;text-align: right">%</i>
+          </div>
+        </div>
+        <!-- Canh bao nhap thieu DOMAIN VA DOMAIN PERCENT -->
+        <div
+          class="form-group alert alert-danger"
+          role="alert"
+          *ngIf="
+            insertFormPractise.get('domain').errors &&
+            insertFormPractise.get('domain').touched
+          "
+        >
+          <span *ngIf="insertFormPractise.hasError('required', ['domain'])">
+            Please select domain!
+          </span>
+        </div>
+
+        <div
+          class="form-group alert alert-danger"
+          role="alert"
+          *ngIf="
+            insertFormPractise.get('domainper').errors &&
+            insertFormPractise.get('domainper').touched
+          "
+        >
+          <span *ngIf="insertFormPractise.hasError('required', ['domainper'])">
+            Please enter domain percent!
+          </span>
+        </div>
+        <!-- Canh bao nhap thieu DOMAIN VA DOMAIN PERCENT -->
+        <button type="submit" class="btn btn-success">Create Practice</button>
+        <button
+          style="margin-left: 30px;"
+          (lick)="onBack()"
+          class="btn btn-dark"
+        >
+          Close
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,359 @@
+* {
+  outline: 0 !important;
+  font-size: 16px !important;
+}
+#snackbar {
+  width: 100%;
+  height: 80px;
+  background-color: #718093;
+  color: #ffff;
+  text-align: center;
+  vertical-align: middle;
+  padding: 26px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0px;
+  font-size: 25px !important;
+  box-shadow: 18px 18px 20px rgb(173, 173, 173);
+  z-index: 100;
+}
+.noti {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  z-index: 3;
+}
+.noti1 {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  background-color: #273f5f;
+  opacity: 0.5;
+  z-index: 2;
+}
+#snackbard {
+  width: 350px;
+  height: 86.5px;
+  background-color: #ffffff;
+  color: #718093;
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: stretch;
+  z-index: 4;
+  font-size: 18px;
+  box-shadow: 18px 18px 20px #273f5f;
+  margin: 0 auto;
+  margin-top: 20%;
+}
+
+.yn {
+  display: flex;
+  flex-direction: row;
+  vertical-align: center;
+}
+
+#bss1 {
+  background: #ff0000;
+  width: 50px;
+  height: 86.5px;
+  font-size: 20px;
+  vertical-align: center;
+  color: #ffffff;
+  padding: 25px 0px 25px 0px;
+}
+
+.chu {
+  padding: 20px 0px 20px 0px;
+}
+#bss2 {
+  background: #128af3;
+  width: 50px;
+  height: 86.5px;
+  font-size: 20px;
+  vertical-align: center;
+  color: #ffffff;
+  padding: 25px 0px 25px 0px;
+}
+#bss1:hover {
+  background: #db0000;
+}
+
+#bss2:hover {
+  background: #0070d3;
+}
+
+//divtable-------------------------------------------------------
+
+// Search Add Button-------------------------------------------------------
+
+.divtable {
+  margin: 2.5% 0% 2.5% 2.5%;
+  width: 95% !important;
+  height: auto;
+  padding: 0 !important;
+}
+
+#searchadd {
+  display: inline-block;
+}
+
+.searchform {
+  width: 275px;
+  position: relative;
+}
+
+.addbutton {
+  position: relative;
+  float: right;
+}
+
+// Search Add Button-------------------------------------------------------
+
+.maintable {
+  text-align: center;
+  table-layout: fixed;
+  width: 100%;
+  margin-top: 15px;
+  height: 40px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+th {
+  cursor: pointer;
+  height: 40px;
+}
+
+th i {
+  position: relative;
+  top: 4px;
+  right: 8px;
+}
+
+.th1 {
+  width: 4%;
+  vertical-align: middle;
+}
+
+.th2 {
+  width: 18%;
+  vertical-align: middle;
+}
+
+.th3 {
+  width: 18%;
+  vertical-align: middle;
+}
+
+.th4 {
+  width: 8%;
+  vertical-align: middle;
+}
+
+.th5 {
+  width: 8%;
+  vertical-align: middle;
+}
+
+.th6 {
+  width: 8%;
+  vertical-align: middle;
+}
+
+.thietlap {
+  flex-flow: row nowrap;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+td {
+  background-color: rgb(255, 255, 255);
+  color: rgb(39, 44, 51);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  vertical-align: middle;
+}
+
+td img {
+  width: 50px;
+  height: 50px;
+  border-radius: 10%;
+  border: 1px solid #718093;
+}
+td img:hover {
+  border: 2px solid rgb(231, 76, 60);
+}
+
+#th2 {
+  text-align: left;
+  padding: 0 10px 0 10px;
+}
+
+#th3 {
+  text-align: left;
+  padding: 0 10px 0 10px;
+}
+#th5 {
+  text-align: left;
+  padding: 0 10px 0 10px;
+}
+.dn {
+  color: rgb(65, 63, 63);
+  font-size: 15px;
+}
+
+.un {
+  color: #2199e8;
+  font-size: 15px;
+}
+
+.vn {
+  color: #2199e8;
+  font-size: 15px;
+}
+
+//Phan trang-------------------------------------------------------
+
+.phantrang {
+  width: 100%;
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px 0 10px;
+}
+.lt span {
+  color: rgb(70, 68, 68);
+}
+.pagi {
+  position: relative;
+  top: 8px;
+}
+
+//***************************************************************************************************
+@media all and (max-width: 1400px) {
+  .th3 {
+    display: none;
+  }
+}
+//------------------------------------------------------------------------------------------------------
+@media all and (max-width: 800px) {
+  .th1 {
+    width: 10%;
+  }
+  .th2 {
+    width: 16%;
+  }
+  .th4 {
+    display: none;
+  }
+  .th5 {
+    display: none;
+  }
+  .th5 {
+    width: 56%;
+  }
+  .th6 {
+    width: 7%;
+  }
+
+  .searchform {
+    width: 170px;
+    height: 35px;
+    position: relative;
+  }
+  td img:hover {
+    width: 40px;
+    height: 40px;
+    padding: 0px;
+  }
+  .divphai {
+    font-family: 'Open Sans';
+    order: 2;
+  }
+  td img:hover {
+    width: 50px;
+    height: 50px;
+  }
+  .th6 i:hover {
+    font-size: 16px;
+  }
+
+  .lt span {
+    display: none;
+  }
+  #snackbar {
+    font-size: 20px;
+  }
+}
+@media all and (max-width: 600px) {
+  .th1 {
+    width: 4%;
+  }
+  .th5 {
+    width: 75%;
+  }
+}
+
+.th9 {
+  width: 2%;
+}
+
+.th9 label {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+  font-size: 4px;
+  vertical-align: middle;
+  text-align: center;
+}
+.labelStatus {
+  width: 80px;
+  text-align: center !important ;
+  border-radius: 4px;
+  font-size: 4px;
+}
+.pending {
+  background-color: #ff9800;
+  color: white;
+}
+.pin {
+  background-color: #009432;
+  color: white;
+}
+.unpin {
+  background-color: #4d4d4d;
+  color: white;
+}
+.approve {
+  background-color: #009432;
+  color: white;
+}
+.reject {
+  background-color: #f50057;
+  color: white;
+}
+.active {
+  background-color: #4169e1;
+  color: white;
+}
+.active {
+  background-color: #009432;
+  color: white;
+}
+.inactive {
+  background-color: #f50057;
+  color: white;
+}

@@ -1,0 +1,265 @@
+<div class="registertong">
+  <div class="formlogin">
+    <div class="panel">
+      <h2 style="font-size: 60px;text-align: center;color: #1d9ed5;">
+        <i class="fa fa-envelope"></i>
+      </h2>
+      <br />
+    </div>
+    <div style="text-align: center"><h4>Liên hệ</h4></div>
+    <form
+      style="padding: 0px"
+      [formGroup]="insertForm"
+      (ngSubmit)="onSubmitInsert()"
+      enctype="multipart/form-data"
+      class="col-md-12"
+    >
+      <div>
+        <label>
+          Họ tên
+          <mat-error
+            *ngIf="
+              insertForm.get('name').hasError('required') &&
+              insertForm.get('name').touched
+            "
+            style="color: red;font-size: 18px"
+          >
+            không được để trống !
+          </mat-error>
+          <mat-error
+            *ngIf="insertForm.get('name').hasError('minlength')"
+            style="color: red;font-size: 18px"
+            >không được dưới 6 kí tự!</mat-error
+          >
+          <mat-error
+            *ngIf="insertForm.get('name').hasError('maxlength')"
+            style="color: red;font-size: 18px"
+          >
+            Độ dài không quá 30 kí tự !
+          </mat-error>
+        </label>
+      </div>
+      <div>
+        <input
+          type="text"
+          formControlName="name"
+          class="form-control"
+          placeholder=""
+          value=""
+          [ngClass]="{
+            'is-invalid':
+              (insertForm.get('name').hasError('required') &&
+                insertForm.touched) ||
+              insertForm.get('name').hasError('minlength') ||
+              insertForm.get('name').hasError('maxlength'),
+            'is-valid':
+              (!insertForm.get('name').hasError('required') &&
+                insertForm.touched) ||
+              !insertForm.get('name').hasError('minlength') ||
+              !insertForm.get('name').hasError('maxlength')
+          }"
+        />
+      </div>
+      <br />
+      <div>
+        <label>
+          Email
+          <mat-error
+            *ngIf="
+              insertForm.get('email').hasError('required') &&
+              insertForm.get('email').touched
+            "
+            style="color: red;font-size: 18px"
+          >
+            không được để trống !
+          </mat-error>
+          <mat-error
+            *ngIf="insertForm.get('email').hasError('minlength')"
+            style="color: red;font-size: 18px"
+            >không được dưới 6 kí tự!</mat-error
+          >
+          <mat-error
+            *ngIf="insertForm.get('email').hasError('maxlength')"
+            style="color: red;font-size: 18px"
+          >
+            Độ dài không quá 30 kí tự !
+          </mat-error>
+        </label>
+      </div>
+      <div>
+        <input
+          type="text"
+          formControlName="email"
+          class="form-control"
+          placeholder=""
+          value=""
+          [ngClass]="{
+            'is-invalid':
+              (insertForm.get('email').hasError('required') &&
+                insertForm.touched) ||
+              insertForm.get('email').hasError('minlength') ||
+              insertForm.get('email').hasError('maxlength'),
+            'is-valid':
+              (!insertForm.get('email').hasError('required') &&
+                insertForm.touched) ||
+              !insertForm.get('email').hasError('minlength') ||
+              !insertForm.get('email').hasError('maxlength')
+          }"
+        />
+      </div>
+      <br />
+      <div>
+        <label>
+          Phone
+          <mat-error
+            *ngIf="
+              insertForm.get('phone').hasError('required') &&
+              insertForm.get('phone').touched
+            "
+            style="color: red;font-size: 18px"
+          >
+            không được để trống !
+          </mat-error>
+          <mat-error
+            *ngIf="insertForm.get('phone').hasError('minlength')"
+            style="color: red;font-size: 18px"
+            >không được dưới 9 kí tự!</mat-error
+          >
+          <mat-error
+            *ngIf="insertForm.get('phone').hasError('maxlength')"
+            style="color: red;font-size: 18px"
+          >
+            Độ dài không quá 12 kí tự !
+          </mat-error>
+        </label>
+      </div>
+      <div>
+        <input
+          type="phone"
+          formControlName="phone"
+          class="form-control"
+          placeholder=""
+          value=""
+          [ngClass]="{
+            'is-invalid':
+              (insertForm.get('phone').hasError('required') &&
+                insertForm.touched) ||
+              insertForm.get('phone').hasError('minlength') ||
+              insertForm.get('phone').hasError('maxlength'),
+            'is-valid':
+              (!insertForm.get('phone').hasError('required') &&
+                insertForm.touched) ||
+              !insertForm.get('phone').hasError('minlength') ||
+              !insertForm.get('phone').hasError('maxlength')
+          }"
+        />
+      </div>
+      <br />
+      <div>
+        <label>
+          Tiêu đề
+          <mat-error
+            *ngIf="
+              insertForm.get('subject').hasError('required') &&
+              insertForm.get('subject').touched
+            "
+            style="color: red;font-size: 18px"
+          >
+            không được để trống !
+          </mat-error>
+          <mat-error
+            *ngIf="insertForm.get('subject').hasError('minlength')"
+            style="color: red;font-size: 18px"
+            >không được dưới 6 kí tự!</mat-error
+          >
+          <mat-error
+            *ngIf="insertForm.get('subject').hasError('maxlength')"
+            style="color: red;font-size: 18px"
+          >
+            Độ dài không quá 30 kí tự !
+          </mat-error>
+        </label>
+      </div>
+      <div>
+        <input
+          type="text"
+          formControlName="subject"
+          class="form-control"
+          [ngClass]="{
+            'is-invalid':
+              (insertForm.get('subject').hasError('required') &&
+                insertForm.touched) ||
+              insertForm.get('subject').hasError('minlength') ||
+              insertForm.get('subject').hasError('maxlength'),
+            'is-valid':
+              (!insertForm.get('subject').hasError('required') &&
+                insertForm.touched) ||
+              !insertForm.get('subject').hasError('minlength') ||
+              !insertForm.get('subject').hasError('maxlength')
+          }"
+        />
+      </div>
+      <br />
+      <label>
+        Tin nhắn
+        <mat-error
+          *ngIf="
+            insertForm.get('message').hasError('required') &&
+            insertForm.get('message').touched
+          "
+          style="color: red;font-size: 18px"
+        >
+          không được để trống !
+        </mat-error>
+        <mat-error
+          *ngIf="insertForm.get('message').hasError('minlength')"
+          style="color: red;font-size: 18px"
+          >không được dưới 6 kí tự!</mat-error
+        >
+        <mat-error
+          *ngIf="insertForm.get('message').hasError('maxlength')"
+          style="color: red;font-size: 18px"
+        >
+          Độ dài không quá 255 kí tự !
+        </mat-error>
+      </label>
+      <textarea
+        type="text"
+        formControlName="message"
+        class="form-control"
+        placeholder="enter message here..."
+        value=""
+        rows="5"
+        [ngClass]="{
+          'is-invalid':
+            (insertForm.get('message').hasError('required') &&
+              insertForm.touched) ||
+            insertForm.get('message').hasError('minlength') ||
+            insertForm.get('message').hasError('maxlength'),
+          'is-valid':
+            (!insertForm.get('message').hasError('required') &&
+              insertForm.touched) ||
+            !insertForm.get('message').hasError('minlength') ||
+            !insertForm.get('message').hasError('maxlength')
+        }"
+      >
+      </textarea>
+
+      <br />
+      <mat-error
+        *ngIf="successMesage !== ''"
+        style="color: red;font-size: 18px"
+      >
+        <span> {{ successMesage }} </span>
+      </mat-error>
+      <div class="loginbutton">
+        <input
+          style="width: 100px;"
+          type="submit"
+          class="btn btn-primary"
+          value="Liên hệ"
+        />
+      </div>
+    </form>
+  </div>
+</div>

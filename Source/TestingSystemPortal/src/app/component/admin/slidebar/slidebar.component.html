@@ -1,0 +1,474 @@
+<!-- Page Content -->
+<div id="content" *ngIf="showTable">
+  <div id="fu">
+    <input
+      class="form-control"
+      id="search_box"
+      type="search"
+      placeholder="Tìm kiếm theo tiêu đề"
+      aria-label="Search"
+      (keyup)="filterByTitle($event)"
+    />
+
+    <button
+      type="button"
+      class="btn btn-primary abtn"
+      (click)="onClickAddNew()"
+      *ngIf="showTable && checkRolePermission('insertslidebanner')"
+    >
+      + Thêm nội dung
+    </button>
+  </div>
+  <table
+    class="table table-bordered text-center "
+    style="margin-top: 10px;"
+    *ngIf="showTable"
+  >
+    <thead>
+      <tr>
+        <th style="text-align: left" colspan="3">Tiêu đề</th>
+        <th colspan="2">Ảnh nền</th>
+        <th style="text-align: left" colspan="3">Khẩu hiệu</th>
+        <th style="text-align: center" colspan="2">Trạng thái</th>
+        <th>Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let slidebar of (slideBars
+            | paginate: { itemsPerPage: [perPage], currentPage: p });
+          trackBy: trackByFn
+        "
+      >
+        <td
+          style="vertical-align: middle; text-align: left;"
+          colspan="3"
+          title="{{ slidebar.title }}"
+        >
+          {{ slidebar.title | truncate: 20 }}
+        </td>
+        <td
+          style="vertical-align: middle;"
+          colspan="2"
+          title="{{ slidebar.img }}"
+        >
+          <img
+            style="border-radius: 5px"
+            width="80px"
+            height="50px"
+            src="{{ baseURL }}/resources/images/slidebars/{{ slidebar.img }}"
+          />
+        </td>
+        <td
+          style="vertical-align: middle;text-align: left;"
+          colspan="3"
+          title="{{ slidebar.slogan }}"
+        >
+          {{ slidebar.slogan | truncate: 30 }}
+        </td>
+        <td
+          class="th9"
+          style="vertical-align: middle;"
+          colspan="2"
+          *ngIf="slidebar.show === true"
+        >
+          <label class="labelStatus active"> Active</label>
+        </td>
+        <td
+          class="th9"
+          style="vertical-align: middle;"
+          colspan="2"
+          *ngIf="slidebar.show === false"
+        >
+          <label class="labelStatus inactive"> Inactive</label>
+        </td>
+        <td style="vertical-align: middle;">
+          <i
+            style="color: white "
+            class="fa fa-check-circle btn btn-success"
+            (click)="onClickApply(slidebar)"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title="kích hoạt"
+          ></i>
+          <i
+            style="color: white; margin-left: 10px"
+            *ngIf="checkRolePermission('updatelidebanner')"
+            class="fa fa-pencil btn btn-primary"
+            (click)="onClickUpdate(slidebar)"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title="sửa slidebar"
+          ></i>
+          <i
+            style="color: white; margin-left: 10px"
+            *ngIf="checkRolePermission('deleteslidebanner')"
+            class="fa fa-trash-o btn btn-danger icon"
+            (click)="onClickDelete(slidebar)"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title="xóa slidebar"
+          ></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="phantrang" *ngIf="showTable">
+    <div class="lt">
+      <span for="sel1">Results per page: </span>
+      <select class="ft" id="sel1" (change)="onChange($event)">
+        <option>5</option>
+        <option>10</option>
+        <!-- <option>15</option> -->
+      </select>
+    </div>
+    <div class="pagi">
+      <pagination-controls
+        *ngIf="showTable"
+        class="text-center"
+        (pageChange)="p = $event"
+      ></pagination-controls>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="container">
+    <div class="container">
+      <div class="container">
+        <div class="container">
+          <div class="container">
+            <div class="container">
+              <div class="container">
+                <div class="container">
+                  <form
+                    [formGroup]="insertForm"
+                    (ngSubmit)="onSubmitInsert()"
+                    enctype="multipart/form-data"
+                    *ngIf="showInsertForm"
+                  >
+                    <div style="text-align: center">
+                      <h4>Thêm mới nội dung</h4>
+                    </div>
+                    <br />
+                    <br />
+
+                    <div class="modal-body">
+                      <div class="form-group">
+                        <label>
+                          Tiêu đề<span class="required_field">*</span></label
+                        >
+
+                        <input
+                          type="text"
+                          id="title"
+                          class="form-control"
+                          formControlName="title"
+                          [ngClass]="{
+                            'is-invalid':
+                              !insertForm.get('title').valid &&
+                              insertForm.get('title').touched,
+                            'is-valid': insertForm.get('title').valid
+                          }"
+                        />
+                      </div>
+                      <div
+                        class="form-group alert alert-danger"
+                        role="alert"
+                        *ngIf="
+                          insertForm.get('title').errors &&
+                          insertForm.get('title').touched
+                        "
+                      >
+                        <span
+                          *ngIf="insertForm.hasError('whitespace', ['title'])"
+                        >
+                          Tiêu đề không được để trống!
+                        </span>
+                        <span
+                          *ngIf="insertForm.hasError('maxlength', ['title'])"
+                        >
+                          Khẩu hiệu không được quá 60 kí tự !
+                        </span>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-md-6">
+                          <label>
+                            Ảnh nền<span class="required_field"
+                              >*</span
+                            ></label
+                          >
+                          <input
+                            type="file"
+                            id="image"
+                            class="form-control"
+                            (change)="setImage($event)"
+                            formControlName="image"
+                            [ngClass]="{
+                              'is-invalid':
+                                !insertForm.get('image').valid &&
+                                insertForm.get('image').touched,
+                              'is-valid': insertForm.get('image').valid
+                            }"
+                          />
+
+                          <div
+                            class="form-group alert alert-danger"
+                            role="alert"
+                            *ngIf="
+                              insertForm.get('image').errors &&
+                              insertForm.get('image').touched
+                            "
+                          >
+                            <span
+                              *ngIf="insertForm.hasError('required', ['image'])"
+                            >
+                              Ảnh nền không được để trống !
+                            </span>
+                            <span
+                              *ngIf="insertForm.hasError('pattern', ['image'])"
+                            >
+                              Chỉ nhận định dạng jpg và png !
+                            </span>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <img
+                            *ngIf="!showMedia"
+                            style="width: 120px;height: 80px;"
+                            [src]="imageSrc || 'http://placehold.it/180'"
+                            alt="your image"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label>
+                          Khẩu hiệu<span class="required_field"
+                            >*</span
+                          ></label
+                        >
+                        <textarea
+                          id="slogan"
+                          class="form-control"
+                          formControlName="slogan"
+                          [ngClass]="{
+                            'is-invalid':
+                              !insertForm.get('slogan').valid &&
+                              insertForm.get('slogan').touched,
+                            'is-valid': insertForm.get('slogan').valid
+                          }"
+                        ></textarea>
+                      </div>
+                      <div
+                        class="form-group alert alert-danger"
+                        role="alert"
+                        *ngIf="
+                          insertForm.get('slogan').errors &&
+                          insertForm.get('slogan').touched
+                        "
+                      >
+                        <span
+                          *ngIf="insertForm.hasError('whitespace', ['slogan'])"
+                        >
+                          Khẩu hiệu không được để trống !
+                        </span>
+                        <span
+                          *ngIf="insertForm.hasError('maxlength', ['slogan'])"
+                        >
+                          Khẩu hiệu không được quá 260 kí tự !
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-success">
+                        Thêm mới
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        (click)="onClickCloseForm()"
+                      >
+                        Đóng
+                      </button>
+                    </div>
+                  </form>
+
+                  <form
+                    [formGroup]="updateForm"
+                    (ngSubmit)="onSubmitUpdate()"
+                    enctype="multipart/form-data"
+                    *ngIf="showUpdateForm"
+                  >
+                    <div style="text-align: center">
+                      <h4>Cập nhật nội dung</h4>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="modal-body">
+                      <div class="form-group">
+                        <label>
+                          Tiêu đề<span class="required_field">*</span></label
+                        >
+                        <input
+                          type="text"
+                          id="title"
+                          class="form-control"
+                          formControlName="title"
+                          [ngClass]="{
+                            'is-invalid':
+                              !updateForm.get('title').valid &&
+                              updateForm.get('title').touched,
+                            'is-valid': updateForm.get('title').valid
+                          }"
+                        />
+                      </div>
+                      <div
+                        class="form-group alert alert-danger"
+                        role="alert"
+                        *ngIf="
+                          updateForm.get('title').errors &&
+                          updateForm.get('title').touched
+                        "
+                      >
+                        <span
+                          *ngIf="updateForm.hasError('whitespace', ['title'])"
+                        >
+                          Tiêu đề không được để trống !
+                        </span>
+                        <span
+                          *ngIf="updateForm.hasError('maxlength', ['title'])"
+                        >
+                          Tiêu đề không được quá 60 kí tự !
+                        </span>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-md-6">
+                          <label>
+                            Ảnh nền<span class="required_field"
+                              >*</span
+                            ></label
+                          >
+                          <input
+                            type="file"
+                            id="image"
+                            class="form-control"
+                            (change)="setImage($event)"
+                            formControlName="image"
+                            [ngClass]="{
+                              'is-invalid':
+                                !updateForm.get('image').valid &&
+                                updateForm.get('image').touched,
+                              'is-valid': updateForm.get('image').valid
+                            }"
+                          />
+
+                          <div
+                            class="form-group alert alert-danger"
+                            role="alert"
+                            *ngIf="
+                              updateForm.get('image').errors &&
+                              updateForm.get('image').touched
+                            "
+                          >
+                            <span
+                              *ngIf="updateForm.hasError('required', ['image'])"
+                            >
+                              Ảnh nền không được để trống !
+                            </span>
+                            <span
+                              *ngIf="updateForm.hasError('pattern', ['image'])"
+                            >
+                              Chỉ nhận định dạng jpg và png !
+                            </span>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <img
+                            *ngIf="!showMedia"
+                            style="width: 120px;height: 80px;"
+                            [src]="imageSrc || 'http://placehold.it/180'"
+                            alt="your image"
+                          />
+                          <img
+                            *ngIf="showMedia"
+                            src="{{ baseURL }}/resources/images/slidebars/{{
+                              imageBefore
+                            }}"
+                            alt=""
+                            style="width: 120px;height: 80px;"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label>
+                          Khẩu hiệu<span class="required_field"
+                            >*</span
+                          ></label
+                        >
+                        <textarea
+                          id="slogan"
+                          class="form-control"
+                          formControlName="slogan"
+                          [ngClass]="{
+                            'is-invalid':
+                              !updateForm.get('slogan').valid &&
+                              updateForm.get('slogan').touched,
+                            'is-valid': updateForm.get('slogan').valid
+                          }"
+                        ></textarea>
+                      </div>
+
+                      <div
+                        class="form-group alert alert-danger"
+                        role="alert"
+                        *ngIf="
+                          updateForm.get('slogan').errors &&
+                          updateForm.get('slogan').touched
+                        "
+                      >
+                        <span
+                          *ngIf="updateForm.hasError('whitespace', ['slogan'])"
+                        >
+                          Khẩu hiệu không được để trống !
+                        </span>
+                        <span
+                          *ngIf="updateForm.hasError('maxlength', ['slogan'])"
+                        >
+                          Khẩu hiệu không được quá 260 kí tự !
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="modal-footer">
+                      <button
+                        type="submit"
+                        class="btn btn-success"
+                        (click)="onSubmitUpdate()"
+                      >
+                        Cập nhật
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        (click)="onClickCloseForm()"
+                      >
+                        Đóng
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<popup #popupDelete (confirmClick)="confirmDeleteClick()">
+  Bạn có chắc chắn muốn xóa ?
+</popup>
+
+<popup #popupApplyFailed> Cần ít nhất 2 bản ghi được kích hoạt ! </popup>
