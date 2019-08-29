@@ -41,6 +41,17 @@ public class ExamGroupServiceImpl implements ExamGroupService {
 	public void deleteExamGroup(int examId, int groupId) {
 		 examGroupRepo.deleteExamGroup(examId, groupId);
 	}
+	public boolean insertExamGroup(Exam_Group exam_Group) {
+		// TODO Auto-generated method stub
+		try {
+			this.examGroupRepo.save(exam_Group);
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return false;
+	}
 	
 }
 

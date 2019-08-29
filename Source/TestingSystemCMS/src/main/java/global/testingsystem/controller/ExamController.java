@@ -36,6 +36,7 @@ import global.testingsystem.entity.Chapter_Exam;
 import global.testingsystem.entity.CustomError;
 import global.testingsystem.entity.Domain_Exam;
 import global.testingsystem.entity.Exam;
+import global.testingsystem.entity.Exam_Group;
 import global.testingsystem.entity.Exam_Question;
 import global.testingsystem.entity.Exam_Result;
 import global.testingsystem.entity.Exam_Setting;
@@ -87,8 +88,9 @@ public class ExamController {
 	private ExamSettingService examSettingService;
 	@Autowired
 	private ServletContext servletContext;
-    @Autowired
-    private ModelMapper modelMapper;
+	@Autowired
+	private ModelMapper modelMapper;
+
 	@Autowired
 	public ExamController(ExamServiceImpl examService, SubjectServiceImpl subjectService, UsersServiceImpl usersService,
 			UploadFileService uploadService, GroupServiceImpl groupService, ExamQuestionService examQuestionService,
@@ -132,8 +134,8 @@ public class ExamController {
 	}
 
 	@GetMapping(value = ConstantPage.REST_API_GET_ALL_EXAM, produces = { MediaType.APPLICATION_PROBLEM_JSON_VALUE })
-	public List<Object> list(@RequestParam("searchKey") String searchKey,@RequestParam("type") String type ) {
-		List<Object> list = examService.list(searchKey,type);
+	public List<Object> list(@RequestParam("searchKey") String searchKey, @RequestParam("type") String type) {
+		List<Object> list = examService.list(searchKey, type);
 		return list;
 	}
 
@@ -153,11 +155,10 @@ public class ExamController {
 		int idExam = jsonObject.getInt("exam_id");
 		int status = jsonObject.getInt("status");
 		try {
-		Exam ex = examService.findById(idExam);
-		ex.setStatus(status);
-		return examService.update(ex);
-		}
-		catch(Exception e) {
+			Exam ex = examService.findById(idExam);
+			ex.setStatus(status);
+			return examService.update(ex);
+		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
@@ -209,6 +210,12 @@ public class ExamController {
 			else
 				ex.setMedia("");
 			boolean isSuccess = examService.insert(ex);
+			// add examId and groupId into exam_group table
+			Group group = this.groupService.findGroupByName("RRC");
+			Exam_Group eg = new Exam_Group();
+			eg.setGroup_id(group.getId());
+			eg.setExam_id(ex.getId());
+			this.examGroupService.insertExamGroup(eg);
 			Exam lastExam = examService.findLastId();
 			// thêm exam, group vào exam_group
 			examService.InsertObjectInvite(listUserId, "user", lastExam.getId());
@@ -220,7 +227,7 @@ public class ExamController {
 		}
 	}
 
-	@PostMapping(value = ConstantPage.REST_API_INSERT_PRACTISE,produces = { MediaType.APPLICATION_PROBLEM_JSON_VALUE })
+	@PostMapping(value = ConstantPage.REST_API_INSERT_PRACTISE, produces = { MediaType.APPLICATION_PROBLEM_JSON_VALUE })
 	public ResponseEntity<Object> insertPractise(@RequestParam("formdata") String practiseExam) {
 		JSONObject jsonObject = new JSONObject(practiseExam);
 		Exam ex = new Exam();
@@ -234,33 +241,33 @@ public class ExamController {
 		if (currentListQuestion.size() < jsonObject.getInt("numofquestion")) {
 			throw new CustomError.GeneralError("Subject không đủ câu hỏi!");
 		} else {
-	    ex.setMax_attempt(5);
-		ex.setTitle("Practice");
-		JSONArray select = jsonObject.getJSONArray("detailSelect");
-		ex.setSubject(subjectService.findSubjectById(Integer.parseInt(subject)));
-		int userId = jsonObject.getInt("creator_id");
-		ex.setUsers(usersService.findById(userId));
-		ex.setType(1);
-		ex.setStatus(1);
-		 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		Date startDate= new Date();
-		try {
-			ex.setStart_date(formatter.parse(formatter.format(startDate)));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		int id = examService.insertGetId(ex);
-		examService.InsertObjectInvite(userId + "", "user", id);
-		for (int i = 0; i < select.length(); i++) {
-			JSONObject object = select.getJSONObject(i);
-			int chapter = object.getInt("chapter");
-			int domain = object.getInt("domain");
-			int number = object.getInt("number");
-			Exam_Setting exam_Setting = new Exam_Setting(id, chapter, domain, number);
-			examSettingService.saveExamSetting(exam_Setting);
-		}
-		return new ResponseEntity<Object>(id, HttpStatus.OK);
+			ex.setMax_attempt(5);
+			ex.setTitle("Practice");
+			JSONArray select = jsonObject.getJSONArray("detailSelect");
+			ex.setSubject(subjectService.findSubjectById(Integer.parseInt(subject)));
+			int userId = jsonObject.getInt("creator_id");
+			ex.setUsers(usersService.findById(userId));
+			ex.setType(1);
+			ex.setStatus(1);
+			SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+			Date startDate = new Date();
+			try {
+				ex.setStart_date(formatter.parse(formatter.format(startDate)));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			int id = examService.insertGetId(ex);
+			examService.InsertObjectInvite(userId + "", "user", id);
+			for (int i = 0; i < select.length(); i++) {
+				JSONObject object = select.getJSONObject(i);
+				int chapter = object.getInt("chapter");
+				int domain = object.getInt("domain");
+				int number = object.getInt("number");
+				Exam_Setting exam_Setting = new Exam_Setting(id, chapter, domain, number);
+				examSettingService.saveExamSetting(exam_Setting);
+			}
+			return new ResponseEntity<Object>(id, HttpStatus.OK);
 		}
 
 	}
@@ -364,82 +371,83 @@ public class ExamController {
 			return new ResponseEntity<Object>(isSuccess, HttpStatus.OK);
 		}
 	}
-	@PostMapping(value = ConstantPage.REST_API_UPDATE_EXAM_SERVICE,produces = {
+
+	@PostMapping(value = ConstantPage.REST_API_UPDATE_EXAM_SERVICE, produces = {
 			MediaType.APPLICATION_PROBLEM_JSON_VALUE })
 	public Map<String, String> updateExamService(@RequestParam int examId, @RequestParam List<Integer> listQuestion,
 			@RequestParam int creatType, @RequestParam(required = false) String listRandom) {
 		Map<String, String> map = new HashMap<>();
-			Exam exam = examService.findById(examId);
-			exam.setCreate_type(creatType);
-			examService.update(exam);
-			if (listRandom != null) {
-				examSettingService.deleteExamSetting(examId);
-				JSONObject jsonObject = new JSONObject(listRandom);
-				JSONArray select = jsonObject.getJSONArray("detailSelect");
-				for (int i = 0; i < select.length(); i++) {
-					JSONObject object = select.getJSONObject(i);
-					int chapter = object.getInt("chapter");
-					int domain = object.getInt("domain");
-					int number = object.getInt("number");
-					Exam_Setting exam_Setting = new Exam_Setting(examId, chapter, domain, number);
-					examSettingService.saveExamSetting(exam_Setting);
-				}
+		Exam exam = examService.findById(examId);
+		exam.setCreate_type(creatType);
+		examService.update(exam);
+		if (listRandom != null) {
+			examSettingService.deleteExamSetting(examId);
+			JSONObject jsonObject = new JSONObject(listRandom);
+			JSONArray select = jsonObject.getJSONArray("detailSelect");
+			for (int i = 0; i < select.length(); i++) {
+				JSONObject object = select.getJSONObject(i);
+				int chapter = object.getInt("chapter");
+				int domain = object.getInt("domain");
+				int number = object.getInt("number");
+				Exam_Setting exam_Setting = new Exam_Setting(examId, chapter, domain, number);
+				examSettingService.saveExamSetting(exam_Setting);
 			}
-			List<Integer> temp = new ArrayList<Integer>();
-			List<Integer> temp1 = new ArrayList<Integer>();
-			Exam_Question exam_question = new Exam_Question();
-			exam_question.setExam_id(examId);
-			List<Integer> listIdQuestion = questionService.getListQuestionByExamId(examId);
-			// các item sẽ update
-			for (Integer id : listIdQuestion) {
-				if (!listQuestion.contains(id)) {
-					temp.add(id);
-				}
+		}
+		List<Integer> temp = new ArrayList<Integer>();
+		List<Integer> temp1 = new ArrayList<Integer>();
+		Exam_Question exam_question = new Exam_Question();
+		exam_question.setExam_id(examId);
+		List<Integer> listIdQuestion = questionService.getListQuestionByExamId(examId);
+		// các item sẽ update
+		for (Integer id : listIdQuestion) {
+			if (!listQuestion.contains(id)) {
+				temp.add(id);
 			}
-			// cac item cần update
-			for (Integer id : listQuestion) {
-				if (!listIdQuestion.contains(id)) {
-					temp1.add(id);
-				}
+		}
+		// cac item cần update
+		for (Integer id : listQuestion) {
+			if (!listIdQuestion.contains(id)) {
+				temp1.add(id);
 			}
-			if (temp1.size() == 0 && temp.size() != 0) {
+		}
+		if (temp1.size() == 0 && temp.size() != 0) {
+			for (int i = 0; i < temp.size(); i++) {
+				examQuestionService.deleteExamQuestion(temp.get(i), examId);
+			}
+		} else if (temp1.size() != 0 && temp.size() == 0) {
+			for (int i = 0; i < temp1.size(); i++) {
+				Exam_Question exam_q = new Exam_Question();
+				exam_q.setExam_id(examId);
+				exam_q.setQuestion_id(temp1.get(i));
+				examQuestionService.saveExamQuestion(exam_q);
+			}
+		} else {
+			if (temp.size() < temp1.size()) {
 				for (int i = 0; i < temp.size(); i++) {
-					examQuestionService.deleteExamQuestion(temp.get(i), examId);
+					examQuestionService.updateExamQuestion(temp.get(i), temp1.get(i), examId);
 				}
-			} else if (temp1.size() != 0 && temp.size() == 0) {
-				for (int i = 0; i < temp1.size(); i++) {
+				for (int i = temp.size(); i < temp1.size(); i++) {
 					Exam_Question exam_q = new Exam_Question();
 					exam_q.setExam_id(examId);
 					exam_q.setQuestion_id(temp1.get(i));
 					examQuestionService.saveExamQuestion(exam_q);
+					;
 				}
 			} else {
-				if (temp.size() < temp1.size()) {
-					for (int i = 0; i < temp.size(); i++) {
-						examQuestionService.updateExamQuestion(temp.get(i), temp1.get(i), examId);
-					}
-					for (int i = temp.size(); i < temp1.size(); i++) {
-						Exam_Question exam_q = new Exam_Question();
-						exam_q.setExam_id(examId);
-						exam_q.setQuestion_id(temp1.get(i));
-						examQuestionService.saveExamQuestion(exam_q);
-						;
-					}
-				} else {
-					for (int i = 0; i < temp1.size(); i++) {
-						examQuestionService.updateExamQuestion(temp.get(i), temp1.get(i), examId);
-					}
-					for (int i = temp1.size(); i < temp.size(); i++) {
-						Exam_Question exam_q = new Exam_Question();
-						exam_q.setExam_id(examId);
-						exam_q.setQuestion_id(temp.get(i));
-						examQuestionService.saveExamQuestion(exam_q);
-						;
-					}
+				for (int i = 0; i < temp1.size(); i++) {
+					examQuestionService.updateExamQuestion(temp.get(i), temp1.get(i), examId);
+				}
+				for (int i = temp1.size(); i < temp.size(); i++) {
+					Exam_Question exam_q = new Exam_Question();
+					exam_q.setExam_id(examId);
+					exam_q.setQuestion_id(temp.get(i));
+					examQuestionService.saveExamQuestion(exam_q);
+					;
 				}
 			}
-			map.put("response", "success");
-			return map;
+		}
+		map.put("response", "success");
+		return map;
 	}
 
 	public static String differentNumber(String first, String second) {
@@ -458,8 +466,7 @@ public class ExamController {
 
 	}
 
-	@PostMapping(value = ConstantPage.REST_API_ADD_EXAMRANDOM,produces = {
-			MediaType.APPLICATION_PROBLEM_JSON_VALUE })
+	@PostMapping(value = ConstantPage.REST_API_ADD_EXAMRANDOM, produces = { MediaType.APPLICATION_PROBLEM_JSON_VALUE })
 	public void addExamRandom(@RequestParam int examId, @RequestParam int idDomain, @RequestParam int idChapter,
 			@RequestParam int percentageChapter, @RequestParam int percentageDomain) {
 		try {
@@ -523,28 +530,33 @@ public class ExamController {
 
 	@GetMapping(value = ConstantPage.REST_API_GET_LIST_EXAMSETTING)
 	public List<Object> getListExamSetting(@PathVariable int idExam) {
-		List<Object> response =new ArrayList<>();
+		List<Object> response = new ArrayList<>();
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 		List<Object> list = examSettingService.listExamSetting(idExam);
-		for(Object obj :list) {
+		for (Object obj : list) {
 			ExamSettingDto data = new ExamSettingDto();
 			JSONArray temp = new JSONArray(obj);
-			for(int i=0;i<temp.length();i++) {
-				if(i==0) data.setChapter_id(Integer.parseInt(temp.get(i).toString()));
-				else if (i==1) data.setChapterName(temp.get(i).toString());
-				else if (i==2) data.setDomain_id(Integer.parseInt(temp.get(i).toString()));
-				else if (i==3) data.setDomainName(temp.get(i).toString());
-				else data.setQuestionNum(Integer.parseInt(temp.get(i).toString()));
+			for (int i = 0; i < temp.length(); i++) {
+				if (i == 0)
+					data.setChapter_id(Integer.parseInt(temp.get(i).toString()));
+				else if (i == 1)
+					data.setChapterName(temp.get(i).toString());
+				else if (i == 2)
+					data.setDomain_id(Integer.parseInt(temp.get(i).toString()));
+				else if (i == 3)
+					data.setDomainName(temp.get(i).toString());
+				else
+					data.setQuestionNum(Integer.parseInt(temp.get(i).toString()));
 			}
 			try {
-				String json=mapper.writeValueAsString(data);
+				String json = mapper.writeValueAsString(data);
 				response.add(json);
 			} catch (JsonProcessingException e) {
 				e.printStackTrace();
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}	
+			}
 		}
 		return response;
 	}
@@ -553,37 +565,42 @@ public class ExamController {
 	public List<Exam_Result> getListExamResult(@PathVariable int idExam) {
 		return examResultService.listExam_Result(idExam);
 	}
+
 	@PostMapping(value = ConstantPage.REST_API_SEARCH_EXAM)
 	public List<Object> search(@RequestParam("data") String data) {
 		JSONObject jsonObject = new JSONObject(data);
 		String key = jsonObject.getString("key");
-		String type= jsonObject.getString("type");
-		if("search".equals(type))
-		return examService.search(key);
-		else return examService.filterByType(key);
+		String type = jsonObject.getString("type");
+		if ("search".equals(type))
+			return examService.search(key);
+		else
+			return examService.filterByType(key);
 	}
-	@GetMapping(value ="/exam/getQuestionInSubject")
-	public List<Integer> getQuestionInSubject(@RequestParam("idSubject") int idSubject,@RequestParam("numberQuestion") int numberQuestion) {
+
+	@GetMapping(value = "/exam/getQuestionInSubject")
+	public List<Integer> getQuestionInSubject(@RequestParam("idSubject") int idSubject,
+			@RequestParam("numberQuestion") int numberQuestion) {
 		List<Question> currentListQuestion = questionService.getListQuestionBySubjectId(idSubject);
 		if (currentListQuestion == null)
 			throw new CustomError.GeneralError("Subject không đủ câu hỏi!");
 		if (currentListQuestion.size() < numberQuestion) {
 			throw new CustomError.GeneralError("Subject không đủ câu hỏi!");
 		} else {
-		return examResultService.getListQuestionInSubject(idSubject,numberQuestion);
-	   }
+			return examResultService.getListQuestionInSubject(idSubject, numberQuestion);
+		}
 	}
-	
-	@GetMapping(value ="/exam/getQuestionInSubject2")
-	public List<Question> getQuestionInSubject2(@RequestParam("idSubject") int idSubject,@RequestParam("numberQuestion") int numberQuestion) {
-		List<Question> obj = examResultService.getListQuestionInSubject2(idSubject,numberQuestion);
+
+	@GetMapping(value = "/exam/getQuestionInSubject2")
+	public List<Question> getQuestionInSubject2(@RequestParam("idSubject") int idSubject,
+			@RequestParam("numberQuestion") int numberQuestion) {
+		List<Question> obj = examResultService.getListQuestionInSubject2(idSubject, numberQuestion);
 		return obj;
-	} 
-	
+	}
+
 	@GetMapping(value = ConstantPage.REST_API_SUM_USER_TEST)
 	public Integer sumUserTestExam(@PathVariable int idExam) {
-	  int sumUser = examService.sumUserTest(idExam);
-	  return sumUser;
+		int sumUser = examService.sumUserTest(idExam);
+		return sumUser;
 	}
 
 }
